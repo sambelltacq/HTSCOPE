@@ -57,6 +57,8 @@ htscope1_SRCS += htscope1_registerRecordDeviceDriver.cpp
 htscope1_SRCS_DEFAULT += htscope1Main.cpp
 htscope1_SRCS_vxWorks += -nil-
 
+htscope1_LIBS += stream
+htscope1_LIBS += asyn
 # Link in the code from our support library
 htscope1_LIBS += htscope1Support
 
