@@ -1,0 +1,14 @@
+record(bo, "$(UUT):REFRESH") {
+	field(DTYP, "asynInt32")
+	field(OUT,  "@asyn($(UUT),0,$(TIMEOUT))REFRESH")
+}
+
+record(longin, "$(UUT):NCHAN"){
+	field(DTYP, "asynInt32")
+	field(INP, "@asyn($(UUT),0,$(TIMEOUT))NCHAN")
+}
+
+record(longin, "$(UUT):NSAM"){
+	field(DTYP, "asynInt32")
+	field(INP, "@asyn($(UUT),0,$(TIMEOUT))NSAM")
+}

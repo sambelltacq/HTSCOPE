@@ -27,6 +27,7 @@ htscope1Support_SRCS += dbSubExample.c
 htscope1Support_SRCS += devhtscope1Version.c
 htscope1Support_SRCS += htscope1Hello.c
 htscope1Support_SRCS += initTrace.c
+htscope1Support_SRCS += MultiChannelScope.cpp
 
 htscope1Support_LIBS += $(EPICS_BASE_IOC_LIBS)
 

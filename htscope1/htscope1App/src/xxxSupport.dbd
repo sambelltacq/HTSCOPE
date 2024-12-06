@@ -6,4 +6,5 @@ include "asyn.dbd"
 registrar(drvAsynIPPortRegisterCommands)
 registrar(drvAsynSerialPortRegisterCommands)
 registrar(vxi11RegisterCommands)
+registrar(multiChannelScopeRegister)
 
