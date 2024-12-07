@@ -13,21 +13,11 @@
 #include <iocsh.h>
 #include <epicsExport.h>
 
-#include "asynPortDriver.h"
+#include "MultiChannelScope.h"
 
 #include <string>
 
-#define PS_NCHAN 		"NCHAN"				/* asynInt32, 		r/o */
-#define PS_NSAM			"NSAM"				/* asynInt32,       r/o */
-#define PS_CHANNEL		"CHANNEL"			/* ,       r/o */
-#define PS_TB			"TIMEBASE"			/*,        r/o */
-#define PS_REFRESH		"REFRESH"			/* asynInt32, 		r/w */
-#define PS_FS           "FS"                /* asynFloat64,     r/w */
-#define PS_STRIDE		"STRIDE"			/* asynInt32,       r/w */
-#define PS_DELAY		"DELAY"				/* asynFloat64,     r/w */
 
-typedef epicsFloat64 CTYPE;
-typedef epicsFloat64 TBTYPE;
 
 #include <sys/stat.h>
 #include <iostream>
@@ -38,96 +28,6 @@ long GetFileSize(const std::string& filename) {
     int rc = stat(filename.c_str(), &stat_buf);
     return rc == 0 ? stat_buf.st_size : -1;
 }
-
-
-class MultiChannelScope : public asynPortDriver {
-public:
-    MultiChannelScope(const char *portName, int numChannels, int maxPoints, unsigned data_size);
-
-    // Add methods for scope functionality
-    ~MultiChannelScope();
-    /* These are the methods that we override from asynPortDriver */
-    virtual asynStatus writeInt32(asynUser *pasynUser, epicsInt32 value);
-
-    virtual asynStatus writeFloat64(asynUser *pasynUser, epicsFloat64 value);
-    virtual asynStatus readFloat64Array(asynUser *pasynUser, epicsFloat64 *value,
-                                        size_t nElements, size_t *nIn);
-private:
-    const unsigned nchan;
-    const unsigned nsam;
-    const int ssb;
-
-	int P_NCHAN;
-	int P_NSAM;
-	int P_CHANNEL;
-	int P_TB;
-	int P_REFRESH;
-	int P_FS;
-	int P_STRIDE;
-	int P_DELAY;
-
-    // Add private members for scope data
-    long data_len;
-    epicsInt16* RAW;		    // array [SAMPLE][CH]
-
-    CTYPE** CHANNELS;			// array [CH][SAMPLE]
-    TBTYPE* TB;                 // array [SAMPLE]
-    FILE* fp;
-    unsigned stride;
-    unsigned startoff;
-
-
-    void get_tb() {
-    	double fs;                                   // pick a reasonable default
-    	int stride;
-    	double isi;
-    	double delay = 0;
-    	asynStatus status = (asynStatus) getDoubleParam(P_FS, &fs);
-    	if (status != asynSuccess){
-    		fs = 1e6;
-    		printf("ERROR: %s failed to retrieve fs, setting default %.3e\n", __FUNCTION__, fs);
-    	}
-    	status = (asynStatus) getIntegerParam(P_STRIDE, &stride);
-    	if (status != asynSuccess){
-    		stride = 1;
-    		printf("ERROR: %s failed to retrieve stride, setting default %d\n", __FUNCTION__, stride);
-    	}
-    	isi = (double)stride/fs;
-
-    	status = (asynStatus) getDoubleParam(P_DELAY, &delay);
-    	if (status != asynSuccess){
-    		delay = 0;
-    		printf("ERROR: %s failed to retrieve delay, setting default %.3e\n", __FUNCTION__, delay);
-    	}
-    	printf("%s create TB delay:%f isi:%f\n", __FUNCTION__, delay, isi);
-
-    	for (unsigned isam = 0; isam < nsam; ++isam, delay += isi){
-    		TB[isam] = delay;
-    		if (isam == 0 || (isam+1)%10000 == 0)
-    		printf("%s [%d] create TB delay:%f isi:%f\n", __FUNCTION__, isam, delay, isi);
-    	}
-    	doCallbacksFloat64Array(TB, nsam, P_TB, 0);
-    }
-    void get_data() {
-    	asynStatus status = asynSuccess;
-    	printf("%s\n", __FUNCTION__);
-
-    	for (unsigned isam = 0; isam < nsam; ++isam){
-    		unsigned cursor = (isam+startoff)*nchan;
-    		for (unsigned ic = 0; ic < nchan; ++ic){
-    			CHANNELS[ic][isam] = RAW[cursor+ic];
-    		}
-    	}
-
-    	for (unsigned ic = 0; ic < nchan; ic++){
-    		printf("%s ic:%d nsam:%d P_CHANNEL:%d\n", __FUNCTION__, ic, nsam, P_CHANNEL);
-    		doCallbacksFloat64Array(CHANNELS[ic], nsam, P_CHANNEL, ic);
-    	}
-
-    	get_tb();
-    }
-};
-
 
 MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int maxPoints, unsigned data_size) :
 		 asynPortDriver(portName,
@@ -204,6 +104,57 @@ MultiChannelScope::~MultiChannelScope() {
 /* Configuration routine.  Called directly, or from the iocsh function below */
 
 
+
+void MultiChannelScope::get_data() {
+	asynStatus status = asynSuccess;
+	printf("%s\n", __FUNCTION__);
+
+	for (unsigned isam = 0; isam < nsam; ++isam){
+		unsigned cursor = (isam+startoff)*nchan;
+		for (unsigned ic = 0; ic < nchan; ++ic){
+			CHANNELS[ic][isam] = RAW[cursor+ic];
+		}
+	}
+
+	for (unsigned ic = 0; ic < nchan; ic++){
+		printf("%s ic:%d nsam:%d P_CHANNEL:%d\n", __FUNCTION__, ic, nsam, P_CHANNEL);
+		doCallbacksFloat64Array(CHANNELS[ic], nsam, P_CHANNEL, ic);
+	}
+}
+
+
+void MultiChannelScope::get_tb() {
+	double fs;                                   // pick a reasonable default
+	int stride;
+	double isi;
+	double delay = 0;
+	asynStatus status = (asynStatus) getDoubleParam(P_FS, &fs);
+	if (status != asynSuccess){
+		fs = 1e6;
+		printf("ERROR: %s failed to retrieve fs, setting default %.3e\n", __FUNCTION__, fs);
+	}
+	status = (asynStatus) getIntegerParam(P_STRIDE, &stride);
+	if (status != asynSuccess){
+		stride = 1;
+		printf("ERROR: %s failed to retrieve stride, setting default %d\n", __FUNCTION__, stride);
+	}
+	isi = (double)stride/fs;
+
+	status = (asynStatus) getDoubleParam(P_DELAY, &delay);
+	if (status != asynSuccess){
+		delay = 0;
+		printf("ERROR: %s failed to retrieve delay, setting default %.3e\n", __FUNCTION__, delay);
+	}
+	printf("%s create TB delay:%f isi:%f\n", __FUNCTION__, delay, isi);
+
+	for (unsigned isam = 0; isam < nsam; ++isam, delay += isi){
+		TB[isam] = delay;
+		if (isam == 0 || (isam+1)%10000 == 0)
+		printf("%s [%d] create TB delay:%f isi:%.4g\n", __FUNCTION__, isam, delay, isi);
+	}
+	doCallbacksFloat64Array(TB, nsam, P_TB, 0);
+}
+
 asynStatus MultiChannelScope::writeInt32(asynUser *pasynUser, epicsInt32 value)
 {
 	asynStatus status = asynSuccess;
@@ -222,6 +173,7 @@ asynStatus MultiChannelScope::writeInt32(asynUser *pasynUser, epicsInt32 value)
 
     if (function == P_REFRESH){
     	get_data();
+    	get_tb();
 
     	FILE* fp = fopen("params.txt", "w");
     	reportParams(fp, 3);
@@ -244,13 +196,29 @@ asynStatus MultiChannelScope::writeInt32(asynUser *pasynUser, epicsInt32 value)
 
 asynStatus MultiChannelScope::writeFloat64(asynUser *pasynUser, epicsFloat64 value)
 {
-	asynStatus status = asynSuccess;
-	return status;
+	return asynPortDriver::writeFloat64(pasynUser, value);
 }
 asynStatus MultiChannelScope::readFloat64Array(asynUser *pasynUser, epicsFloat64 *value,
                                     size_t nElements, size_t *nIn)
 {
-	asynStatus status = asynSuccess;
+    int function;
+    const char *paramName;
+    int addr;
+
+    asynStatus status = parseAsynUser(pasynUser, &function, &addr, &paramName);
+    if (status != asynSuccess){
+    	printf("ERROR: %s %d\n", __FUNCTION__, __LINE__);
+    	return status;
+    }
+    if (function == P_TB) {
+    	printf("INFO %s %s %d\n", __FUNCTION__, paramName, nsam);
+        memcpy(value, TB, nsam*sizeof(epicsFloat64));
+        *nIn = nsam;
+    }else if (function == P_CHANNEL) {
+    	printf("INFO %s %s[%d] [%d] %d\n", __FUNCTION__, paramName, addr, addr+1, nsam);
+        memcpy(value, CHANNELS[addr], nsam*sizeof(epicsFloat64));
+        *nIn = nsam;
+    }
 	return status;
 }
 extern "C" {
