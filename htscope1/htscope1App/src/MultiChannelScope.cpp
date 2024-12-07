@@ -147,17 +147,17 @@ void MultiChannelScope::init_data() {
 	doCallbacksFloat64Array(TB, nsam, P_TB, 0);
 }
 void MultiChannelScope::get_data() {
-	printf("%s\n", __FUNCTION__);
+	printf("%s start:%d stride:%d\n", __FUNCTION__, startoff, stride);
 
 	for (unsigned isam = 0; isam < nsam; ++isam){
-		unsigned cursor = (isam+startoff)*nchan;
+		unsigned cursor = (isam+startoff)*nchan*stride;
 		for (unsigned ic = 0; ic < nchan; ++ic){
 			CHANNELS[ic][isam] = RAW[cursor+ic];
 		}
 	}
 
 	for (unsigned ic = 0; ic < nchan; ic++){
-		printf("%s ic:%d nsam:%d P_CHANNEL:%d\n", __FUNCTION__, ic, nsam, P_CHANNEL);
+		//printf("%s ic:%d nsam:%d P_CHANNEL:%d\n", __FUNCTION__, ic, nsam, P_CHANNEL);
 		doCallbacksFloat64Array(CHANNELS[ic], nsam, P_CHANNEL, ic);
 	}
 }
@@ -189,8 +189,10 @@ void MultiChannelScope::get_tb() {
 
 	for (unsigned isam = 0; isam < nsam; ++isam, delay += isi){
 		TB[isam] = delay;
+		/*
 		if (isam == 0 || (isam+1)%10000 == 0)
-		printf("%s [%d] create TB delay:%f isi:%.4g\n", __FUNCTION__, isam, delay, isi);
+			printf("%s [%d] create TB delay:%f isi:%.4g\n", __FUNCTION__, isam, delay, isi);
+		 */
 	}
 	printf("%s doCallbacksFloat64Array(%p, %d, %d, %d)\n",
 			__FUNCTION__, TB, nsam, P_TB, 0);
@@ -219,6 +221,10 @@ asynStatus MultiChannelScope::writeInt32(asynUser *pasynUser, epicsInt32 value)
     	FILE* fp = fopen("params.txt", "w");
     	reportParams(fp, 3);
     	fclose(fp);
+    }else if (function == P_STRIDE){
+    	stride = value;
+    }else if (function == P_DELAY){
+    	startoff = value;
     }
 
     /* Do callbacks so higher layers see any changes */
