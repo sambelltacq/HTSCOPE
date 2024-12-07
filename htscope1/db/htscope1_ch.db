@@ -2,7 +2,7 @@
 # make one
 record(waveform, "$(UUT):TB") {
     field(DTYP, "asynFloat64ArrayIn")
-    field(INP,  "@asyn($(UUT),0,$(TIMEOUT))TB")
+    field(INP,  "@asyn($(UUT),0,$(TIMEOUT))TIMEBASE")
     field(FTVL, "DOUBLE")
     field(NELM, "$(NPOINTS)")
     field(LOPR, "0")
@@ -11,7 +11,7 @@ record(waveform, "$(UUT):TB") {
     field(SCAN, "I/O Intr")
 }
 
-# make nchanw
+# make nchan
 
 record(waveform, "$(UUT):CH:$(CH)") {
     field(DTYP, "asynFloat64ArrayIn")
