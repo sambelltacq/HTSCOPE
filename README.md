@@ -25,4 +25,26 @@ To browse the data rapidly, we have two controls:
  - Moves start of data SPAN/2 to the right.
 
 
+Test data:
+ramp  800000000 1 4 1 > Downloads/ramp800M-1-4-1
+ramp 1600000000 1 2 1 > Downloads/ramp1600M-1-2-1
+ramp  100000000 1 2 16 > Downloads/ramp100M-1-2-16
+
+for best results:
+ln -s Downloads/ramp800M-1-4-1 acq1102_123
+
+
+Generate st.cmd
+./scripts/make_htscope_st.cmd.py --nchan=16 --data32=0 --ndata=100000 acq1102_123
+
+cd bin/linux-x86_64
+./htscope1 ../../st.cmd
+
+
+Now run the opi set from OPI
+
+Press Refresh for new data
+Stride and Start are effective.
+For best large span results, disable fast [ODD] channels
+
 
