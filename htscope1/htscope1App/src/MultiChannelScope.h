@@ -22,6 +22,7 @@
 typedef epicsFloat64 CTYPE;
 typedef epicsFloat64 TBTYPE;
 
+void runTask(void *drvPvt);
 
 class MultiChannelScope : public asynPortDriver {
 public:
@@ -31,10 +32,9 @@ public:
     ~MultiChannelScope();
     /* These are the methods that we override from asynPortDriver */
     virtual asynStatus writeInt32(asynUser *pasynUser, epicsInt32 value);
-
     virtual asynStatus writeFloat64(asynUser *pasynUser, epicsFloat64 value);
-    virtual asynStatus readFloat64Array(asynUser *pasynUser, epicsFloat64 *value,
-                                        size_t nElements, size_t *nIn);
+    void task(void);
+
 private:
     const unsigned nchan;
     const unsigned nsam;
@@ -58,10 +58,11 @@ private:
     FILE* fp;
     unsigned stride;
     unsigned startoff;
-
+    bool refresh;
 
     void get_tb();
     void get_data();
+    void init_data();
 };
 
 #endif /* HTSCOPE1_HTSCOPE1APP_SRC_MULTICHANNELSCOPE_H_ */

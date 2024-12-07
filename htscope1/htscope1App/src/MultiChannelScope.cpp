@@ -29,6 +29,8 @@ long GetFileSize(const std::string& filename) {
     return rc == 0 ? stat_buf.st_size : -1;
 }
 
+
+
 MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int maxPoints, unsigned data_size) :
 		 asynPortDriver(portName,
 							 numChannels,
@@ -82,6 +84,54 @@ MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int 
 
 	printf("RAW:%p\n", RAW);
 
+
+
+    /* Create the thread that computes the waveforms in the background */
+	asynStatus status = (asynStatus)(epicsThreadCreate("MultiChannelScopeTask",
+                          epicsThreadPriorityMedium,
+                          epicsThreadGetStackSize(epicsThreadStackMedium),
+                          (EPICSTHREADFUNC)::runTask,
+                          this) == NULL);
+    if (status) {
+        printf("%s:%s: epicsThreadCreate failure\n", "mcScope", __FUNCTION__);
+        return;
+    }
+}
+
+
+
+MultiChannelScope::~MultiChannelScope() {
+	munmap(RAW, data_len);
+	fclose(fp);
+}
+/* Configuration routine.  Called directly, or from the iocsh function below */
+
+
+void runTask(void *drvPvt)
+{
+	MultiChannelScope *pPvt = (MultiChannelScope *)drvPvt;
+
+    pPvt->task();
+}
+
+void MultiChannelScope::task(void)
+{
+	lock();
+	init_data();
+
+	while(1){
+		unlock();
+		epicsThreadSleep(1);
+		lock();
+		if (refresh){
+			get_tb();
+			get_data();
+			refresh = 0;
+		}
+	}
+}
+
+void MultiChannelScope::init_data() {
 	CHANNELS = new CTYPE* [nchan];
 	for (unsigned ic = 0; ic < nchan; ++ic){
 		CHANNELS[ic] = new CTYPE [nsam];
@@ -96,17 +146,7 @@ MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int 
 	}
 	doCallbacksFloat64Array(TB, nsam, P_TB, 0);
 }
-
-MultiChannelScope::~MultiChannelScope() {
-	munmap(RAW, data_len);
-	fclose(fp);
-}
-/* Configuration routine.  Called directly, or from the iocsh function below */
-
-
-
 void MultiChannelScope::get_data() {
-	asynStatus status = asynSuccess;
 	printf("%s\n", __FUNCTION__);
 
 	for (unsigned isam = 0; isam < nsam; ++isam){
@@ -145,13 +185,15 @@ void MultiChannelScope::get_tb() {
 		delay = 0;
 		printf("ERROR: %s failed to retrieve delay, setting default %.3e\n", __FUNCTION__, delay);
 	}
-	printf("%s create TB delay:%f isi:%f\n", __FUNCTION__, delay, isi);
+	printf("%s create TB delay:%f isi:%.4g\n", __FUNCTION__, delay, isi);
 
 	for (unsigned isam = 0; isam < nsam; ++isam, delay += isi){
 		TB[isam] = delay;
 		if (isam == 0 || (isam+1)%10000 == 0)
 		printf("%s [%d] create TB delay:%f isi:%.4g\n", __FUNCTION__, isam, delay, isi);
 	}
+	printf("%s doCallbacksFloat64Array(%p, %d, %d, %d)\n",
+			__FUNCTION__, TB, nsam, P_TB, 0);
 	doCallbacksFloat64Array(TB, nsam, P_TB, 0);
 }
 
@@ -172,8 +214,7 @@ asynStatus MultiChannelScope::writeInt32(asynUser *pasynUser, epicsInt32 value)
 
 
     if (function == P_REFRESH){
-    	get_data();
-    	get_tb();
+    	refresh = 1;
 
     	FILE* fp = fopen("params.txt", "w");
     	reportParams(fp, 3);
@@ -198,29 +239,7 @@ asynStatus MultiChannelScope::writeFloat64(asynUser *pasynUser, epicsFloat64 val
 {
 	return asynPortDriver::writeFloat64(pasynUser, value);
 }
-asynStatus MultiChannelScope::readFloat64Array(asynUser *pasynUser, epicsFloat64 *value,
-                                    size_t nElements, size_t *nIn)
-{
-    int function;
-    const char *paramName;
-    int addr;
 
-    asynStatus status = parseAsynUser(pasynUser, &function, &addr, &paramName);
-    if (status != asynSuccess){
-    	printf("ERROR: %s %d\n", __FUNCTION__, __LINE__);
-    	return status;
-    }
-    if (function == P_TB) {
-    	printf("INFO %s %s %d\n", __FUNCTION__, paramName, nsam);
-        memcpy(value, TB, nsam*sizeof(epicsFloat64));
-        *nIn = nsam;
-    }else if (function == P_CHANNEL) {
-    	printf("INFO %s %s[%d] [%d] %d\n", __FUNCTION__, paramName, addr, addr+1, nsam);
-        memcpy(value, CHANNELS[addr], nsam*sizeof(epicsFloat64));
-        *nIn = nsam;
-    }
-	return status;
-}
 extern "C" {
 
 	/** EPICS iocsh callable function to call constructor for the testAsynPortDriver class.
