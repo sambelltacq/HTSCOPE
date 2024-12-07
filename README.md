@@ -21,11 +21,27 @@ To browse the data rapidly, we have two controls:
  - Z6: STRIDE=  2              # SPAN= 0.1s
  - Z7: STRIDE=  1              # SPAN= 0.05s
 
-2. PAN
+2. PAN  : increment/decrement DELAY
  - Moves start of data SPAN/2 to the right.
 
 
-Test data:
+## Build
+
+1. We assume there is already a build of EPICS BASE, ASYN, STREAMDEVICE, SNC
+Peter used EPICS7 from ACQ400_ESW_TOP
+https://github.com/D-TACQ/ACQ400_ESW_TOP
+
+Not because we want to run this on a ZYNQ (well, it's an idea!), but because it saved time with a pre-cooked build environment.
+This ends up with the full BASE under /use/local/epics/base, with an $EPICS_BASE pre-defined.
+
+2. Build this project
+```
+mkdir PROJECTS; cd PROJECTS
+git clone https://github.com/D-TACQ/HTSCOPE
+cd HTSCOPE; make
+```
+
+3. Make Test data, at $HOME:
 ramp  800000000 1 4 1 > Downloads/ramp800M-1-4-1
 ramp 1600000000 1 2 1 > Downloads/ramp1600M-1-2-1
 ramp  100000000 1 2 16 > Downloads/ramp100M-1-2-16
@@ -33,18 +49,25 @@ ramp  100000000 1 2 16 > Downloads/ramp100M-1-2-16
 for best results:
 ln -s Downloads/ramp800M-1-4-1 acq1102_123
 
+4. Make a cs-studio workspace 
+.. and add PROJECTS/HTSCOPE/OPI as a project
 
-Generate st.cmd
+5. Generate st.cmd
+```
 ./scripts/make_htscope_st.cmd.py --nchan=16 --data32=0 --ndata=100000 acq1102_123
+```
 
+6. Run the IOC
+```
 cd bin/linux-x86_64
 ./htscope1 ../../st.cmd
-
+```
 
 Now run the opi set from OPI
 
 Press Refresh for new data
 Stride and Start are effective.
 For best large span results, disable fast [ODD] channels
+for pictures see https://github.com/D-TACQ/HTSCOPE/releases/download/v0.0.1/HTSCOPE-concept.pdf
 
 
