@@ -1,9 +1,26 @@
+
+# make one
+record(waveform, "$(UUT):TB") {
+    field(DTYP, "asynFloat64ArrayIn")
+    field(INP,  "@asyn($(UUT),0,$(TIMEOUT))TB")
+    field(FTVL, "DOUBLE")
+    field(NELM, "$(NPOINTS)")
+    field(LOPR, "0")
+    field(HOPR, "10")
+    field(EGU,  "s")
+    field(SCAN, "I/O Intr")
+}
+
+# make nchanw
+
 record(waveform, "$(UUT):CH:$(CH)") {
     field(DTYP, "asynFloat64ArrayIn")
     field(INP,  "@asyn($(UUT),$(IX),$(TIMEOUT))CHANNEL")
     field(FTVL, "DOUBLE")
     field(NELM, "$(NPOINTS)")
     field(LOPR, "-10")
-    field(HOPR, "10")	
+    field(HOPR, "10")
+    field(EGU,  "V")
     field(SCAN, "I/O Intr")
 }
+

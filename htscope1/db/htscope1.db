@@ -12,3 +12,30 @@ record(longin, "$(UUT):NSAM"){
 	field(DTYP, "asynInt32")
 	field(INP, "@asyn($(UUT),0,$(TIMEOUT))NSAM")
 }
+
+record(longout, "$(UUT):STRIDE"){
+	field(DTYP, "asynInt32")
+	field(OUT, "@asyn($(UUT),0,$(TIMEOUT))STRIDE")
+	field(DRVL, "1")
+	field(DRVH, "200")
+	field(VAL,  "1")
+	field(PINI, "YES")
+}
+
+record(ao, "$(UUT):DELAY") {
+	field(DTYP, "asynFloat64")
+	field(OUT, "@asyn($(UUT),0,$(TIMEOUT))DELAY")
+	field(DRVL, "0")
+	field(DRVH, "10")
+	field(VAL,  "0")
+	field(PINI, "YES")
+}
+
+record(ao, "$(UUT):FS") {
+	field(DTYP, "asynFloat64")
+	field(OUT, "@asyn($(UUT),0,$(TIMEOUT))FS")
+	field(DRVL, "1e3")
+	field(DRVH, "80e6")
+	field(VAL,  "2e6")
+	field(PINI, "YES")
+}
