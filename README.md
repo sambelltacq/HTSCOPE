@@ -42,13 +42,15 @@ cd HTSCOPE; make
 ```
 
 3. Make Test data, at $HOME:
+```
 ramp  800000000 1 4 1 > Downloads/ramp800M-1-4-1
 ramp 1600000000 1 2 1 > Downloads/ramp1600M-1-2-1
 ramp  100000000 1 2 16 > Downloads/ramp100M-1-2-16
-
+```
 for best results:
+```
 ln -s Downloads/ramp800M-1-4-1 acq1102_123
-
+```
 4. Make a cs-studio workspace 
 .. and add PROJECTS/HTSCOPE/OPI as a project
 
