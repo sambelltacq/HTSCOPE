@@ -5,6 +5,7 @@
  *      Author: pgm
  */
 
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -31,7 +32,7 @@ long GetFileSize(const std::string& filename) {
 
 
 
-MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int maxPoints, unsigned data_size) :
+MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int maxPoints, unsigned _data_size) :
 		 asynPortDriver(portName,
 							 numChannels,
 							 asynInt32Mask | asynFloat64Mask | asynFloat64ArrayMask | asynDrvUserMask,
@@ -40,7 +41,7 @@ MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int 
 							 1,
 							 0,
 							 0),
-							 nchan(numChannels), nsam(maxPoints),
+							 nchan(numChannels), nsam(maxPoints), data_size(_data_size),
 							 ssb(numChannels*data_size),
 							 stride(1), startoff(0)
 {
@@ -79,6 +80,11 @@ MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int 
 
 
 	data_len -= data_len%(ssb);
+
+	data_len_words   = data_len/data_size;
+	data_len_samples = data_len/ssb;
+
+	printf("data_len: %ld words: %ld samples %ld\n", data_len, data_len_words, data_len_samples);
 
 	RAW = (epicsInt16*)mmap(0, data_len, PROT_READ, MAP_SHARED, fileno(fp), 0);
 
@@ -147,10 +153,30 @@ void MultiChannelScope::init_data() {
 	doCallbacksFloat64Array(TB, nsam, P_TB, 0);
 }
 void MultiChannelScope::get_data() {
-	printf("%s start:%d stride:%d\n", __FUNCTION__, startoff, stride);
+	double delay = 0;
+	double fs = 2e6;
+
+	asynStatus status = getDoubleParam(P_DELAY, &delay);
+	if (status != asynSuccess){
+		delay = 0;
+		printf("ERROR: %s failed to retrieve P_DELAY, setting default %.3g\n", __FUNCTION__, delay);
+	}
+	status = getDoubleParam(P_FS, &fs);
+	if (status != asynSuccess){
+		fs = 2e6;
+		printf("ERROR: %s failed to retrieve P_FS, setting default %.3g\n", __FUNCTION__, fs);
+	}
+	startoff = delay*fs;
+	printf("%s startoff:%ld (samples) stride:%u\n", __FUNCTION__, startoff, stride);
+
+	unsigned long start_cursor = startoff*nchan;
 
 	for (unsigned isam = 0; isam < nsam; ++isam){
-		unsigned cursor = (isam+startoff)*nchan*stride;
+		unsigned long cursor = start_cursor + isam*nchan*stride;
+		if (cursor >= data_len_words+nchan*data_size){
+			printf("cursor %lu reached limit of data at %d/%d\n", cursor, isam, nsam);
+			break;
+		}
 		for (unsigned ic = 0; ic < nchan; ++ic){
 			CHANNELS[ic][isam] = RAW[cursor+ic];
 		}
@@ -223,8 +249,6 @@ asynStatus MultiChannelScope::writeInt32(asynUser *pasynUser, epicsInt32 value)
     	fclose(fp);
     }else if (function == P_STRIDE){
     	stride = value;
-    }else if (function == P_DELAY){
-    	startoff = value;
     }
 
     /* Do callbacks so higher layers see any changes */

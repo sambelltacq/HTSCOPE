@@ -38,6 +38,7 @@ public:
 private:
     const unsigned nchan;
     const unsigned nsam;
+    const unsigned data_size;
     const int ssb;
 
 	int P_NCHAN;
@@ -51,13 +52,15 @@ private:
 
     // Add private members for scope data
     long data_len;
+    long data_len_words;
+    long data_len_samples;
     epicsInt16* RAW;		    // array [SAMPLE][CH]
 
     CTYPE** CHANNELS;			// array [CH][SAMPLE]
     TBTYPE* TB;                 // array [SAMPLE]
     FILE* fp;
     unsigned stride;
-    unsigned startoff;
+    unsigned long startoff;
     bool refresh;
 
     void get_tb();

@@ -39,3 +39,55 @@ record(ao, "$(UUT):FS") {
 	field(VAL,  "2e6")
 	field(PINI, "YES")
 }
+
+record(bo, "$(UUT):PAN_LEFT:1") {
+	field(FLNK, "$(UUT):PAN_LEFT:1:c PP")
+}
+
+record(calcout, "$(UUT):PAN_LEFT:1:c") {
+	field(INPA, "$(UUT):DELAY")
+	field(CALC, "A-1")
+	field(OOPT, "Every Time")
+	field(DOPT, "use CALC")
+	field(OUT,  "$(UUT):DELAY PP")
+	field(FLNK, "$(UUT):REFRESH PP")
+}
+
+record(bo, "$(UUT):PAN_RIGHT:1") {
+	field(FLNK, "$(UUT):PAN_RIGHT:1:c PP")	
+}
+
+record(calcout, "$(UUT):PAN_RIGHT:1:c") {
+	field(INPA, "$(UUT):DELAY")
+	field(CALC, "A+1")
+	field(OOPT, "Every Time")
+	field(DOPT, "use CALC")
+	field(OUT,  "$(UUT):DELAY PP")
+	field(FLNK, "$(UUT):REFRESH PP")
+}
+
+record(bo, "$(UUT):ZOOM:IN") {
+	field(FLNK, "$(UUT):ZOOM:IN:c PP")
+}
+
+record(calcout, "$(UUT):ZOOM:IN:c") {
+	field(INPA, "$(UUT):STRIDE")
+	field(CALC, "A/2")
+	field(OOPT, "Every Time")
+	field(DOPT, "use CALC")
+	field(OUT,  "$(UUT):STRIDE PP")
+	field(FLNK, "$(UUT):REFRESH PP")
+}
+
+record(bo, "$(UUT):ZOOM:OUT") {
+	field(FLNK, "$(UUT):ZOOM:OUT:c PP")
+}
+
+record(calcout, "$(UUT):ZOOM:OUT:c") {
+	field(INPA, "$(UUT):STRIDE")
+	field(CALC, "A*2")
+	field(OOPT, "Every Time")
+	field(DOPT, "use CALC")
+	field(OUT,  "$(UUT):STRIDE PP")
+	field(FLNK, "$(UUT):REFRESH PP")
+}
