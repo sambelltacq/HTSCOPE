@@ -67,7 +67,7 @@ def run_main(args):
     print_postamble(args)
 
 def default_prefix():
-    return f'{socket.gethostname()}:{os.environ.get("USER")}:'
+    return f'{socket.gethostname().split(".")[0]}:{os.environ.get("USER")}:'
 
 def get_parser():
     parser = argparse.ArgumentParser(description="create htscope epics record definition")
