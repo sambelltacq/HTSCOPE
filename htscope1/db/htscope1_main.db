@@ -1,0 +1,24 @@
+# common records for htscope.
+
+record(ao, "$(PFX):SHOT_TIME") {
+	field(DTYP, "Soft Channel")
+	field(DRVL, "1")
+	field(DRVH, "20")
+	field(VAL,  "10")
+	field(PINI, "YES")
+	field(EGU,  "s")
+}
+
+record(stringout, "$(PFX):UUTS"){
+	field(DTYP, "Soft Channel")
+	field(VAL,  "$(UUTS)")
+	field(PINI, "YES")
+}
+
+record(bo, "$(PFX):RUNSTOP") {
+	field(DTYP, "Soft Channel")
+	field(ZNAM, "STOP")
+	field(ONAM, "RUN")
+	field(VAL,  "STOP")
+	field(PINI, "YES")
+}

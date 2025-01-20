@@ -30,7 +30,8 @@ multiChannelScopeConfigure("{uut}", {args.nchan}, {args.ndata}, {wsize})
     tm = "TIMEOUT=0"
     uutdb="../../db/htscope1.db"
     args.fp.write(f"""
-dbLoadRecords("{uutdb}","PFX={args.prefix},UUT={uut},{tm}")""")
+dbLoadRecords("{uutdb}","PFX={args.prefix},UUT={uut},{tm}")
+""")
     chdb = "../../db/htscope1_ch.db"
     for ix in range(args.nchan):
         ch = f"{ix+1:02}"
@@ -42,6 +43,11 @@ asynSetTraceMask("{uut}",0,0xff))
 
 def print_postamble(args):
     args.fp.write("\n# postamble\n")
+    maindb = "../../db/htscope1_main.db"
+    uuts= ','.join(args.uuts)
+    args.fp.write(f"""
+dbloadRecords("{maindb}","PFX={args.prefix},UUTS={uuts}")
+""")
     args.fp.write("iocInit()\n")
     args.fp.write("# end\n")
     args.fp.close()

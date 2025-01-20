@@ -72,4 +72,21 @@ Stride and Start are effective.
 For best large span results, disable fast [ODD] channels
 for pictures see https://github.com/D-TACQ/HTSCOPE/releases/download/v0.0.1/HTSCOPE-concept.pdf
 
+## Running a composite system:
+
+htscope1_main.db defines records that are common to the whole system:
+```
+./scripts/make_htscope_st.cmd.py --nchan=16 acq1102_001 acq1102_002
+
+tail st.cmd
+dbloadRecords("../../db/htscope1_main.db","PFX=hoy6:pgm:,UUTS=acq1102_001,acq1102_002")
+```
+
+1. $(PFX):SHOT_TIME   :: shot run length in s
+2. $(PFX):UUTS        :: list of UUTs in set
+3. $(PFX):RUNSTOP
+
+Glue: we suggest a pyepics wrapper that blocks on RUNSTOP and starts/stops htstream.py as a spawnd task
+
+
 
