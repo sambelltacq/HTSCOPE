@@ -1,93 +1,93 @@
-record(bo, "$(UUT):REFRESH") {
+record(bo, "$(PFX)$(UUT):REFRESH") {
 	field(DTYP, "asynInt32")
-	field(OUT,  "@asyn($(UUT),0,$(TIMEOUT))REFRESH")
+	field(OUT,  "@asyn($(PFX)$(UUT),0,$(TIMEOUT))REFRESH")
 }
 
-record(longin, "$(UUT):NCHAN"){
+record(longin, "$(PFX)$(UUT):NCHAN"){
 	field(DTYP, "asynInt32")
-	field(INP, "@asyn($(UUT),0,$(TIMEOUT))NCHAN")
+	field(INP, "@asyn($(PFX)$(UUT),0,$(TIMEOUT))NCHAN")
 }
 
-record(longin, "$(UUT):NSAM"){
+record(longin, "$(PFX)$(UUT):NSAM"){
 	field(DTYP, "asynInt32")
-	field(INP, "@asyn($(UUT),0,$(TIMEOUT))NSAM")
+	field(INP, "@asyn($(PFX)$(UUT),0,$(TIMEOUT))NSAM")
 }
 
-record(longout, "$(UUT):STRIDE"){
+record(longout, "$(PFX)$(UUT):STRIDE"){
 	field(DTYP, "asynInt32")
-	field(OUT, "@asyn($(UUT),0,$(TIMEOUT))STRIDE")
+	field(OUT, "@asyn($(PFX)$(UUT),0,$(TIMEOUT))STRIDE")
 	field(DRVL, "1")
 	field(DRVH, "200")
 	field(VAL,  "1")
 	field(PINI, "YES")
 }
 
-record(ao, "$(UUT):DELAY") {
+record(ao, "$(PFX)$(UUT):DELAY") {
 	field(DTYP, "asynFloat64")
-	field(OUT, "@asyn($(UUT),0,$(TIMEOUT))DELAY")
+	field(OUT, "@asyn($(PFX)$(UUT),0,$(TIMEOUT))DELAY")
 	field(DRVL, "0")
 	field(DRVH, "10")
 	field(VAL,  "0")
 	field(PINI, "YES")
 }
 
-record(ao, "$(UUT):FS") {
+record(ao, "$(PFX)$(UUT):FS") {
 	field(DTYP, "asynFloat64")
-	field(OUT, "@asyn($(UUT),0,$(TIMEOUT))FS")
+	field(OUT, "@asyn($(PFX)$(UUT),0,$(TIMEOUT))FS")
 	field(DRVL, "1e3")
 	field(DRVH, "80e6")
 	field(VAL,  "2e6")
 	field(PINI, "YES")
 }
 
-record(bo, "$(UUT):PAN_LEFT:1") {
-	field(FLNK, "$(UUT):PAN_LEFT:1:c PP")
+record(bo, "$(PFX)$(UUT):PAN_LEFT:1") {
+	field(FLNK, "$(PFX)$(UUT):PAN_LEFT:1:c PP")
 }
 
-record(calcout, "$(UUT):PAN_LEFT:1:c") {
-	field(INPA, "$(UUT):DELAY")
+record(calcout, "$(PFX)$(UUT):PAN_LEFT:1:c") {
+	field(INPA, "$(PFX)$(UUT):DELAY")
 	field(CALC, "A-1")
 	field(OOPT, "Every Time")
 	field(DOPT, "use CALC")
-	field(OUT,  "$(UUT):DELAY PP")
-	field(FLNK, "$(UUT):REFRESH PP")
+	field(OUT,  "$(PFX)$(UUT):DELAY PP")
+	field(FLNK, "$(PFX)$(UUT):REFRESH PP")
 }
 
-record(bo, "$(UUT):PAN_RIGHT:1") {
-	field(FLNK, "$(UUT):PAN_RIGHT:1:c PP")	
+record(bo, "$(PFX)$(UUT):PAN_RIGHT:1") {
+	field(FLNK, "$(PFX)$(UUT):PAN_RIGHT:1:c PP")	
 }
 
-record(calcout, "$(UUT):PAN_RIGHT:1:c") {
-	field(INPA, "$(UUT):DELAY")
+record(calcout, "$(PFX)$(UUT):PAN_RIGHT:1:c") {
+	field(INPA, "$(PFX)$(UUT):DELAY")
 	field(CALC, "A+1")
 	field(OOPT, "Every Time")
 	field(DOPT, "use CALC")
-	field(OUT,  "$(UUT):DELAY PP")
-	field(FLNK, "$(UUT):REFRESH PP")
+	field(OUT,  "$(PFX)$(UUT):DELAY PP")
+	field(FLNK, "$(PFX)$(UUT):REFRESH PP")
 }
 
-record(bo, "$(UUT):ZOOM:IN") {
-	field(FLNK, "$(UUT):ZOOM:IN:c PP")
+record(bo, "$(PFX)$(UUT):ZOOM:IN") {
+	field(FLNK, "$(PFX)$(UUT):ZOOM:IN:c PP")
 }
 
-record(calcout, "$(UUT):ZOOM:IN:c") {
-	field(INPA, "$(UUT):STRIDE")
+record(calcout, "$(PFX)$(UUT):ZOOM:IN:c") {
+	field(INPA, "$(PFX)$(UUT):STRIDE")
 	field(CALC, "A/2")
 	field(OOPT, "Every Time")
 	field(DOPT, "use CALC")
-	field(OUT,  "$(UUT):STRIDE PP")
-	field(FLNK, "$(UUT):REFRESH PP")
+	field(OUT,  "$(PFX)$(UUT):STRIDE PP")
+	field(FLNK, "$(PFX)$(UUT):REFRESH PP")
 }
 
-record(bo, "$(UUT):ZOOM:OUT") {
-	field(FLNK, "$(UUT):ZOOM:OUT:c PP")
+record(bo, "$(PFX)$(UUT):ZOOM:OUT") {
+	field(FLNK, "$(PFX)$(UUT):ZOOM:OUT:c PP")
 }
 
-record(calcout, "$(UUT):ZOOM:OUT:c") {
-	field(INPA, "$(UUT):STRIDE")
+record(calcout, "$(PFX)$(UUT):ZOOM:OUT:c") {
+	field(INPA, "$(PFX)$(UUT):STRIDE")
 	field(CALC, "A*2")
 	field(OOPT, "Every Time")
 	field(DOPT, "use CALC")
-	field(OUT,  "$(UUT):STRIDE PP")
-	field(FLNK, "$(UUT):REFRESH PP")
+	field(OUT,  "$(PFX)$(UUT):STRIDE PP")
+	field(FLNK, "$(PFX)$(UUT):REFRESH PP")
 }
