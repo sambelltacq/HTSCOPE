@@ -74,6 +74,37 @@ for pictures see https://github.com/D-TACQ/HTSCOPE/releases/download/v0.0.1/HTSC
 
 ## Running a composite system:
 
+### Define db
+```usage: make_htscope_st.cmd.py [-h] [--output OUTPUT] [--nchan NCHAN] [--data32 DATA32] [--ndata NDATA] [--prefix PREFIX] uuts [uuts ...]
+
+create htscope epics record definition
+
+positional arguments:
+  uuts                 uut1[, uut2...]
+
+options:
+  -h, --help           show this help message and exit
+  --output, -O OUTPUT  record definition file name [st.cmd]
+  --nchan NCHAN        specify number of channels (or use hapi to automate)
+  --data32 DATA32      set to 1 for d32 data (or use hapi to automate)
+  --ndata NDATA        number of data elements in WF
+  --prefix PREFIX      prefix for PV's, default="$(hostname):$USER"
+```
+
+1. PREFIX : db macro PFX: this can be blank, but we suggest that HOST:USER: is a better choice.
+
+```
+eg
+magnetics1:adam     adam's personal view (with custom PAN/ZOOM)
+magnetics1:bruce    bruce's personable view (with custom PAN/ZOOM)
+```
+
+Having an IOC per user isn't really so wasteful, it lets each user control their own view.
+Of course, only one user should be allowed to press "RUN/STOP" !
+
+
+
+### Toplevel control
 htscope1_main.db defines records that are common to the whole system:
 ```
 ./scripts/make_htscope_st.cmd.py --nchan=16 acq1102_001 acq1102_002

@@ -1,5 +1,6 @@
 # preamble
-
+# command
+#./scripts/make_htscope_st.cmd.py --nchan=16 acq1102_001 acq1102_002
 dbLoadDatabase("../../dbd/htscope1.dbd")
 htscope1_registerRecordDeviceDriver(pdbbase)
 
