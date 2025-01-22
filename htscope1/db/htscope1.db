@@ -48,7 +48,7 @@ record(calcout, "$(PFX)$(UUT):PAN_LEFT:1:c") {
 	field(INPA, "$(PFX)$(UUT):DELAY")
 	field(CALC, "A-1")
 	field(OOPT, "Every Time")
-	field(DOPT, "use CALC")
+	field(DOPT, "Use CALC")
 	field(OUT,  "$(PFX)$(UUT):DELAY PP")
 	field(FLNK, "$(PFX)$(UUT):REFRESH PP")
 }
@@ -61,7 +61,7 @@ record(calcout, "$(PFX)$(UUT):PAN_RIGHT:1:c") {
 	field(INPA, "$(PFX)$(UUT):DELAY")
 	field(CALC, "A+1")
 	field(OOPT, "Every Time")
-	field(DOPT, "use CALC")
+	field(DOPT, "Use CALC")
 	field(OUT,  "$(PFX)$(UUT):DELAY PP")
 	field(FLNK, "$(PFX)$(UUT):REFRESH PP")
 }
@@ -74,7 +74,7 @@ record(calcout, "$(PFX)$(UUT):ZOOM:IN:c") {
 	field(INPA, "$(PFX)$(UUT):STRIDE")
 	field(CALC, "A/2")
 	field(OOPT, "Every Time")
-	field(DOPT, "use CALC")
+	field(DOPT, "Use CALC")
 	field(OUT,  "$(PFX)$(UUT):STRIDE PP")
 	field(FLNK, "$(PFX)$(UUT):REFRESH PP")
 }
@@ -87,7 +87,7 @@ record(calcout, "$(PFX)$(UUT):ZOOM:OUT:c") {
 	field(INPA, "$(PFX)$(UUT):STRIDE")
 	field(CALC, "A*2")
 	field(OOPT, "Every Time")
-	field(DOPT, "use CALC")
+	field(DOPT, "Use CALC")
 	field(OUT,  "$(PFX)$(UUT):STRIDE PP")
 	field(FLNK, "$(PFX)$(UUT):REFRESH PP")
 }

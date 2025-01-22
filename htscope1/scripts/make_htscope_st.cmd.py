@@ -26,7 +26,7 @@ def print_uut(uut, args):
     wsize=4 if args.data32 == 1 else 2
     args.fp.write(f"\n# uut {uut}\n")
     args.fp.write(f"""
-multiChannelScopeConfigure("{uut}", {args.nchan}, {args.ndata}, {wsize})
+multiChannelScopeConfigure("{args.prefix}{uut}", {args.nchan}, {args.ndata}, {wsize})
     """)
     tm = "TIMEOUT=0"
     uutdb="../../db/htscope1.db"
@@ -39,7 +39,7 @@ dbLoadRecords("{uutdb}","PFX={args.prefix},UUT={uut},{tm}")
         args.fp.write(f"""
 dbLoadRecords("{chdb}","PFX={args.prefix},UUT={uut},CH={ch},IX={ix},{tm},NPOINTS={args.ndata}")""")
     args.fp.write(f"""
-asynSetTraceMask("{uut}",0,0xff))
+asynSetTraceMask("{args.prefix}{uut}",0,0xff))
     """)
 
 def print_postamble(args):
@@ -47,7 +47,7 @@ def print_postamble(args):
     maindb = "../../db/htscope1_main.db"
     uuts= ','.join(args.uuts)
     args.fp.write(f"""
-dbloadRecords("{maindb}","PFX={args.prefix},UUTS={uuts}")
+dbLoadRecords("{maindb}","PFX={args.prefix},UUTS={uuts}")
 """)
     args.fp.write("iocInit()\n")
     args.fp.write("# end\n")
