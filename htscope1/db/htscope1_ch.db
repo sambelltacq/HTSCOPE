@@ -1,8 +1,8 @@
 
 # make one
-record(waveform, "$(UUT):TB") {
+record(waveform, "$(PFX)$(UUT):TB") {
     field(DTYP, "asynFloat64ArrayIn")
-    field(INP,  "@asyn($(UUT),0,$(TIMEOUT))TIMEBASE")
+    field(INP,  "@asyn($(PFX)$(UUT),0,$(TIMEOUT))TIMEBASE")
     field(FTVL, "DOUBLE")
     field(NELM, "$(NPOINTS)")
     field(LOPR, "0")
@@ -13,9 +13,9 @@ record(waveform, "$(UUT):TB") {
 
 # make nchan
 
-record(waveform, "$(UUT):CH:$(CH)") {
+record(waveform, "$(PFX)$(UUT):CH:$(CH)") {
     field(DTYP, "asynFloat64ArrayIn")
-    field(INP,  "@asyn($(UUT),$(IX),$(TIMEOUT))CHANNEL")
+    field(INP,  "@asyn($(PFX)$(UUT),$(IX),$(TIMEOUT))CHANNEL")
     field(FTVL, "DOUBLE")
     field(NELM, "$(NPOINTS)")
     field(LOPR, "-10")
