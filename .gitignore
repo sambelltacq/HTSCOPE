@@ -25,3 +25,6 @@ O.*/
 *.log
 .*.swp
 .DS_Store
+htscope1.dbd
+htscope1/dbd/htscope1.dbd
+
