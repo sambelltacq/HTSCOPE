@@ -1,6 +1,7 @@
 # common records for htscope.
+# nb: $PFX macro INCLUDES ':'
 
-record(ao, "$(PFX):SHOT_TIME") {
+record(ao, "$(PFX)SHOT_TIME") {
 	field(DTYP, "Soft Channel")
 	field(DRVL, "1")
 	field(DRVH, "20")
@@ -9,13 +10,13 @@ record(ao, "$(PFX):SHOT_TIME") {
 	field(EGU,  "s")
 }
 
-record(stringout, "$(PFX):UUTS"){
+record(stringout, "$(PFX)UUTS"){
 	field(DTYP, "Soft Channel")
 	field(VAL,  "$(UUTS)")
 	field(PINI, "YES")
 }
 
-record(bo, "$(PFX):RUNSTOP") {
+record(bo, "$(PFX)RUNSTOP") {
 	field(DTYP, "Soft Channel")
 	field(ZNAM, "STOP")
 	field(ONAM, "RUN")
