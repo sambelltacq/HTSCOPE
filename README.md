@@ -56,6 +56,7 @@ ln -s Downloads/ramp800M-1-4-1 acq1102_123
 
 5. Generate st.cmd
 ```
+cd htscope1
 ./scripts/make_htscope_st.cmd.py --nchan=16 --data32=0 --ndata=100000 acq1102_123
 ```
 
