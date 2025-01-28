@@ -158,4 +158,25 @@ lrwxrwxrwx 1 dt100 dt100 36 Jan 27 16:08 /home/dt100/kamino:dt100:acq1102_015 ->
 </pre>
 * Data source @@todo .. what happens a/ at the get go when there is no data, b/ when the data file is rubbed out on a new capture. Currently, our best move is to force an IOC restart..
 
+### procServ
+Build and make (.deb didn't work for me..)
+
+```
+cd PROJECTS
+wget https://launchpad.net/ubuntu/+archive/primary/+sourcefiles/procserv/2.7.0-2/procserv_2.7.0.orig.tar.gz
+tar xvzf procserv_2.7.0.orig.tar.gz 
+cd procServ-2.7.0
+./configure 
+make
+make install
+sudo make install
+procServ 
+[dt100@kamino ~]$procServ -h
+Usage: procServ [options] -P <endpoint>... <command args ...>    (-h for help)
+       procServ [options] <endpoint> <command args ...>
+
+kickoff:
+./scripts/start_servers
+...
+```
 

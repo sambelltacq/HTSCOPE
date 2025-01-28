@@ -1,0 +1,4 @@
+#!/bin/bash
+
+# run the IOC on control socket 8841
+procServ -L ioc.log -l 8842 -P 8841 ./scripts/run_ioc
