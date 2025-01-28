@@ -51,9 +51,9 @@ private:
 	int P_DELAY;
 
     // Add private members for scope data
-    long data_len;
-    long data_len_words;
-    long data_len_samples;
+    unsigned long data_len;
+    unsigned long data_len_words;
+    unsigned long data_len_samples;
     epicsInt16* RAW;		    // array [SAMPLE][CH]
 
     CTYPE** CHANNELS;			// array [CH][SAMPLE]

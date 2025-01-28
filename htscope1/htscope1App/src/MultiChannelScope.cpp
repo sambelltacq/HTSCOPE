@@ -116,8 +116,7 @@ MultiChannelScope::~MultiChannelScope() {
 void runTask(void *drvPvt)
 {
 	MultiChannelScope *pPvt = (MultiChannelScope *)drvPvt;
-
-    pPvt->task();
+	pPvt->task();
 }
 
 void MultiChannelScope::task(void)
@@ -178,6 +177,11 @@ void MultiChannelScope::get_data() {
 			break;
 		}
 		for (unsigned ic = 0; ic < nchan; ++ic){
+#if 0
+			if (ic == 0 && isam <20){
+				printf("%s ic:%d isam:%d cursor:%d %04x\n", __FUNCTION__, ic, isam, cursor, RAW[cursor+ic]);
+			}
+#endif
 			CHANNELS[ic][isam] = RAW[cursor+ic];
 		}
 	}
@@ -186,6 +190,7 @@ void MultiChannelScope::get_data() {
 		//printf("%s ic:%d nsam:%d P_CHANNEL:%d\n", __FUNCTION__, ic, nsam, P_CHANNEL);
 		doCallbacksFloat64Array(CHANNELS[ic], nsam, P_CHANNEL, ic);
 	}
+	printf("%s 99 nchan:%d nsam:%d\n", __FUNCTION__, nchan, nsam);
 }
 
 
