@@ -47,7 +47,7 @@ def print_postamble(args):
     maindb = "./db/htscope1_main.db"
     uuts= ','.join(args.uuts)
     args.fp.write(f"""
-dbLoadRecords("{maindb}","PFX={args.prefix},UUTS={uuts}")
+dbLoadRecords("{maindb}","PFX={args.prefix},UUTS=\'{uuts}\'")
 """)
     args.fp.write("iocInit()\n")
     args.fp.write("# end\n")
