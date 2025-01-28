@@ -46,10 +46,12 @@ def print_postamble(args):
     args.fp.write("\n# postamble\n")
     maindb = "./db/htscope1_main.db"
     uuts= ','.join(args.uuts)
+    host_ioc=args.prefix.split(':')[0] + ':'
     args.fp.write(f"""
-dbLoadRecords("{maindb}","PFX={args.prefix},UUTS=\'{uuts}\'")
+dbLoadRecords("{maindb}","PFX={host_ioc},UUTS=\'{uuts}\'")
 """)
     args.fp.write("iocInit()\n")
+    args.fp.write("dbl > records.dbl\n")
     args.fp.write("# end\n")
     args.fp.close()
 
