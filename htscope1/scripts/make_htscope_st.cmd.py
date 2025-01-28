@@ -68,9 +68,11 @@ def run_main(args):
         print_uut(uut, args)
 
     if args.user2 is not None:
-        args.prefix = args.host_ioc + args.user2 + ':'
-        for uut in args.uuts:
-            print_uut(uut, args)
+        for user2 in args.user2.split(','):
+            args.prefix = args.host_ioc + user2 + ':'
+            for uut in args.uuts:
+                print_uut(uut, args)
+
     print_postamble(args)
 
 def default_prefix():

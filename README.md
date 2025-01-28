@@ -111,7 +111,7 @@ htscope1_main.db defines records that are common to the whole system:
 ./scripts/make_htscope_st.cmd.py --nchan=16 acq1102_001 --data32=0 acq1102_002
 
 tail st.cmd
-dbloadRecords("./db/htscope1_main.db","PFX=hoy6:pgm:,UUTS=acq1102_001,acq1102_002")
+dbloadRecords("./db/htscope1_main.db","PFX=host:user:,UUTS=acq1102_001,acq1102_002")
 ```
 
 1. $(PFX):SHOT_TIME   :: shot run length in s
@@ -185,29 +185,39 @@ Multiple users want multiple independent views.
 By default the PV prefix is host:user  where user is the current user, eg for kamino:dt100
 There's provision for a second user view e.g
 ```
-pgm@hoy6:~/PROJECTS/HTSCOPE/htscope1$ ./scripts/make_htscope_st.cmd.py --user2=fred --nchan=32 --data32=0 acq1102_015 acq1102_010
+user@host:~/PROJECTS/HTSCOPE/htscope1$ ./scripts/make_htscope_st.cmd.py --user2=fred --nchan=32 --data32=0 acq1102_015 acq1102_010
+```
+Multiple second users are supported, eg
+```
+user@host:~/PROJECTS/HTSCOPE/htscope1$ ./scripts/make_htscope_st.cmd.py --user2=fred,jim --nchan=32 --data32=0 acq1102_015 acq1102_010
+```
+** NB ** each second user needs a data file alias @@todo WBN to use a single mapping
+e.g
+```
+user@host:~$ ln -s host:user:acq1102_010 host:fred:acq1102_010
+user@host:~$ ln -s host:user:acq1102_015 host:fred:acq1102_015
 ```
 ### What PV's do we get?
 
 ### Global
 ```
-pgm@hoy6:~/PROJECTS/HTSCOPE/htscope1$ cat records.dbl | grep -v pgm | grep -v fred
-hoy6:SHOT_TIME                   # User specified run time
-hoy6:RUNSTOP                     # User sets RUN to start, worker set s STOP on completion
-hoy6:UUTS                        # User sets list of UUTS in fleet
-hoy6:STATUS                      # worker reports current status in one-liner
+user@host:~/PROJECTS/HTSCOPE/htscope1$ cat records.dbl | grep -v user | grep -v fred
+host:SHOT_TIME                   # User specified run time
+host:RUNSTOP                     # User sets RUN to start, worker set s STOP on completion
+host:UUTS                        # User sets list of UUTS in fleet
+host:STATUS                      # worker reports current status in one-liner
 ```
 ### Primary User
 ```
-pgm@hoy6:~/PROJECTS/HTSCOPE/htscope1$ cat records.dbl | grep -v fred | grep CH:01
-hoy6:pgm:acq1102_015:CH:01
-hoy6:pgm:acq1102_010:CH:01
+user@host:~/PROJECTS/HTSCOPE/htscope1$ cat records.dbl | grep -v fred | grep CH:01
+host:user:acq1102_015:CH:01
+host:user:acq1102_010:CH:01
 ```
 ### user2
 ```
-pgm@hoy6:~/PROJECTS/HTSCOPE/htscope1$ cat records.dbl | grep -v pgm | grep CH:01
-hoy6:fred:acq1102_015:CH:01
-hoy6:fred:acq1102_010:CH:01
+user@host:~/PROJECTS/HTSCOPE/htscope1$ cat records.dbl | grep -v user | grep CH:01
+host:fred:acq1102_015:CH:01
+host:fred:acq1102_010:CH:01
 ```
 
 
