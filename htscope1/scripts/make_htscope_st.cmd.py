@@ -46,9 +46,8 @@ def print_postamble(args):
     args.fp.write("\n# postamble\n")
     maindb = "./db/htscope1_main.db"
     uuts= ','.join(args.uuts)
-    host_ioc=args.prefix.split(':')[0] + ':'
     args.fp.write(f"""
-dbLoadRecords("{maindb}","PFX={host_ioc},UUTS=\'{uuts}\'")
+dbLoadRecords("{maindb}","PFX={args.host_ioc},UUTS=\'{uuts}\'")
 """)
     args.fp.write("iocInit()\n")
     args.fp.write("dbl > records.dbl\n")
@@ -60,12 +59,18 @@ def init(args):
         print("@@todo gather nchan: we need HAPI for this")
     if args.data32 is None:
         print("@@todo gather data32: we need HAPI for this")
+    args.host_ioc=args.prefix.split(':')[0] + ':'
 
 def run_main(args):
     init(args)
     print_preamble(args)
     for uut in args.uuts:
         print_uut(uut, args)
+
+    if args.user2 is not None:
+        args.prefix = args.host_ioc + args.user2 + ':'
+        for uut in args.uuts:
+            print_uut(uut, args)
     print_postamble(args)
 
 def default_prefix():
@@ -78,6 +83,7 @@ def get_parser():
     parser.add_argument('--data32', default=None, type=int, help="set to 1 for d32 data (or use hapi to automate)")
     parser.add_argument('--ndata',  default=100000, type=int, help="number of data elements in WF")
     parser.add_argument('--prefix', default=default_prefix(), type=str, help='prefix for PV\'s, default="$(hostname):$USER"')
+    parser.add_argument('--user2',   default=None, help='specify a second user, use existing prefix')
     parser.add_argument('uuts', nargs='+', help="uut1[, uut2...]")
     return parser
 

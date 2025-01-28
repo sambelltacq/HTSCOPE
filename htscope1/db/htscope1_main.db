@@ -8,12 +8,14 @@ record(ao, "$(PFX)SHOT_TIME") {
 	field(VAL,  "10")
 	field(PINI, "YES")
 	field(EGU,  "s")
+	field(DESC, "specify shot duration")
 }
 
 record(stringout, "$(PFX)UUTS"){
 	field(DTYP, "Soft Channel")
 	field(VAL,  "$(UUTS)")
 	field(PINI, "YES")
+	field(DESC, "list of UUTs in shot")
 }
 
 record(bo, "$(PFX)RUNSTOP") {
@@ -21,5 +23,13 @@ record(bo, "$(PFX)RUNSTOP") {
 	field(ZNAM, "STOP")
 	field(ONAM, "RUN")
 	field(PINI, "YES")
-    field(VAL, "0")
+        field(VAL, "0")
+	field(DESC, "Start/Stop the shot")
+}
+
+record(stringin, "$(PFX)STATUS") {
+	field(DTYP, "Soft Channel")
+	field(PINI, "YES")
+	field(VAL,  "init")
+	field(DESC, "htstream reports status")
 }

@@ -180,3 +180,38 @@ kickoff:
 ...
 ```
 
+## handling multiple users
+Multiple users want multiple independent views.
+By default the PV prefix is host:user  where user is the current user, eg for kamino:dt100
+There's provision for a second user view e.g
+```
+pgm@hoy6:~/PROJECTS/HTSCOPE/htscope1$ ./scripts/make_htscope_st.cmd.py --user2=fred --nchan=32 --data32=0 acq1102_015 acq1102_010
+```
+### What PV's do we get?
+
+### Global
+```
+pgm@hoy6:~/PROJECTS/HTSCOPE/htscope1$ cat records.dbl | grep -v pgm | grep -v fred
+hoy6:SHOT_TIME                   # User specified run time
+hoy6:RUNSTOP                     # User sets RUN to start, worker set s STOP on completion
+hoy6:UUTS                        # User sets list of UUTS in fleet
+hoy6:STATUS                      # worker reports current status in one-liner
+```
+### Primary User
+```
+pgm@hoy6:~/PROJECTS/HTSCOPE/htscope1$ cat records.dbl | grep -v fred | grep CH:01
+hoy6:pgm:acq1102_015:CH:01
+hoy6:pgm:acq1102_010:CH:01
+```
+### user2
+```
+pgm@hoy6:~/PROJECTS/HTSCOPE/htscope1$ cat records.dbl | grep -v pgm | grep CH:01
+hoy6:fred:acq1102_015:CH:01
+hoy6:fred:acq1102_010:CH:01
+```
+
+
+
+
+
+
