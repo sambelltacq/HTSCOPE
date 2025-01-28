@@ -13,7 +13,7 @@ def print_preamble(args):
     args.fp.write("# preamble\n")
     args.fp.write(f'# command\n#{" ".join(sys.argv)}')
     args.fp.write("""
-dbLoadDatabase("../../dbd/htscope1.dbd")
+dbLoadDatabase("./dbd/htscope1.dbd")
 htscope1_registerRecordDeviceDriver(pdbbase)
 
 # Turn on asynTraceFlow and asynTraceError for global trace, i.e. no connected asynUser.
@@ -29,11 +29,11 @@ def print_uut(uut, args):
 multiChannelScopeConfigure("{args.prefix}{uut}", {args.nchan}, {args.ndata}, {wsize})
     """)
     tm = "TIMEOUT=0"
-    uutdb="../../db/htscope1.db"
+    uutdb="./db/htscope1.db"
     args.fp.write(f"""
 dbLoadRecords("{uutdb}","PFX={args.prefix},UUT={uut},{tm}")
 """)
-    chdb = "../../db/htscope1_ch.db"
+    chdb = "./db/htscope1_ch.db"
     for ix in range(args.nchan):
         ch = f"{ix+1:02}"
         args.fp.write(f"""
@@ -44,7 +44,7 @@ asynSetTraceMask("{args.prefix}{uut}",0,0xff))
 
 def print_postamble(args):
     args.fp.write("\n# postamble\n")
-    maindb = "../../db/htscope1_main.db"
+    maindb = "./db/htscope1_main.db"
     uuts= ','.join(args.uuts)
     args.fp.write(f"""
 dbLoadRecords("{maindb}","PFX={args.prefix},UUTS={uuts}")

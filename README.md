@@ -108,10 +108,10 @@ Of course, only one user should be allowed to press "RUN/STOP" !
 ### Toplevel control
 htscope1_main.db defines records that are common to the whole system:
 ```
-./scripts/make_htscope_st.cmd.py --nchan=16 acq1102_001 acq1102_002
+./scripts/make_htscope_st.cmd.py --nchan=16 acq1102_001 --data32=0 acq1102_002
 
 tail st.cmd
-dbloadRecords("../../db/htscope1_main.db","PFX=hoy6:pgm:,UUTS=acq1102_001,acq1102_002")
+dbloadRecords("./db/htscope1_main.db","PFX=hoy6:pgm:,UUTS=acq1102_001,acq1102_002")
 ```
 
 1. $(PFX):SHOT_TIME   :: shot run length in s
@@ -120,5 +120,42 @@ dbloadRecords("../../db/htscope1_main.db","PFX=hoy6:pgm:,UUTS=acq1102_001,acq110
 
 Glue: we suggest a pyepics wrapper that blocks on RUNSTOP and starts/stops htstream.py as a spawnd task
 
+### Run the system
+
+./scripts/run_ioc          # runs against st.cmd. @@TODO run from procServ
+
+### cs-studio UI
+
+* OPI set written for cs-studio CLASSIC, not Phoebus, Phoebus port in progress.
+* create your own unique WORKSPACE per HOST, link HTSCOPE/OPI as a project.
+* Define the following macros in the WORKSPACE (Edit|Preferences|CSS Applications|Display|BOY|OPI Runtime
+<pre>
+UUT        eg acq1102_015
+SITE       1
+CHX        1
+PFX        host:user   eg kamino:dt100
+</pre>
+* Set Channel Access params (Edit|Preferences|CSS Core|Data Sources|Channel Access)
+<pre>
+# may need to set 
+Address List : localhost, uncheck  "AutoAddressList"
+# definately need to set:
+Max Array Size (bytes) : 1000000
+</pre>
+
+### @@TODO
+
+* run IOC from procServ
+* run HTSTREAM_LAUNCHER from procServ
+* make_htscope_st.cmd.py .. avoid HAPI if possible, suggest use pyEpics to pick up nchan, data32 values from UUT.
+* HUGE Max Array Size 100000 .. we're using DOUBLES. Maybe get better mileage with FLOATS .. this is a _network_ protocol
+* Prototype implemented with Channel Access CA .. maybe easy to switch to the new PV Access thanks to QSRV .. but is it any better?
+* Data source is ~/host:user:uut, usually an s-link to the real landing area on ramdisk. Currently, s-link made by hand
+eg
+<pre>
+dt100@kamino ~]$ls -l /home/dt100/kamino\:dt100\:acq1102_015
+lrwxrwxrwx 1 dt100 dt100 36 Jan 27 16:08 /home/dt100/kamino:dt100:acq1102_015 -> /mnt/afhba.2/acq1102_015/000000/2.00
+</pre>
+* Data source @@todo .. what happens a/ at the get go when there is no data, b/ when the data file is rubbed out on a new capture. Currently, our best move is to force an IOC restart..
 
 

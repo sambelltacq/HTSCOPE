@@ -1,0 +1,12 @@
+#!/bin/bash
+
+BIN=./bin/linux-x86_64
+
+if [ ! -d $BIN ]; then
+	echo "ERROR: $BIN does not exist, run from htscope1/ top level"
+	exit 1
+fi
+
+$BIN/htscope1 ./st.cmd
+
+
