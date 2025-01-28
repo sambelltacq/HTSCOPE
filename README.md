@@ -25,7 +25,16 @@ To browse the data rapidly, we have two controls:
  - Moves start of data SPAN/2 to the right.
 
 
+
 ## Build
+
+### Install packages
+
+* compiler 
+* apt-get install expect     # unbuffer .. used in scripting
+* apt-get install pyepics
+
+### Build Detail
 
 1. We assume there is already a build of EPICS BASE, ASYN, STREAMDEVICE, SNC
 Peter used EPICS7 from ACQ400_ESW_TOP
@@ -143,20 +152,6 @@ Address List : localhost, uncheck  "AutoAddressList"
 Max Array Size (bytes) : 1000000
 </pre>
 
-### @@TODO
-
-* run IOC from procServ
-* run HTSTREAM_LAUNCHER from procServ
-* make_htscope_st.cmd.py .. avoid HAPI if possible, suggest use pyEpics to pick up nchan, data32 values from UUT.
-* HUGE Max Array Size 100000 .. we're using DOUBLES. Maybe get better mileage with FLOATS .. this is a _network_ protocol
-* Prototype implemented with Channel Access CA .. maybe easy to switch to the new PV Access thanks to QSRV .. but is it any better?
-* Data source is ~/host:user:uut, usually an s-link to the real landing area on ramdisk. Currently, s-link made by hand
-eg
-<pre>
-dt100@kamino ~]$ls -l /home/dt100/kamino\:dt100\:acq1102_015
-lrwxrwxrwx 1 dt100 dt100 36 Jan 27 16:08 /home/dt100/kamino:dt100:acq1102_015 -> /mnt/afhba.2/acq1102_015/000000/2.00
-</pre>
-* Data source @@todo .. what happens a/ at the get go when there is no data, b/ when the data file is rubbed out on a new capture. Currently, our best move is to force an IOC restart..
 
 ### procServ
 Build and make (.deb didn't work for me..)
@@ -176,9 +171,25 @@ Usage: procServ [options] -P <endpoint>... <command args ...>    (-h for help)
        procServ [options] <endpoint> <command args ...>
 
 kickoff:
-./scripts/start_servers
-...
+./init/start_servers
 ```
+
+### Service sockets
+
+* to view the ioc : nc localhost 8841
+* to view the stream : nc localhost 8843
+
+```
+user@host:~/PROJECTS/HTSCOPE/htscope1$ cat init/start_servers 
+#!/bin/bash
+
+# run the IOC on control socket 8841
+procServ -L ioc.log -l 8842 -P 8841 ./scripts/run_ioc
+
+# run the htstream wrapper on control socket 8843
+procServ -L htstream_wrapper.log -l 8844 -P 8843 ./scripts/run_htstream_wrapper.py
+```
+
 
 ## handling multiple users
 Multiple users want multiple independent views.
@@ -221,7 +232,21 @@ host:fred:acq1102_010:CH:01
 ```
 
 
+### @@TODO
 
+* run IOC from procServ
+* run HTSTREAM_LAUNCHER from procServ
+* make_htscope_st.cmd.py .. avoid HAPI if possible, suggest use pyEpics to pick up nchan, data32 values from UUT.
+* HUGE Max Array Size 100000 .. we're using DOUBLES. Maybe get better mileage with FLOATS .. this is a _network_ protocol
+* Prototype implemented with Channel Access CA .. maybe easy to switch to the new PV Access thanks to QSRV .. but is it any better?
+* Data source is ~/host:user:uut, usually an s-link to the real landing area on ramdisk. Currently, s-link made by hand
+eg
+<pre>
+dt100@kamino ~]$ls -l /home/dt100/kamino\:dt100\:acq1102_015
+lrwxrwxrwx 1 dt100 dt100 36 Jan 27 16:08 /home/dt100/kamino:dt100:acq1102_015 -> /mnt/afhba.2/acq1102_015/000000/2.00
+</pre>
+* Data source @@todo .. what happens a/ at the get go when there is no data, b/ when the data file is rubbed out on a new capture. Currently, our best move is to force an IOC restart..
+* use StreamDevice to monitor the output from ht_stream and keep a status PV up to date.0
 
 
 
