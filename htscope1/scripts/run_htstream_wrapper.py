@@ -6,27 +6,38 @@ import time
 
 import subprocess
 import shlex
+import select
+import signal
+
+# https://www.thecodingforums.com/threads/can-read-be-non-blocking.643344/
+
+run_request = 0
+
 
 def run_process_with_live_output(command):
-    process = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
+    pp = subprocess.Popen(shlex.split(command), stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
 
     # universal_newlines=True, bufsize=1)
 
     while True:
-        output = process.stdout.readline()
-        if output == '' and process.poll() is not None:
-            break
-        if output:
+        rc = select.select([pp.stdout.fileno()], [], [], 0.5)
+        if len(rc[0]) > 0:
+            output = pp.stdout.readline()
+            if not output:
+                break
             print(output.strip())
+        else:
+            if run_request != 1:
+                print(f'STOP requested')
+                pp.send_signal(signal.SIGABRT)
 
-    return process.poll()
+    return pp.poll()
 
 
 # get HOST:USER for local ioc
 
 PFX =  f'{socket.gethostname().split(".")[0]}:'
 
-run_request = 0
 
 def onChange(pvname=None, value=None, char_value=None, **kwargs):
     global run_request
