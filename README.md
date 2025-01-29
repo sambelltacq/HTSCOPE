@@ -142,7 +142,8 @@ Glue: we suggest a pyepics wrapper that blocks on RUNSTOP and starts/stops htstr
 UUT        eg acq1102_015
 SITE       1
 CHX        1
-PFX        host:user   eg kamino:dt100
+PFX        host:user   eg kamino:dt100:
+HOST       host:       eg kamino:
 </pre>
 * Set Channel Access params (Edit|Preferences|CSS Core|Data Sources|Channel Access)
 <pre>
@@ -249,6 +250,11 @@ lrwxrwxrwx 1 dt100 dt100 36 Jan 27 16:08 /home/dt100/kamino:dt100:acq1102_015 ->
 * use StreamDevice to monitor the output from ht_stream and keep a status PV up to date.0
 
 * We have a bootstrap problem: IOC won't run until we have one data set. So we need to make the device support open/mmap file on demand (and close it on a file delete on new run).
+
+Typical bootstrap command 
+```
+/scripts/ht_stream.py --concat=999999 --secs=10 acq1102_015 acq1102_010
+```
 
 * making /mnt/ writable: Peter hacked as follows: works for folks who follow instructions to create 
 user "dt100"
