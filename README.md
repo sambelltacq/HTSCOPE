@@ -248,5 +248,18 @@ lrwxrwxrwx 1 dt100 dt100 36 Jan 27 16:08 /home/dt100/kamino:dt100:acq1102_015 ->
 * Data source @@todo .. what happens a/ at the get go when there is no data, b/ when the data file is rubbed out on a new capture. Currently, our best move is to force an IOC restart..
 * use StreamDevice to monitor the output from ht_stream and keep a status PV up to date.0
 
+* We have a bootstrap problem: IOC won't run until we have one data set. So we need to make the device support open/mmap file on demand (and close it on a file delete on new run).
+
+* making /mnt/ writable: Peter hacked as follows: works for folks who follow instructions to create 
+user "dt100"
+
+--- a/scripts/mount-ramdisk
++++ b/scripts/mount-ramdisk
+@@ -1,2 +1,4 @@
+ mount -t ramfs dram /mnt
++sudo chown -R dt100.dt100 /mnt
++
+
+* aborting the stream can crash the box - probably best to suppress abort once data is flowing (the shot is only 10s after all)
 
 
