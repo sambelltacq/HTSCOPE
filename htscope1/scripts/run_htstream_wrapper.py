@@ -43,16 +43,21 @@ STATUS = epics.get_pv(f'{PFX}STATUS')
 print(f'RUNSTOP: {RUNSTOP.get()} UUTS: {UUTS.get()} SHOT_TIME: {SHOT_TIME.get()}')
 
 loopcount = 0
+shot = 0
 
 while True:
     if run_request == 1:
-        print('run_request')
+        shot += 1
+        STATUS.put(f'run_request shot {shot}')
+        print(f'run_request shot {shot}')
         uuts = ' '.join(UUTS.get().split(','))
         secs = int(SHOT_TIME.get())
         job = f'unbuffer ./scripts/ht_stream.py --concat=999999 --secs={secs} {uuts}'
-        print(f'run job {job}')
-        run_process_with_live_output(job)
-        STATUS.put('all good')
+        STATUS.put(f'run job {shot}')
+        print(f'run job {shot} {job}')
+        rc = run_process_with_live_output(job)
+        STATUS.put(f'htstream complete rc {rc}')
+        print(f'htstream complete rc {rc}')
         RUNSTOP.put(0)
 
     time.sleep(0.1)
