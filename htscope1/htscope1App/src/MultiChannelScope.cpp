@@ -50,6 +50,9 @@ MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int 
 	createParam(PS_CHANNEL,             asynParamFloat64Array,      &P_CHANNEL);
 	createParam(PS_TB,                  asynParamFloat64Array,      &P_TB);
 	createParam(PS_REFRESH,				asynParamInt32,             &P_REFRESH);
+	createParam(PS_REFRESHr,			asynParamInt32,             &P_REFRESHr);
+	createParam(PS_MMAPUNMAP,			asynParamInt32,             &P_MMAPUNMAP);
+	createParam(PS_MMAPUNMAPr,			asynParamInt32,             &P_MMAPUNMAPr);
 	createParam(PS_FS,                  asynParamFloat64,           &P_FS);
 	createParam(PS_STRIDE,              asynParamInt32,             &P_STRIDE);
 	createParam(PS_DELAY,              	asynParamFloat64,           &P_DELAY);
@@ -67,6 +70,89 @@ MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int 
 
 	printf("P_NCHAN:%d P_NSAM:%d P_CHANNEL:%d P_REFRESH:%d\n", P_NCHAN, P_NSAM, P_CHANNEL, P_REFRESH);
 
+
+
+
+
+    /* Create the thread that computes the waveforms in the background */
+	asynStatus status = (asynStatus)(epicsThreadCreate("MultiChannelScopeTask",
+                          epicsThreadPriorityMedium,
+                          epicsThreadGetStackSize(epicsThreadStackMedium),
+                          (EPICSTHREADFUNC)::runTask,
+                          this) == NULL);
+    if (status) {
+        printf("%s:%s: epicsThreadCreate failure\n", "mcScope", __FUNCTION__);
+        return;
+    }
+}
+
+
+
+MultiChannelScope::~MultiChannelScope() {
+	if (mmap_active){
+		mmap_active = 0;
+		unmap_uut_data();
+	}
+}
+/* Configuration routine.  Called directly, or from the iocsh function below */
+
+
+void runTask(void *drvPvt)
+{
+	MultiChannelScope *pPvt = (MultiChannelScope *)drvPvt;
+	pPvt->task();
+}
+
+void MultiChannelScope::task(void)
+{
+	asynStatus status = asynSuccess;
+
+	lock();
+	init_data();
+
+	while(1){
+		unlock();
+		epicsThreadSleep(1);
+		lock();
+		if (mmap_active && refresh){
+			get_tb();
+			get_data();
+			status = setIntegerParam(P_REFRESHr, refresh = 0);
+			printf("%s %s rc %d\n", __FUNCTION__, "setIntegerParam", status);
+#if 0
+			if (status)
+				epicsSnprintf(pasynUser->errorMessage, pasynUser->errorMessageSize,
+				              "%s:%s: status=%d, function=%d, name=%s, value=%d",
+				               driverName, functionName, status, function, paramName, value);
+			else
+				asynPrint(pasynUser, ASYN_TRACEIO_DRIVER,
+				              "%s:%s: function=%d, name=%s, value=%d\n",
+				              driverName, functionName, function, paramName, value);
+#endif
+			status = callParamCallbacks();
+			printf("%s %s rc %d\n", __FUNCTION__, "callParamCallbacks", status);
+			printf("%s cleared refresh, callParamCallbacks() done\n", __FUNCTION__);
+		}
+	}
+}
+
+void MultiChannelScope::init_data() {
+	CHANNELS = new CTYPE* [nchan];
+	for (unsigned ic = 0; ic < nchan; ++ic){
+		CHANNELS[ic] = new CTYPE [nsam];
+		for (unsigned isam = 0; isam < nsam; ++isam){
+			CHANNELS[ic][isam] = (ic+1)*0.1;
+		}
+    	doCallbacksFloat64Array(CHANNELS[ic], nsam, P_CHANNEL, ic);
+	}
+	TB = new TBTYPE[nsam];
+	for (unsigned isam = 0; isam < nsam; ++isam){
+		TB[isam] = isam;
+	}
+	doCallbacksFloat64Array(TB, nsam, P_TB, 0);
+}
+
+void MultiChannelScope::mmap_uut_data() {
 	char datafile[128];
 	sprintf(datafile, "%s/%s", getenv("HOME"), portName);
 
@@ -89,67 +175,11 @@ MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int 
 	RAW = (epicsInt16*)mmap(0, data_len, PROT_READ, MAP_SHARED, fileno(fp), 0);
 
 	printf("RAW:%p\n", RAW);
-
-
-
-    /* Create the thread that computes the waveforms in the background */
-	asynStatus status = (asynStatus)(epicsThreadCreate("MultiChannelScopeTask",
-                          epicsThreadPriorityMedium,
-                          epicsThreadGetStackSize(epicsThreadStackMedium),
-                          (EPICSTHREADFUNC)::runTask,
-                          this) == NULL);
-    if (status) {
-        printf("%s:%s: epicsThreadCreate failure\n", "mcScope", __FUNCTION__);
-        return;
-    }
 }
 
-
-
-MultiChannelScope::~MultiChannelScope() {
+void MultiChannelScope::unmap_uut_data() {
 	munmap(RAW, data_len);
 	fclose(fp);
-}
-/* Configuration routine.  Called directly, or from the iocsh function below */
-
-
-void runTask(void *drvPvt)
-{
-	MultiChannelScope *pPvt = (MultiChannelScope *)drvPvt;
-	pPvt->task();
-}
-
-void MultiChannelScope::task(void)
-{
-	lock();
-	init_data();
-
-	while(1){
-		unlock();
-		epicsThreadSleep(1);
-		lock();
-		if (refresh){
-			get_tb();
-			get_data();
-			refresh = 0;
-		}
-	}
-}
-
-void MultiChannelScope::init_data() {
-	CHANNELS = new CTYPE* [nchan];
-	for (unsigned ic = 0; ic < nchan; ++ic){
-		CHANNELS[ic] = new CTYPE [nsam];
-		for (unsigned isam = 0; isam < nsam; ++isam){
-			CHANNELS[ic][isam] = (ic+1)*0.1;
-		}
-    	doCallbacksFloat64Array(CHANNELS[ic], nsam, P_CHANNEL, ic);
-	}
-	TB = new TBTYPE[nsam];
-	for (unsigned isam = 0; isam < nsam; ++isam){
-		TB[isam] = isam;
-	}
-	doCallbacksFloat64Array(TB, nsam, P_TB, 0);
 }
 void MultiChannelScope::get_data() {
 	double delay = 0;
@@ -252,8 +282,22 @@ asynStatus MultiChannelScope::writeInt32(asynUser *pasynUser, epicsInt32 value)
     	FILE* fp = fopen("params.txt", "w");
     	reportParams(fp, 3);
     	fclose(fp);
+    	status = (asynStatus) setIntegerParam(addr, P_REFRESHr, 0);
+    	printf("%s %s rc %d\n", __FUNCTION__, "setIntegerParam", status);
+    	status = callParamCallbacks();
+    	printf("%s %s rc %d\n", __FUNCTION__, "callParamCallbacks", status);
     }else if (function == P_STRIDE){
     	stride = value;
+    }else if (function == P_MMAPUNMAP){
+    	if (value == 1){
+    		mmap_uut_data();
+    		mmap_active = 1;
+    	}else{
+    		mmap_active = 0;
+    		unmap_uut_data();
+    	}
+    	status = (asynStatus) setIntegerParam(addr, P_MMAPUNMAPr, value);
+    	if (status != 0) printf("ERROR %s setIntegerParam %d, %d, %d fail\n", __FUNCTION__,  addr, P_MMAPUNMAPr, value);
     }
 
     /* Do callbacks so higher layers see any changes */
