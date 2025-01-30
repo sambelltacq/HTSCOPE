@@ -49,6 +49,17 @@ record(bo, "$(PFX)$(UUT):MMAPUNMAP") {
 	field(ONAM, "MMAP")
 }
 
+record(bo, "$(PFX)$(UUT):act") {
+	field(DTYP, "Soft Channel")
+	field(OMSL, "closed_loop")
+	field(DOL,  "$(HOST)ONRUN:N NPP")
+	field(OUT,  "$(PFX)$(UUT):MMAPUNMAP PP")	
+}
+record(fanout, "$(HOST)ONRUN:N:f") {	
+	field($(RUNFAN), "$(PFX)$(UUT):act")
+
+}
+
 record(bo, "$(PFX)$(UUT):MMAPUNMAP:w") {
 	field(DTYP, "asynInt32")
 	field(OUT,  "@asyn($(PFX)$(UUT),0,$(TIMEOUT))MMAPUNMAP")
