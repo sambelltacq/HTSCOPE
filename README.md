@@ -267,5 +267,7 @@ user "dt100"
 +
 
 * aborting the stream can crash the box - probably best to suppress abort once data is flowing (the shot is only 10s after all)
+* BUG: there's a memory leak, that will crash the box (possible cause of the above)
+
 
 

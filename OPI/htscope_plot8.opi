@@ -29,7 +29,7 @@
     <tbx>$(PFX)$(UUT):TB</tbx>
     <xtitle>time [s]</xtitle>
     <y_axis_title>level [V]</y_axis_title>
-    <TYPE>short</TYPE>
+    <TYPE>loc://TYPE("short")</TYPE>
   </macros>
   <name></name>
   <rules />
