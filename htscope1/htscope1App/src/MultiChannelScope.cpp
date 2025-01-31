@@ -43,7 +43,7 @@ MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int 
 							 0),
 							 nchan(numChannels), nsam(maxPoints), data_size(_data_size),
 							 ssb(numChannels*data_size),
-							 stride(1), startoff(0)
+							 stride(1), startoff(0), RAW(0), fp(0)
 {
 	createParam(PS_NCHAN,               asynParamInt32,         	&P_NCHAN);
 	createParam(PS_NSAM,                asynParamInt32,         	&P_NSAM);
@@ -179,8 +179,14 @@ bool MultiChannelScope::mmap_uut_data() {
 }
 
 void MultiChannelScope::unmap_uut_data() {
-	munmap(RAW, data_len);
-	fclose(fp);
+	if (RAW){
+		munmap(RAW, data_len);
+		RAW = 0;
+	}
+	if (fp){
+		fclose(fp);
+		fp = 0;
+	}
 }
 void MultiChannelScope::get_data() {
 	double delay = 0;
@@ -293,8 +299,10 @@ asynStatus MultiChannelScope::writeInt32(asynUser *pasynUser, epicsInt32 value)
     	if (value == 1){
     		mmap_active = mmap_uut_data();
     	}else{
-    		mmap_active = 0;
-    		unmap_uut_data();
+    		if (mmap_active){
+    			mmap_active = 0;
+    			unmap_uut_data();
+    		}
     	}
     	status = (asynStatus) setIntegerParam(addr, P_MMAPUNMAPr, value);
     	if (status != 0) printf("ERROR %s setIntegerParam %d, %d, %d fail\n", __FUNCTION__,  addr, P_MMAPUNMAPr, value);
