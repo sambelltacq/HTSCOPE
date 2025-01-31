@@ -152,14 +152,14 @@ void MultiChannelScope::init_data() {
 	doCallbacksFloat64Array(TB, nsam, P_TB, 0);
 }
 
-void MultiChannelScope::mmap_uut_data() {
+bool MultiChannelScope::mmap_uut_data() {
 	char datafile[128];
 	sprintf(datafile, "%s/%s", getenv("HOME"), portName);
 
 	fp = fopen(datafile, "r");
 	if (fp == 0){
 		perror(datafile);
-		exit(errno);
+		return false;
 	}
 	data_len = GetFileSize(datafile);
 	printf("file: %s data_len %lu\n", datafile, data_len);
@@ -175,6 +175,7 @@ void MultiChannelScope::mmap_uut_data() {
 	RAW = (epicsInt16*)mmap(0, data_len, PROT_READ, MAP_SHARED, fileno(fp), 0);
 
 	printf("RAW:%p\n", RAW);
+	return true;
 }
 
 void MultiChannelScope::unmap_uut_data() {
@@ -290,8 +291,7 @@ asynStatus MultiChannelScope::writeInt32(asynUser *pasynUser, epicsInt32 value)
     	stride = value;
     }else if (function == P_MMAPUNMAP){
     	if (value == 1){
-    		mmap_uut_data();
-    		mmap_active = 1;
+    		mmap_active = mmap_uut_data();
     	}else{
     		mmap_active = 0;
     		unmap_uut_data();

@@ -73,7 +73,7 @@ private:
     void get_tb();
     void get_data();
     void init_data();
-    void mmap_uut_data();
+    bool mmap_uut_data();   // return True on success
     void unmap_uut_data();
 };
 
