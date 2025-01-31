@@ -73,14 +73,13 @@ JAVA_EXE="java -Dlog.level=DEBUG"
 ARGS="-nosplash"
 PROTOCOL="file://"
 LAUNCHER="$ROOT_DIR/CSS/ht_scope_launcher.bob"
+SETTINGS="$ROOT_DIR/CSS/settings.ini"
 QUERY=$(macro_to_query)
 RESOURCE="${PROTOCOL}${LAUNCHER}?${QUERY}"
 
 rm ~/.phoebus/memento
-PHOEBUS_HOME="" #TODO set home to insure memento seperation
 
-#TODO add preferences here
+CMD="$JAVA_EXE -jar $PHOEBUS_JAR $ARGS -resource $RESOURCE -settings $SETTINGS"
 
-CMD="$JAVA_EXE -jar $PHOEBUS_JAR $ARGS -resource $RESOURCE"
 echo "CMD: $CMD"
 $CMD
