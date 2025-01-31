@@ -1,0 +1,1385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2025-01-31 15:23:55 by dt100-->
+<display version="2.0.0">
+  <name>HT_Scope_Launcher</name>
+  <width>778</width>
+  <height>455</height>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button</name>
+    <actions>
+      <action type="open_display">
+        <description>Open Display</description>
+        <file>opi/ht_stream_plot.bob</file>
+        <macros>
+          <test1>dsadadsd</test1>
+        </macros>
+        <target>window</target>
+      </action>
+    </actions>
+    <text>Open Plot</text>
+    <x>590</x>
+    <y>18</y>
+    <width>90</width>
+    <height>49</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>Group_1</name>
+    <x>20</x>
+    <y>9</y>
+    <width>137</width>
+    <height>134</height>
+    <style>2</style>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label_10</name>
+      <text>HT_SCOPE</text>
+      <y>103</y>
+      <width>135</width>
+      <height>28</height>
+      <font>
+        <font name="Header 2" family="Liberation Sans" style="BOLD" size="18.0">
+        </font>
+      </font>
+      <background_color>
+        <color name="Read_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <wrap_words>false</wrap_words>
+    </widget>
+    <widget type="picture" version="2.0.0">
+      <name>Picture_3</name>
+      <file>image/dtacq.png</file>
+      <width>135</width>
+      <height>103</height>
+    </widget>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>Group</name>
+    <x>461</x>
+    <y>18</y>
+    <width>108</width>
+    <height>45</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label_8</name>
+      <text>User: ${USER}</text>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_9</name>
+      <text>Host: ${HOST}</text>
+      <y>25</y>
+    </widget>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>UUT 1</name>
+    <macros>
+      <UUT>UUT_1</UUT>
+    </macros>
+    <x>157</x>
+    <width>156</width>
+    <height>76</height>
+    <transparent>true</transparent>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_9</name>
+      <pv_name>pva://${${UUT}}:MODE:CONTINUOUS:STATE</pv_name>
+      <y>20</y>
+      <width>110</width>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_4</name>
+      <text>${${UUT}}</text>
+      <width>120</width>
+    </widget>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>UUT 2</name>
+    <macros>
+      <UUT>UUT_2</UUT>
+    </macros>
+    <x>157</x>
+    <y>76</y>
+    <width>156</width>
+    <height>76</height>
+    <transparent>true</transparent>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_10</name>
+      <pv_name>pva://${${UUT}}:MODE:CONTINUOUS:STATE</pv_name>
+      <y>20</y>
+      <width>110</width>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_5</name>
+      <text>${${UUT}}</text>
+      <width>120</width>
+    </widget>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>UUT 3</name>
+    <macros>
+      <UUT>UUT_3</UUT>
+    </macros>
+    <x>305</x>
+    <width>156</width>
+    <height>76</height>
+    <transparent>true</transparent>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_11</name>
+      <pv_name>pva://${${UUT}}:MODE:CONTINUOUS:STATE</pv_name>
+      <y>20</y>
+      <width>110</width>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_6</name>
+      <text>${${UUT}}</text>
+      <width>120</width>
+    </widget>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>UUT 4</name>
+    <macros>
+      <UUT>UUT_4</UUT>
+    </macros>
+    <x>305</x>
+    <y>76</y>
+    <width>156</width>
+    <height>76</height>
+    <transparent>true</transparent>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_12</name>
+      <pv_name>pva://${${UUT}}:MODE:CONTINUOUS:STATE</pv_name>
+      <y>20</y>
+      <width>110</width>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_7</name>
+      <text>${${UUT}}</text>
+      <width>120</width>
+    </widget>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>Traces</name>
+    <x>11</x>
+    <y>144</y>
+    <width>328</width>
+    <height>311</height>
+    <transparent>true</transparent>
+    <widget type="group" version="3.0.0">
+      <name>Trace_1</name>
+      <macros>
+        <trace_num>1</trace_num>
+      </macros>
+      <width>268</width>
+      <height>30</height>
+      <style>3</style>
+      <line_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </line_color>
+      <transparent>true</transparent>
+      <scripts>
+        <script file="scripts/trace_builder.py">
+          <pv_name>loc://TRACE_EN_$(trace_num)</pv_name>
+          <pv_name>loc://TRACE_UUT_$(trace_num)</pv_name>
+          <pv_name>loc://TRACE_CHAN_$(trace_num)</pv_name>
+        </script>
+      </scripts>
+      <widget type="checkbox" version="2.0.0">
+        <name>trace_en_1</name>
+        <pv_name>loc://TRACE_EN_$(trace_num)(1)</pv_name>
+        <label></label>
+        <x>40</x>
+        <width>18</width>
+        <height>30</height>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+      </widget>
+      <widget type="combo" version="2.0.0">
+        <name>trace_uut_1</name>
+        <pv_name>loc://TRACE_UUT_$(trace_num)("$(UUT_1)")</pv_name>
+        <x>68</x>
+        <width>150</width>
+        <tooltip></tooltip>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <items>
+          <item>${UUT_1}</item>
+          <item>${UUT_2}</item>
+          <item>${UUT_3}</item>
+          <item>${UUT_4}</item>
+        </items>
+      </widget>
+      <widget type="spinner" version="2.0.0">
+        <name>trace_chan_1</name>
+        <pv_name>loc://TRACE_CHAN_$(trace_num)&lt;Vlong&gt;($(trace_num))
+</pv_name>
+        <x>228</x>
+        <width>60</width>
+        <height>30</height>
+        <precision>0</precision>
+        <background_color>
+          <color name="Header_ForeGround" red="255" green="255" blue="255">
+          </color>
+        </background_color>
+        <vertical_alignment>1</vertical_alignment>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <minimum>1.0</minimum>
+        <maximum>$(NCHAN)</maximum>
+        <limits_from_pv>false</limits_from_pv>
+      </widget>
+      <widget type="group" version="3.0.0">
+        <name>Trace_id_1</name>
+        <width>30</width>
+        <height>30</height>
+        <style>3</style>
+        <transparent>true</transparent>
+        <widget type="ellipse" version="2.0.0">
+          <name>trace_color_1</name>
+          <width>30</width>
+          <height>30</height>
+          <background_color>
+            <color name="Background" red="255" green="255" blue="255">
+            </color>
+          </background_color>
+        </widget>
+        <widget type="label" version="2.0.0">
+          <name>trace_num_1</name>
+          <text>${trace_num}</text>
+          <width>30</width>
+          <height>30</height>
+          <font>
+            <font family="Liberation Sans" style="BOLD" size="14.0">
+            </font>
+          </font>
+          <horizontal_alignment>1</horizontal_alignment>
+          <vertical_alignment>1</vertical_alignment>
+        </widget>
+      </widget>
+    </widget>
+    <widget type="group" version="3.0.0">
+      <name>Trace_2</name>
+      <macros>
+        <trace_num>2</trace_num>
+      </macros>
+      <y>35</y>
+      <width>268</width>
+      <height>30</height>
+      <style>3</style>
+      <line_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </line_color>
+      <transparent>true</transparent>
+      <scripts>
+        <script file="scripts/trace_builder.py">
+          <pv_name>loc://TRACE_EN_$(trace_num)</pv_name>
+          <pv_name>loc://TRACE_UUT_$(trace_num)</pv_name>
+          <pv_name>loc://TRACE_CHAN_$(trace_num)</pv_name>
+        </script>
+      </scripts>
+      <widget type="checkbox" version="2.0.0">
+        <name>trace_en_2</name>
+        <pv_name>loc://TRACE_EN_$(trace_num)(1)</pv_name>
+        <label></label>
+        <x>40</x>
+        <width>18</width>
+        <height>30</height>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+      </widget>
+      <widget type="combo" version="2.0.0">
+        <name>trace_uut_2</name>
+        <pv_name>loc://TRACE_UUT_$(trace_num)("$(UUT_1)")</pv_name>
+        <x>68</x>
+        <width>150</width>
+        <tooltip></tooltip>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <items>
+          <item>${UUT_1}</item>
+          <item>${UUT_2}</item>
+          <item>${UUT_3}</item>
+          <item>${UUT_4}</item>
+        </items>
+      </widget>
+      <widget type="spinner" version="2.0.0">
+        <name>trace_chan_2</name>
+        <pv_name>loc://TRACE_CHAN_$(trace_num)&lt;Vlong&gt;($(trace_num))
+</pv_name>
+        <x>228</x>
+        <width>60</width>
+        <height>30</height>
+        <precision>0</precision>
+        <background_color>
+          <color name="Header_ForeGround" red="255" green="255" blue="255">
+          </color>
+        </background_color>
+        <vertical_alignment>1</vertical_alignment>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <minimum>1.0</minimum>
+        <maximum>$(NCHAN)</maximum>
+        <limits_from_pv>false</limits_from_pv>
+      </widget>
+      <widget type="group" version="3.0.0">
+        <name>Trace_id_2</name>
+        <width>30</width>
+        <height>30</height>
+        <style>3</style>
+        <transparent>true</transparent>
+        <widget type="ellipse" version="2.0.0">
+          <name>trace_color_2</name>
+          <width>30</width>
+          <height>30</height>
+          <line_color>
+            <color red="255" green="0" blue="0">
+            </color>
+          </line_color>
+          <background_color>
+            <color name="Background" red="255" green="255" blue="255">
+            </color>
+          </background_color>
+        </widget>
+        <widget type="label" version="2.0.0">
+          <name>trace_num_2</name>
+          <text>${trace_num}</text>
+          <width>30</width>
+          <height>30</height>
+          <font>
+            <font family="Liberation Sans" style="BOLD" size="14.0">
+            </font>
+          </font>
+          <horizontal_alignment>1</horizontal_alignment>
+          <vertical_alignment>1</vertical_alignment>
+        </widget>
+      </widget>
+    </widget>
+    <widget type="group" version="3.0.0">
+      <name>Trace_3</name>
+      <macros>
+        <trace_num>3</trace_num>
+      </macros>
+      <y>70</y>
+      <width>268</width>
+      <height>30</height>
+      <style>3</style>
+      <line_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </line_color>
+      <transparent>true</transparent>
+      <scripts>
+        <script file="scripts/trace_builder.py">
+          <pv_name>loc://TRACE_EN_$(trace_num)</pv_name>
+          <pv_name>loc://TRACE_UUT_$(trace_num)</pv_name>
+          <pv_name>loc://TRACE_CHAN_$(trace_num)</pv_name>
+        </script>
+      </scripts>
+      <widget type="checkbox" version="2.0.0">
+        <name>trace_en_3</name>
+        <pv_name>loc://TRACE_EN_$(trace_num)(1)</pv_name>
+        <label></label>
+        <x>40</x>
+        <width>18</width>
+        <height>30</height>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+      </widget>
+      <widget type="combo" version="2.0.0">
+        <name>trace_uut_3</name>
+        <pv_name>loc://TRACE_UUT_$(trace_num)("$(UUT_1)")</pv_name>
+        <x>68</x>
+        <width>150</width>
+        <tooltip></tooltip>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <items>
+          <item>${UUT_1}</item>
+          <item>${UUT_2}</item>
+          <item>${UUT_3}</item>
+          <item>${UUT_4}</item>
+        </items>
+      </widget>
+      <widget type="spinner" version="2.0.0">
+        <name>trace_chan_3</name>
+        <pv_name>loc://TRACE_CHAN_$(trace_num)&lt;Vlong&gt;($(trace_num))
+</pv_name>
+        <x>228</x>
+        <width>60</width>
+        <height>30</height>
+        <precision>0</precision>
+        <background_color>
+          <color name="Header_ForeGround" red="255" green="255" blue="255">
+          </color>
+        </background_color>
+        <vertical_alignment>1</vertical_alignment>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <minimum>1.0</minimum>
+        <maximum>$(NCHAN)</maximum>
+        <limits_from_pv>false</limits_from_pv>
+      </widget>
+      <widget type="group" version="3.0.0">
+        <name>Trace_id_3</name>
+        <width>30</width>
+        <height>30</height>
+        <style>3</style>
+        <transparent>true</transparent>
+        <widget type="ellipse" version="2.0.0">
+          <name>trace_color_3</name>
+          <width>30</width>
+          <height>30</height>
+          <line_color>
+            <color red="0" green="255" blue="0">
+            </color>
+          </line_color>
+          <background_color>
+            <color name="Background" red="255" green="255" blue="255">
+            </color>
+          </background_color>
+        </widget>
+        <widget type="label" version="2.0.0">
+          <name>trace_num_3</name>
+          <text>${trace_num}</text>
+          <width>30</width>
+          <height>30</height>
+          <font>
+            <font family="Liberation Sans" style="BOLD" size="14.0">
+            </font>
+          </font>
+          <horizontal_alignment>1</horizontal_alignment>
+          <vertical_alignment>1</vertical_alignment>
+        </widget>
+      </widget>
+    </widget>
+    <widget type="group" version="3.0.0">
+      <name>Trace_4</name>
+      <macros>
+        <trace_num>4</trace_num>
+      </macros>
+      <y>105</y>
+      <width>268</width>
+      <height>30</height>
+      <style>3</style>
+      <line_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </line_color>
+      <transparent>true</transparent>
+      <scripts>
+        <script file="scripts/trace_builder.py">
+          <pv_name>loc://TRACE_EN_$(trace_num)</pv_name>
+          <pv_name>loc://TRACE_UUT_$(trace_num)</pv_name>
+          <pv_name>loc://TRACE_CHAN_$(trace_num)</pv_name>
+        </script>
+      </scripts>
+      <widget type="checkbox" version="2.0.0">
+        <name>trace_en_4</name>
+        <pv_name>loc://TRACE_EN_$(trace_num)(1)</pv_name>
+        <label></label>
+        <x>40</x>
+        <width>18</width>
+        <height>30</height>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+      </widget>
+      <widget type="combo" version="2.0.0">
+        <name>trace_uut_4</name>
+        <pv_name>loc://TRACE_UUT_$(trace_num)("$(UUT_1)")</pv_name>
+        <x>68</x>
+        <width>150</width>
+        <tooltip></tooltip>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <items>
+          <item>${UUT_1}</item>
+          <item>${UUT_2}</item>
+          <item>${UUT_3}</item>
+          <item>${UUT_4}</item>
+        </items>
+      </widget>
+      <widget type="spinner" version="2.0.0">
+        <name>trace_chan_4</name>
+        <pv_name>loc://TRACE_CHAN_$(trace_num)&lt;Vlong&gt;($(trace_num))
+</pv_name>
+        <x>228</x>
+        <width>60</width>
+        <height>30</height>
+        <precision>0</precision>
+        <background_color>
+          <color name="Header_ForeGround" red="255" green="255" blue="255">
+          </color>
+        </background_color>
+        <vertical_alignment>1</vertical_alignment>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <minimum>1.0</minimum>
+        <maximum>$(NCHAN)</maximum>
+        <limits_from_pv>false</limits_from_pv>
+      </widget>
+      <widget type="group" version="3.0.0">
+        <name>Trace_id_4</name>
+        <width>30</width>
+        <height>30</height>
+        <style>3</style>
+        <transparent>true</transparent>
+        <widget type="ellipse" version="2.0.0">
+          <name>trace_color_4</name>
+          <width>30</width>
+          <height>30</height>
+          <line_color>
+            <color red="170" green="0" blue="255">
+            </color>
+          </line_color>
+          <background_color>
+            <color name="Background" red="255" green="255" blue="255">
+            </color>
+          </background_color>
+        </widget>
+        <widget type="label" version="2.0.0">
+          <name>trace_num_4</name>
+          <text>${trace_num}</text>
+          <width>30</width>
+          <height>30</height>
+          <font>
+            <font family="Liberation Sans" style="BOLD" size="14.0">
+            </font>
+          </font>
+          <horizontal_alignment>1</horizontal_alignment>
+          <vertical_alignment>1</vertical_alignment>
+        </widget>
+      </widget>
+    </widget>
+    <widget type="group" version="3.0.0">
+      <name>Trace_5</name>
+      <macros>
+        <trace_num>5</trace_num>
+      </macros>
+      <y>140</y>
+      <width>268</width>
+      <height>30</height>
+      <style>3</style>
+      <line_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </line_color>
+      <transparent>true</transparent>
+      <scripts>
+        <script file="scripts/trace_builder.py">
+          <pv_name>loc://TRACE_EN_$(trace_num)</pv_name>
+          <pv_name>loc://TRACE_UUT_$(trace_num)</pv_name>
+          <pv_name>loc://TRACE_CHAN_$(trace_num)</pv_name>
+        </script>
+      </scripts>
+      <widget type="checkbox" version="2.0.0">
+        <name>trace_en_5</name>
+        <pv_name>loc://TRACE_EN_$(trace_num)(1)</pv_name>
+        <label></label>
+        <x>40</x>
+        <width>18</width>
+        <height>30</height>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+      </widget>
+      <widget type="combo" version="2.0.0">
+        <name>trace_uut_5</name>
+        <pv_name>loc://TRACE_UUT_$(trace_num)("$(UUT_1)")</pv_name>
+        <x>68</x>
+        <width>150</width>
+        <tooltip></tooltip>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <items>
+          <item>${UUT_1}</item>
+          <item>${UUT_2}</item>
+          <item>${UUT_3}</item>
+          <item>${UUT_4}</item>
+        </items>
+      </widget>
+      <widget type="spinner" version="2.0.0">
+        <name>trace_chan_5</name>
+        <pv_name>loc://TRACE_CHAN_$(trace_num)&lt;Vlong&gt;($(trace_num))
+</pv_name>
+        <x>228</x>
+        <width>60</width>
+        <height>30</height>
+        <precision>0</precision>
+        <background_color>
+          <color name="Header_ForeGround" red="255" green="255" blue="255">
+          </color>
+        </background_color>
+        <vertical_alignment>1</vertical_alignment>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <minimum>1.0</minimum>
+        <maximum>$(NCHAN)</maximum>
+        <limits_from_pv>false</limits_from_pv>
+      </widget>
+      <widget type="group" version="3.0.0">
+        <name>Trace_id_5</name>
+        <width>30</width>
+        <height>30</height>
+        <style>3</style>
+        <transparent>true</transparent>
+        <widget type="ellipse" version="2.0.0">
+          <name>trace_color_5</name>
+          <width>30</width>
+          <height>30</height>
+          <line_color>
+            <color red="255" green="255" blue="0">
+            </color>
+          </line_color>
+          <background_color>
+            <color name="Background" red="255" green="255" blue="255">
+            </color>
+          </background_color>
+        </widget>
+        <widget type="label" version="2.0.0">
+          <name>trace_num_5</name>
+          <text>${trace_num}</text>
+          <width>30</width>
+          <height>30</height>
+          <font>
+            <font family="Liberation Sans" style="BOLD" size="14.0">
+            </font>
+          </font>
+          <horizontal_alignment>1</horizontal_alignment>
+          <vertical_alignment>1</vertical_alignment>
+        </widget>
+      </widget>
+    </widget>
+    <widget type="group" version="3.0.0">
+      <name>Trace_6</name>
+      <macros>
+        <trace_num>6</trace_num>
+      </macros>
+      <y>175</y>
+      <width>268</width>
+      <height>30</height>
+      <style>3</style>
+      <line_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </line_color>
+      <transparent>true</transparent>
+      <scripts>
+        <script file="scripts/trace_builder.py">
+          <pv_name>loc://TRACE_EN_$(trace_num)</pv_name>
+          <pv_name>loc://TRACE_UUT_$(trace_num)</pv_name>
+          <pv_name>loc://TRACE_CHAN_$(trace_num)</pv_name>
+        </script>
+      </scripts>
+      <widget type="checkbox" version="2.0.0">
+        <name>trace_en_6</name>
+        <pv_name>loc://TRACE_EN_$(trace_num)(1)</pv_name>
+        <label></label>
+        <x>40</x>
+        <width>18</width>
+        <height>30</height>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+      </widget>
+      <widget type="combo" version="2.0.0">
+        <name>trace_uut_6</name>
+        <pv_name>loc://TRACE_UUT_$(trace_num)("$(UUT_1)")</pv_name>
+        <x>68</x>
+        <width>150</width>
+        <tooltip></tooltip>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <items>
+          <item>${UUT_1}</item>
+          <item>${UUT_2}</item>
+          <item>${UUT_3}</item>
+          <item>${UUT_4}</item>
+        </items>
+      </widget>
+      <widget type="spinner" version="2.0.0">
+        <name>trace_chan_6</name>
+        <pv_name>loc://TRACE_CHAN_$(trace_num)&lt;Vlong&gt;($(trace_num))
+</pv_name>
+        <x>228</x>
+        <width>60</width>
+        <height>30</height>
+        <precision>0</precision>
+        <background_color>
+          <color name="Header_ForeGround" red="255" green="255" blue="255">
+          </color>
+        </background_color>
+        <vertical_alignment>1</vertical_alignment>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <minimum>1.0</minimum>
+        <maximum>$(NCHAN)</maximum>
+        <limits_from_pv>false</limits_from_pv>
+      </widget>
+      <widget type="group" version="3.0.0">
+        <name>Trace_id_6</name>
+        <width>30</width>
+        <height>30</height>
+        <style>3</style>
+        <transparent>true</transparent>
+        <widget type="ellipse" version="2.0.0">
+          <name>trace_color_6</name>
+          <width>30</width>
+          <height>30</height>
+          <line_color>
+            <color red="0" green="234" blue="255">
+            </color>
+          </line_color>
+          <background_color>
+            <color name="Background" red="255" green="255" blue="255">
+            </color>
+          </background_color>
+        </widget>
+        <widget type="label" version="2.0.0">
+          <name>trace_num_6</name>
+          <text>${trace_num}</text>
+          <width>30</width>
+          <height>30</height>
+          <font>
+            <font family="Liberation Sans" style="BOLD" size="14.0">
+            </font>
+          </font>
+          <horizontal_alignment>1</horizontal_alignment>
+          <vertical_alignment>1</vertical_alignment>
+        </widget>
+      </widget>
+    </widget>
+    <widget type="group" version="3.0.0">
+      <name>Trace_7</name>
+      <macros>
+        <trace_num>7</trace_num>
+      </macros>
+      <y>210</y>
+      <width>268</width>
+      <height>30</height>
+      <style>3</style>
+      <line_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </line_color>
+      <transparent>true</transparent>
+      <scripts>
+        <script file="scripts/trace_builder.py">
+          <pv_name>loc://TRACE_EN_$(trace_num)</pv_name>
+          <pv_name>loc://TRACE_UUT_$(trace_num)</pv_name>
+          <pv_name>loc://TRACE_CHAN_$(trace_num)</pv_name>
+        </script>
+      </scripts>
+      <widget type="checkbox" version="2.0.0">
+        <name>trace_en_7</name>
+        <pv_name>loc://TRACE_EN_$(trace_num)(1)</pv_name>
+        <label></label>
+        <x>40</x>
+        <width>18</width>
+        <height>30</height>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+      </widget>
+      <widget type="combo" version="2.0.0">
+        <name>trace_uut_7</name>
+        <pv_name>loc://TRACE_UUT_$(trace_num)("$(UUT_1)")</pv_name>
+        <x>68</x>
+        <width>150</width>
+        <tooltip></tooltip>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <items>
+          <item>${UUT_1}</item>
+          <item>${UUT_2}</item>
+          <item>${UUT_3}</item>
+          <item>${UUT_4}</item>
+        </items>
+      </widget>
+      <widget type="spinner" version="2.0.0">
+        <name>trace_chan_7</name>
+        <pv_name>loc://TRACE_CHAN_$(trace_num)&lt;Vlong&gt;($(trace_num))
+</pv_name>
+        <x>228</x>
+        <width>60</width>
+        <height>30</height>
+        <precision>0</precision>
+        <background_color>
+          <color name="Header_ForeGround" red="255" green="255" blue="255">
+          </color>
+        </background_color>
+        <vertical_alignment>1</vertical_alignment>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <minimum>1.0</minimum>
+        <maximum>$(NCHAN)</maximum>
+        <limits_from_pv>false</limits_from_pv>
+      </widget>
+      <widget type="group" version="3.0.0">
+        <name>Trace_id_7</name>
+        <width>30</width>
+        <height>30</height>
+        <style>3</style>
+        <transparent>true</transparent>
+        <widget type="ellipse" version="2.0.0">
+          <name>trace_color_7</name>
+          <width>30</width>
+          <height>30</height>
+          <line_color>
+            <color red="255" green="127" blue="0">
+            </color>
+          </line_color>
+          <background_color>
+            <color name="Background" red="255" green="255" blue="255">
+            </color>
+          </background_color>
+        </widget>
+        <widget type="label" version="2.0.0">
+          <name>trace_num_7</name>
+          <text>${trace_num}</text>
+          <width>30</width>
+          <height>30</height>
+          <font>
+            <font family="Liberation Sans" style="BOLD" size="14.0">
+            </font>
+          </font>
+          <horizontal_alignment>1</horizontal_alignment>
+          <vertical_alignment>1</vertical_alignment>
+        </widget>
+      </widget>
+    </widget>
+    <widget type="group" version="3.0.0">
+      <name>Trace_8</name>
+      <macros>
+        <trace_num>8</trace_num>
+      </macros>
+      <y>245</y>
+      <width>268</width>
+      <height>30</height>
+      <style>3</style>
+      <line_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </line_color>
+      <transparent>true</transparent>
+      <scripts>
+        <script file="scripts/trace_builder.py">
+          <pv_name>loc://TRACE_EN_$(trace_num)</pv_name>
+          <pv_name>loc://TRACE_UUT_$(trace_num)</pv_name>
+          <pv_name>loc://TRACE_CHAN_$(trace_num)</pv_name>
+        </script>
+      </scripts>
+      <widget type="checkbox" version="2.0.0">
+        <name>trace_en_8</name>
+        <pv_name>loc://TRACE_EN_$(trace_num)(1)</pv_name>
+        <label></label>
+        <x>40</x>
+        <width>18</width>
+        <height>30</height>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+      </widget>
+      <widget type="combo" version="2.0.0">
+        <name>trace_uut_8</name>
+        <pv_name>loc://TRACE_UUT_$(trace_num)("$(UUT_1)")</pv_name>
+        <x>68</x>
+        <width>150</width>
+        <tooltip></tooltip>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <items>
+          <item>${UUT_1}</item>
+          <item>${UUT_2}</item>
+          <item>${UUT_3}</item>
+          <item>${UUT_4}</item>
+        </items>
+      </widget>
+      <widget type="spinner" version="2.0.0">
+        <name>trace_chan_8</name>
+        <pv_name>loc://TRACE_CHAN_$(trace_num)&lt;Vlong&gt;($(trace_num))
+</pv_name>
+        <x>228</x>
+        <width>60</width>
+        <height>30</height>
+        <precision>0</precision>
+        <background_color>
+          <color name="Header_ForeGround" red="255" green="255" blue="255">
+          </color>
+        </background_color>
+        <vertical_alignment>1</vertical_alignment>
+        <border_alarm_sensitive>false</border_alarm_sensitive>
+        <minimum>1.0</minimum>
+        <maximum>$(NCHAN)</maximum>
+        <limits_from_pv>false</limits_from_pv>
+      </widget>
+      <widget type="group" version="3.0.0">
+        <name>Trace_id_8</name>
+        <width>30</width>
+        <height>30</height>
+        <style>3</style>
+        <transparent>true</transparent>
+        <widget type="ellipse" version="2.0.0">
+          <name>trace_color_8</name>
+          <width>30</width>
+          <height>30</height>
+          <line_color>
+            <color red="191" green="255" blue="0">
+            </color>
+          </line_color>
+          <background_color>
+            <color name="Background" red="255" green="255" blue="255">
+            </color>
+          </background_color>
+        </widget>
+        <widget type="label" version="2.0.0">
+          <name>trace_num_8</name>
+          <text>${trace_num}</text>
+          <width>30</width>
+          <height>30</height>
+          <font>
+            <font family="Liberation Sans" style="BOLD" size="14.0">
+            </font>
+          </font>
+          <horizontal_alignment>1</horizontal_alignment>
+          <vertical_alignment>1</vertical_alignment>
+        </widget>
+      </widget>
+    </widget>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>Needed to work correctly :(</name>
+    <x>21</x>
+    <y>38</y>
+    <width>442</width>
+    <height>350</height>
+    <visible>false</visible>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_1</name>
+      <pv_name>loc://trace_pvs_0</pv_name>
+      <y>132</y>
+      <width>442</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_2</name>
+      <pv_name>loc://trace_pvs_1</pv_name>
+      <y>152</y>
+      <width>442</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_3</name>
+      <pv_name>loc://trace_pvs_2</pv_name>
+      <y>172</y>
+      <width>442</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_4</name>
+      <pv_name>loc://trace_pvs_3</pv_name>
+      <y>192</y>
+      <width>442</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_5</name>
+      <pv_name>loc://trace_pvs_4</pv_name>
+      <y>212</y>
+      <width>442</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_6</name>
+      <pv_name>loc://trace_pvs_5</pv_name>
+      <y>232</y>
+      <width>442</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_7</name>
+      <pv_name>loc://trace_pvs_6</pv_name>
+      <y>252</y>
+      <width>442</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_8</name>
+      <pv_name>loc://trace_pvs_7</pv_name>
+      <y>272</y>
+      <width>442</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>UUT_1 = ${UUT_1}</text>
+      <y>20</y>
+      <width>122</width>
+      <height>16</height>
+      <auto_size>true</auto_size>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_1</name>
+      <text>UUT_2 = ${UUT_2}</text>
+      <y>36</y>
+      <width>122</width>
+      <height>16</height>
+      <auto_size>true</auto_size>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_2</name>
+      <text>UUT_3 = ${UUT_3}</text>
+      <y>52</y>
+      <width>122</width>
+      <height>16</height>
+      <auto_size>true</auto_size>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_3</name>
+      <text>UUT_4 = ${UUT_4}</text>
+      <y>68</y>
+      <width>122</width>
+      <height>16</height>
+      <auto_size>true</auto_size>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_11</name>
+      <text>HOST = ${HOST}</text>
+      <y>84</y>
+      <width>111</width>
+      <height>16</height>
+      <auto_size>true</auto_size>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_12</name>
+      <text>USER = ${USER}</text>
+      <y>100</y>
+      <width>90</width>
+      <height>16</height>
+      <auto_size>true</auto_size>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_13</name>
+      <text>DEBUG</text>
+      <width>120</width>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="18.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_14</name>
+      <text>PFX = ${PFX}</text>
+      <y>116</y>
+      <width>88</width>
+      <height>16</height>
+      <auto_size>true</auto_size>
+    </widget>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>Controls</name>
+    <x>339</x>
+    <y>144</y>
+    <width>428</width>
+    <height>153</height>
+    <transparent>true</transparent>
+    <widget type="group" version="3.0.0">
+      <name>ControlButtons</name>
+      <x>293</x>
+      <width>90</width>
+      <height>90</height>
+      <style>3</style>
+      <transparent>true</transparent>
+      <widget type="action_button" version="3.0.0">
+        <name>zoom_in</name>
+        <actions>
+          <action type="write_pv">
+            <description>Zoom In</description>
+            <pv_name>${HOST}:${USER}:${UUT_1}:ZOOM:IN</pv_name>
+            <value>0</value>
+          </action>
+        </actions>
+        <text>+</text>
+        <x>30</x>
+        <width>30</width>
+        <tooltip>$(actions)</tooltip>
+      </widget>
+      <widget type="action_button" version="3.0.0">
+        <name>zoom_out</name>
+        <actions>
+          <action type="write_pv">
+            <description>Zoom Out</description>
+            <pv_name>${HOST}:${USER}:${UUT_1}:ZOOM:OUT</pv_name>
+            <value>0</value>
+          </action>
+        </actions>
+        <text>-</text>
+        <x>30</x>
+        <y>60</y>
+        <width>30</width>
+        <tooltip>$(actions)</tooltip>
+      </widget>
+      <widget type="action_button" version="3.0.0">
+        <name>pan_right</name>
+        <actions>
+          <action type="write_pv">
+            <description>Pan Right</description>
+            <pv_name>${HOST}:${USER}:${UUT_1}:PAN_RIGHT:1</pv_name>
+            <value>0</value>
+          </action>
+        </actions>
+        <text>&gt;|</text>
+        <x>60</x>
+        <y>30</y>
+        <width>30</width>
+        <tooltip>$(actions)</tooltip>
+      </widget>
+      <widget type="action_button" version="3.0.0">
+        <name>pan_left</name>
+        <actions>
+          <action type="write_pv">
+            <description>Pan Left</description>
+            <pv_name>${HOST}:${USER}:${UUT_1}:PAN_LEFT:1</pv_name>
+            <value>0</value>
+          </action>
+        </actions>
+        <text>|&lt;</text>
+        <y>30</y>
+        <width>30</width>
+        <tooltip>$(actions)</tooltip>
+      </widget>
+    </widget>
+    <widget type="group" version="3.0.0">
+      <name>Group_2</name>
+      <width>283</width>
+      <height>106</height>
+      <style>3</style>
+      <transparent>true</transparent>
+      <widget type="group" version="3.0.0">
+        <name>stride</name>
+        <macros>
+          <PV>STRIDE</PV>
+          <VALUE>200</VALUE>
+          <MAX>205</MAX>
+        </macros>
+        <y>37</y>
+        <width>282</width>
+        <height>32</height>
+        <style>2</style>
+        <transparent>true</transparent>
+        <widget type="spinner" version="2.0.0">
+          <name>Spinner_2</name>
+          <pv_name>pva://$(PFX):$(UUT_1):STRIDE</pv_name>
+          <x>170</x>
+          <width>110</width>
+          <height>30</height>
+          <precision>0</precision>
+          <background_color>
+            <color name="Header_ForeGround" red="255" green="255" blue="255">
+            </color>
+          </background_color>
+          <vertical_alignment>1</vertical_alignment>
+          <maximum>${MAX}</maximum>
+          <limits_from_pv>false</limits_from_pv>
+        </widget>
+        <widget type="textupdate" version="2.0.0">
+          <name>Text Update_15</name>
+          <pv_name>pva://$(PFX):$(UUT_1):STRIDE</pv_name>
+          <x>86</x>
+          <width>70</width>
+          <height>30</height>
+          <precision>0</precision>
+          <vertical_alignment>1</vertical_alignment>
+        </widget>
+        <widget type="label" version="2.0.0">
+          <name>Label_21</name>
+          <text>${PV}</text>
+          <width>80</width>
+          <height>30</height>
+          <background_color>
+            <color name="Read_Background" red="240" green="240" blue="240">
+            </color>
+          </background_color>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+        </widget>
+      </widget>
+      <widget type="group" version="3.0.0">
+        <name>fs</name>
+        <macros>
+          <PV>FS</PV>
+          <VALUE>2000000</VALUE>
+          <MAX>2000000</MAX>
+        </macros>
+        <x>1</x>
+        <width>282</width>
+        <height>32</height>
+        <style>2</style>
+        <transparent>true</transparent>
+        <widget type="spinner" version="2.0.0">
+          <name>Spinner_4</name>
+          <pv_name>pva://$(PFX):$(UUT_1):FS</pv_name>
+          <x>170</x>
+          <width>110</width>
+          <height>30</height>
+          <precision>0</precision>
+          <background_color>
+            <color name="Header_ForeGround" red="255" green="255" blue="255">
+            </color>
+          </background_color>
+          <vertical_alignment>1</vertical_alignment>
+          <maximum>${MAX}</maximum>
+          <limits_from_pv>false</limits_from_pv>
+        </widget>
+        <widget type="textupdate" version="2.0.0">
+          <name>Text Update_17</name>
+          <pv_name>pva://$(PFX):$(UUT_1):FS</pv_name>
+          <x>86</x>
+          <width>70</width>
+          <height>30</height>
+          <precision>0</precision>
+          <vertical_alignment>1</vertical_alignment>
+        </widget>
+        <widget type="label" version="2.0.0">
+          <name>Label_23</name>
+          <text>${PV}</text>
+          <width>80</width>
+          <height>30</height>
+          <background_color>
+            <color name="Read_Background" red="240" green="240" blue="240">
+            </color>
+          </background_color>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+        </widget>
+      </widget>
+      <widget type="group" version="3.0.0">
+        <name>delay</name>
+        <macros>
+          <PV>DELAY</PV>
+          <VALUE>0</VALUE>
+          <MAX>100</MAX>
+        </macros>
+        <x>1</x>
+        <y>74</y>
+        <width>282</width>
+        <height>32</height>
+        <style>2</style>
+        <transparent>true</transparent>
+        <widget type="spinner" version="2.0.0">
+          <name>Spinner_5</name>
+          <pv_name>pva://$(PFX):$(UUT_1):DELAY</pv_name>
+          <x>170</x>
+          <width>110</width>
+          <height>30</height>
+          <precision>0</precision>
+          <background_color>
+            <color name="Header_ForeGround" red="255" green="255" blue="255">
+            </color>
+          </background_color>
+          <vertical_alignment>1</vertical_alignment>
+          <maximum>${MAX}</maximum>
+          <limits_from_pv>false</limits_from_pv>
+        </widget>
+        <widget type="textupdate" version="2.0.0">
+          <name>Text Update_18</name>
+          <pv_name>pva://$(PFX):$(UUT_1):DELAY</pv_name>
+          <x>86</x>
+          <width>70</width>
+          <height>30</height>
+          <precision>0</precision>
+          <vertical_alignment>1</vertical_alignment>
+        </widget>
+        <widget type="label" version="2.0.0">
+          <name>Label_24</name>
+          <text>${PV}</text>
+          <width>80</width>
+          <height>30</height>
+          <background_color>
+            <color name="Read_Background" red="240" green="240" blue="240">
+            </color>
+          </background_color>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+        </widget>
+      </widget>
+    </widget>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_2</name>
+    <actions execute_as_one="true">
+      <action type="write_pv">
+        <description>Write PV</description>
+        <pv_name>$(PFX):$(UUT_1):REFRESH</pv_name>
+        <value>0</value>
+      </action>
+    </actions>
+    <text>RUNSTOP</text>
+    <x>590</x>
+    <y>94</y>
+    <width>110</width>
+    <height>28</height>
+    <tooltip>$(actions)</tooltip>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_1</name>
+    <actions execute_as_one="true">
+      <action type="write_pv">
+        <description>Write PV</description>
+        <pv_name>$(PFX):$(UUT_1):REFRESH</pv_name>
+        <value>0</value>
+      </action>
+    </actions>
+    <text>Refresh</text>
+    <x>461</x>
+    <y>94</y>
+    <width>110</width>
+    <height>28</height>
+    <tooltip>$(actions)</tooltip>
+    <border_alarm_sensitive>false</border_alarm_sensitive>
+  </widget>
+</display>
