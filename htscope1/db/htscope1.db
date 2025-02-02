@@ -52,10 +52,10 @@ record(bo, "$(HOST):$(USER):$(UUT):MMAPUNMAP") {
 record(bo, "$(HOST):$(USER):$(UUT):act") {
 	field(DTYP, "Soft Channel")
 	field(OMSL, "closed_loop")
-	field(DOL,  "$(HOST)ONRUN:N NPP")
+	field(DOL,  "$(HOST):ONRUN:N NPP")
 	field(OUT,  "$(HOST):$(USER):$(UUT):MMAPUNMAP PP")
 }
-record(fanout, "$(HOST)ONRUN:N:f") {	
+record(fanout, "$(HOST):ONRUN:N:f") {
 	field($(RUNFAN), "$(HOST):$(USER):$(UUT):act")
 
 }
