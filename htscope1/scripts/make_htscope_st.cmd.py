@@ -36,9 +36,10 @@ def _hands_out_outlinks():
             raise e
     return _func
 
-next_link = _hands_out_outlinks()
+global_link = _hands_out_outlinks()
+user_link = None
 
-def print_uut(uut, user, args):
+def print_uut(uut, user, ufan, args):
     print(f'print_uut {uut}')
     wsize=4 if args.data32 == 1 else 2
     args.fp.write(f"\n# uut {uut}\n")
@@ -48,7 +49,7 @@ multiChannelScopeConfigure("{args.host}:{user}:{uut}", {args.nchan}, {args.ndata
     tm = "TIMEOUT=0"
     uutdb="./db/htscope1.db"
     args.fp.write(f"""
-dbLoadRecords("{uutdb}","HOST={args.host},USER={user},UUT={uut},{tm},RUNFAN={next_link()}")
+dbLoadRecords("{uutdb}","HOST={args.host},USER={user},UUT={uut},{tm},GFAN={global_link()},UFAN={ufan}")
 """)
     chdb = "./db/htscope1_ch.db"
     for ix in range(args.nchan):
@@ -56,7 +57,7 @@ dbLoadRecords("{uutdb}","HOST={args.host},USER={user},UUT={uut},{tm},RUNFAN={nex
         args.fp.write(f"""
 dbLoadRecords("{chdb}","HOST={args.host},USER={user},UUT={uut},CH={ch},IX={ix},{tm},NPOINTS={args.ndata}")""")
     args.fp.write(f"""
-asynSetTraceMask("{args.host}:{args.user}:{uut}",0,0xff))
+asynSetTraceMask("{args.host}:{user}:{uut}",0,0xff))
     """)
 
 def print_postamble(args):
@@ -78,11 +79,13 @@ def init(args):
         print("@@todo gather data32: we need HAPI for this")
 
 def run_main(args):
+    global user_link
     init(args)
     print_preamble(args)
     for uut in args.uuts:
+        user_link = _hands_out_outlinks()
         for user in args.user.split(','):
-            print_uut(uut, user, args)
+            print_uut(uut, user, user_link(), args)
 
     print_postamble(args)
 
