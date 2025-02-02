@@ -38,25 +38,25 @@ def _hands_out_outlinks():
 
 next_link = _hands_out_outlinks()
 
-def print_uut(uut, args):
+def print_uut(uut, user, args):
     print(f'print_uut {uut}')
     wsize=4 if args.data32 == 1 else 2
     args.fp.write(f"\n# uut {uut}\n")
     args.fp.write(f"""
-multiChannelScopeConfigure("{args.prefix}{uut}", {args.nchan}, {args.ndata}, {wsize})
+multiChannelScopeConfigure("{args.host}:{user}:{uut}", {args.nchan}, {args.ndata}, {wsize})
     """)
     tm = "TIMEOUT=0"
     uutdb="./db/htscope1.db"
     args.fp.write(f"""
-dbLoadRecords("{uutdb}","HOST={args.host_ioc},PFX={args.prefix},UUT={uut},{tm},RUNFAN={next_link()}")
+dbLoadRecords("{uutdb}","HOST={args.host},USER={user},UUT={uut},{tm},RUNFAN={next_link()}")
 """)
     chdb = "./db/htscope1_ch.db"
     for ix in range(args.nchan):
         ch = f"{ix+1:02}"
         args.fp.write(f"""
-dbLoadRecords("{chdb}","HOST={args.host_ioc},PFX={args.prefix},UUT={uut},CH={ch},IX={ix},{tm},NPOINTS={args.ndata}")""")
+dbLoadRecords("{chdb}","HOST={args.host},USER={args.user},UUT={uut},CH={ch},IX={ix},{tm},NPOINTS={args.ndata}")""")
     args.fp.write(f"""
-asynSetTraceMask("{args.prefix}{uut}",0,0xff))
+asynSetTraceMask("{args.host}:{args.user}:{uut}",0,0xff))
     """)
 
 def print_postamble(args):
@@ -64,7 +64,7 @@ def print_postamble(args):
     maindb = "./db/htscope1_main.db"
     uuts= ','.join(args.uuts)
     args.fp.write(f"""
-dbLoadRecords("{maindb}","HOST={args.host_ioc},UUTS=\'{uuts}\'")
+dbLoadRecords("{maindb}","HOST={args.host},UUTS=\'{uuts}\'")
 """)
     args.fp.write("iocInit()\n")
     args.fp.write("dbl > records.dbl\n")
@@ -76,24 +76,21 @@ def init(args):
         print("@@todo gather nchan: we need HAPI for this")
     if args.data32 is None:
         print("@@todo gather data32: we need HAPI for this")
-    args.host_ioc=args.prefix.split(':')[0] + ':'
 
 def run_main(args):
     init(args)
     print_preamble(args)
     for uut in args.uuts:
-        print_uut(uut, args)
-
-    if args.user2 is not None:
-        for user2 in args.user2.split(','):
-            args.prefix = args.host_ioc + user2 + ':'
-            for uut in args.uuts:
-                print_uut(uut, args)
+        for user in args.user.split(','):
+            print_uut(uut, user, args)
 
     print_postamble(args)
 
-def default_prefix():
-    return f'{socket.gethostname().split(".")[0]}:{os.environ.get("USER")}:'
+def default_host():
+    return f'{socket.gethostname().split(".")[0]}'
+
+def default_user():
+    return f'{os.environ.get("USER")}'
 
 def get_parser():
     parser = argparse.ArgumentParser(description="create htscope epics record definition")
@@ -101,9 +98,9 @@ def get_parser():
     parser.add_argument('--nchan', default=None, type=int, help="specify number of channels (or use hapi to automate)")
     parser.add_argument('--data32', default=None, type=int, help="set to 1 for d32 data (or use hapi to automate)")
     parser.add_argument('--ndata',  default=100000, type=int, help="number of data elements in WF")
-    parser.add_argument('--prefix', default=default_prefix(), type=str, help='prefix for PV\'s, default="$(hostname):$USER"')
-    parser.add_argument('--user2',   default=None, help='specify a second user, use existing prefix')
-    parser.add_argument('uuts', nargs='+', help="uut1[, uut2...]")
+    parser.add_argument('--host', default=default_host(), type=str, help='prefix for PV\'s, default="$(hostname)"')
+    parser.add_argument('--user',   default=default_user(), help='one or more users (must be at least one) eg --user=tom,dick,harry default="$USER"')
+    parser.add_argument('uuts', nargs='+', help="uut1[ uut2...]")
     return parser
 
 if __name__ == '__main__':

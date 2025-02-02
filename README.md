@@ -84,13 +84,24 @@ for pictures see https://github.com/D-TACQ/HTSCOPE/releases/download/v0.0.1/HTSC
 
 ## Running a composite system:
 
+### db name convention:
+
+$(HOST):FROB                   # PV that is global to the HOST eg RUNSTOP
+$(HOST):$(USER):FLIP           # PV that is common to all UUT's in USER's view of the HOST. eg $(HOST):$(USER):ZOOM_IN
+$(HOST):$(USER):$(UUT):CH:01   # PV with user data view 
+
+
 ### Define db
-```usage: make_htscope_st.cmd.py [-h] [--output OUTPUT] [--nchan NCHAN] [--data32 DATA32] [--ndata NDATA] [--prefix PREFIX] uuts [uuts ...]
+```
+pgm@hoy6:~/PROJECTS/HTSCOPE/htscope1$ ./scripts/make_htscope_st.cmd.py --help
+usage: make_htscope_st.cmd.py [-h] [--output OUTPUT] [--nchan NCHAN] [--data32 DATA32] [--ndata NDATA] [--host HOST]
+                              [--user USER]
+                              uuts [uuts ...]
 
 create htscope epics record definition
 
 positional arguments:
-  uuts                 uut1[, uut2...]
+  uuts                 uut1[ uut2...]
 
 options:
   -h, --help           show this help message and exit
@@ -98,14 +109,16 @@ options:
   --nchan NCHAN        specify number of channels (or use hapi to automate)
   --data32 DATA32      set to 1 for d32 data (or use hapi to automate)
   --ndata NDATA        number of data elements in WF
-  --prefix PREFIX      prefix for PV's, default="$(hostname):$USER"
+  --host HOST          prefix for PV's, default="$(hostname)"
+  --user USER          one or more users (must be at least one) eg --user=tom,dick,harry default="$USER"
 ```
 
-1. PREFIX : db macro PFX: this can be blank, but we suggest that HOST:USER: is a better choice.
-
+* HOST:USER:UUT   : Host is the computer name, ideally this is task focussed.
+              : USER 
 ```
 eg
-magnetics1:adam     adam's personal view (with custom PAN/ZOOM)
+magnetics1          host for magnetics experiment. (hostname used by IOC. does not _have_ to be the physical hostname)
+magnetics1:adam     adam's personal view (with custom PAN/ZOOM) (does not _have_ to be the actual LINUX USER adam)
 magnetics1:bruce    bruce's personable view (with custom PAN/ZOOM)
 ```
 
@@ -123,15 +136,24 @@ tail st.cmd
 dbloadRecords("./db/htscope1_main.db","PFX=host:user:,UUTS=acq1102_001,acq1102_002")
 ```
 
-1. $(PFX):SHOT_TIME   :: shot run length in s
-2. $(PFX):UUTS        :: list of UUTs in set
-3. $(PFX):RUNSTOP
+* $(HOST):SHOT_TIME   	:: shot run length in s
+* $(HOST):UUTS        	:: list of UUTs in set
+* $(HOST):RUNSTOP		:: starts/stops a shot
 
 Glue: we suggest a pyepics wrapper that blocks on RUNSTOP and starts/stops htstream.py as a spawnd task
+This is implemented as:
+
+```
+run_htstream_wrapper.py
+```
 
 ### Run the system
 
-./scripts/run_ioc          # runs against st.cmd. @@TODO run from procServ
+Everything runs under procServ:
+
+```
+./init/start_servers
+```
 
 ### cs-studio UI
 
@@ -142,8 +164,8 @@ Glue: we suggest a pyepics wrapper that blocks on RUNSTOP and starts/stops htstr
 UUT        eg acq1102_015
 SITE       1
 CHX        1
-PFX        host:user   eg kamino:dt100:
-HOST       host:       eg kamino:
+USER       user       eg dt100:
+HOST       host       eg kamino
 </pre>
 * Set Channel Access params (Edit|Preferences|CSS Core|Data Sources|Channel Access)
 <pre>
@@ -177,9 +199,13 @@ kickoff:
 
 ### Service sockets
 
-* to view the ioc : nc localhost 8841
-* to view the stream : nc localhost 8843
+To view the service consoles
+```
+./scripts/epics-console
+./scripts/htstream-console
+```
 
+* start up detail:
 ```
 user@host:~/PROJECTS/HTSCOPE/htscope1$ cat init/start_servers 
 #!/bin/bash
