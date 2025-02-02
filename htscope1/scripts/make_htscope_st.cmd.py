@@ -54,7 +54,7 @@ dbLoadRecords("{uutdb}","HOST={args.host},USER={user},UUT={uut},{tm},RUNFAN={nex
     for ix in range(args.nchan):
         ch = f"{ix+1:02}"
         args.fp.write(f"""
-dbLoadRecords("{chdb}","HOST={args.host},USER={args.user},UUT={uut},CH={ch},IX={ix},{tm},NPOINTS={args.ndata}")""")
+dbLoadRecords("{chdb}","HOST={args.host},USER={user},UUT={uut},CH={ch},IX={ix},{tm},NPOINTS={args.ndata}")""")
     args.fp.write(f"""
 asynSetTraceMask("{args.host}:{args.user}:{uut}",0,0xff))
     """)
