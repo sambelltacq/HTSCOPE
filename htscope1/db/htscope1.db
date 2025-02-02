@@ -56,7 +56,7 @@ record(bo, "$(HOST):$(USER):$(UUT):act") {
 	field(OUT,  "$(HOST):$(USER):$(UUT):MMAPUNMAP PP")
 }
 record(fanout, "$(HOST):ONRUN:N:f") {
-	field($(RUNFAN), "$(HOST):$(USER):$(UUT):act")
+	field($(GFAN), "$(HOST):$(USER):$(UUT):act")
 
 }
 
@@ -124,6 +124,15 @@ record(ao, "$(HOST):$(USER):$(UUT):FS") {
 	field(PINI, "YES")
 }
 
+# PAN_LEFT,  first USER then USER:UUT
+record(bo, "$(HOST):$(USER):PAN_LEFT:1"){
+	field(FLNK, "$(HOST):$(USER):PAN_LEFT:1:f")
+}
+
+record(fanout, "$(HOST):$(USER):PAN_LEFT:1:f") {
+	field($(UFAN), "$(HOST):$(USER):$(UUT):PAN_LEFT:1 PP")
+}
+
 record(bo, "$(HOST):$(USER):$(UUT):PAN_LEFT:1") {
 	field(FLNK, "$(HOST):$(USER):$(UUT):PAN_LEFT:1:c PP")
 }
@@ -135,6 +144,15 @@ record(calcout, "$(HOST):$(USER):$(UUT):PAN_LEFT:1:c") {
 	field(DOPT, "Use CALC")
 	field(OUT,  "$(HOST):$(USER):$(UUT):DELAY PP")
 	field(FLNK, "$(HOST):$(USER):$(UUT):REFRESH PP")
+}
+
+# PAN_RIGHT,  first USER then USER:UUT
+record(bo, "$(HOST):$(USER):PAN_RIGHT:1"){
+	field(FLNK, "$(HOST):$(USER):PAN_RIGHT:1:f")
+}
+
+record(fanout, "$(HOST):$(USER):PAN_RIGHT:1:f") {
+	field($(UFAN), "$(HOST):$(USER):$(UUT):PAN_RIGHT:1 PP")
 }
 
 record(bo, "$(HOST):$(USER):$(UUT):PAN_RIGHT:1") {
@@ -150,6 +168,15 @@ record(calcout, "$(HOST):$(USER):$(UUT):PAN_RIGHT:1:c") {
 	field(FLNK, "$(HOST):$(USER):$(UUT):REFRESH PP")
 }
 
+# ZOOM:IN,  first USER then USER:UUT
+record(bo, "$(HOST):$(USER):ZOOM:IN"){
+	field(FLNK, "$(HOST):$(USER):ZOOM:IN:f")
+}
+
+record(fanout, "$(HOST):$(USER):ZOOM:IN:f") {
+	field($(UFAN), "$(HOST):$(USER):$(UUT):ZOOM:IN PP")
+}
+
 record(bo, "$(HOST):$(USER):$(UUT):ZOOM:IN") {
 	field(FLNK, "$(HOST):$(USER):$(UUT):ZOOM:IN:c PP")
 }
@@ -161,6 +188,15 @@ record(calcout, "$(HOST):$(USER):$(UUT):ZOOM:IN:c") {
 	field(DOPT, "Use CALC")
 	field(OUT,  "$(HOST):$(USER):$(UUT):STRIDE PP")
 	field(FLNK, "$(HOST):$(USER):$(UUT):REFRESH PP")
+}
+
+# ZOOM:OUT,  first USER then USER:UUT
+record(bo, "$(HOST):$(USER):ZOOM:OUT"){
+	field(FLNK, "$(HOST):$(USER):ZOOM:OUT:f")
+}
+
+record(fanout, "$(HOST):$(USER):ZOOM:OUT:f") {
+	field($(UFAN), "$(HOST):$(USER):$(UUT):ZOOM:OUT PP")
 }
 
 record(bo, "$(HOST):$(USER):$(UUT):ZOOM:OUT") {

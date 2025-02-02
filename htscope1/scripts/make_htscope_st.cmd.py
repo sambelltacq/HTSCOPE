@@ -82,9 +82,9 @@ def run_main(args):
     global user_link
     init(args)
     print_preamble(args)
-    for uut in args.uuts:
+    for user in args.user.split(','):    
         user_link = _hands_out_outlinks()
-        for user in args.user.split(','):
+        for uut in args.uuts:    
             print_uut(uut, user, user_link(), args)
 
     print_postamble(args)
