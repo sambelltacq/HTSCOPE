@@ -8,8 +8,6 @@ When a trace pv changes update the plot widget trace property
 
 #Startup
 logger = Logger.getLogger('handle_traces')
-logger.info('Start')
-
 widget = locals()['widget']
 pvs = locals()['pvs']
 display = widget.topDisplayModel
@@ -27,7 +25,7 @@ def set_inited(widget):
 def is_invalid(value):
     return not len(value) == 3
 
-def is_old(pv):
+def is_stale(pv):
     timestamp = float(PVUtil.getTimeInMilliseconds(pv)) / 1000
     return t0 - timestamp > 1
 
@@ -37,7 +35,7 @@ for trace_num, pv in enumerate(pvs):
 
     value = PVUtil.getString(pv).split(',')
     
-    if is_inited(widget) and is_old(pv): continue
+    if is_inited(widget) and is_stale(pv): continue
 
     if is_invalid(value): continue
 
@@ -48,7 +46,6 @@ for trace_num, pv in enumerate(pvs):
     logger.info("Trace[{}][x] set '{}' ".format(trace_num, x_pv))
     logger.info("Trace[{}][visible] set '{}' ".format(trace_num, en_pv))
 
-    #TODO only change if diff
     widget.setPropertyValue("traces[{}].name".format(trace_num), y_pv)
     widget.setPropertyValue("traces[{}].y_pv".format(trace_num), y_pv)
     widget.setPropertyValue("traces[{}].x_pv".format(trace_num), x_pv)
