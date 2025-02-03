@@ -17,30 +17,27 @@ loc://trace_pv_1
 
 #Startup
 logger = Logger.getLogger('trace_build')
-logger.info('Start')
-
 widget = locals()['widget']
 pvs = locals()['pvs']
 display = widget.topDisplayModel
+timeout = 2
 
 #main
 
 trace_num = int(widget.effectiveMacros.getValue('trace_num'))
 
-host = "kamino"
-user = "dt100"
-
 env = {
-    "prefix": "{}:{}".format(host, user),
+    "host": widget.effectiveMacros.getValue('HOST'),
+    "user": widget.effectiveMacros.getValue('USER'),
     "uut": pvs[1].read().getValue(),
     "chan": int(pvs[2].read().getValue()),
 }
 
-timeout = 2
-trace_pv = "loc://trace_pvs_{}".format(trace_num - 1)
 enabled = int(pvs[0].read().getValue())
-y_pv = "pva://{prefix}:{uut}:CH:{chan:02d}".format(**env)
-x_pv = "pva://{prefix}:{uut}:TB".format(**env)
+y_pv = "{host}:{user}:{uut}:CH:{chan:02d}".format(**env)
+x_pv = "{host}:{user}:{uut}:TB".format(**env)
+
+trace_pv = "loc://trace_pvs_{}".format(trace_num - 1)
 
 logger.info("{}[x]: '{}' ".format(trace_pv, x_pv))
 logger.info("{}[y]: '{}' ".format(trace_pv, y_pv))
