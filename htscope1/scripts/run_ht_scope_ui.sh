@@ -2,16 +2,17 @@
 
 
 help_msg="
-run_ht_scope: Start phoebus gui for ht scope
+run_ht_scope_ui: Start phoebus gui for ht scope
 
 Usage:
-    ./run_ht_scope.sh --host=kamino --user=dt100 acq1102_015 acq1102_010 acq1102_999 acq1102_999
+    ./run_ht_scope_ui.sh --host=kamino --user=dt100 acq1102_015 acq1102_010 acq1102_123 acq1102_999
 
 Args:
     uuts         Hostname of uuts to target
     --host:      IOC host
     --user:      IOC user
     --chans:     Total chans per uut
+
 "
 
 
