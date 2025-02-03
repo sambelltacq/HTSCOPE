@@ -72,8 +72,8 @@ PHOEBUS_JAR="$HOME/PROJECTS/phoebus/phoebus-product/target/product-4.7.4-SNAPSHO
 JAVA_EXE="java -Dlog.level=DEBUG"
 ARGS="-nosplash"
 PROTOCOL="file://"
-LAUNCHER="$ROOT_DIR/CSS/ht_scope_launcher.bob"
-SETTINGS="$ROOT_DIR/CSS/settings.ini"
+LAUNCHER="$ROOT_DIR/cs-studio/phoebus/CSS/ht_scope_launcher.bob"
+SETTINGS="$ROOT_DIR/cs-studio/phoebus/CSS/settings.ini"
 QUERY=$(macro_to_query)
 RESOURCE="${PROTOCOL}${LAUNCHER}?${QUERY}"
 
