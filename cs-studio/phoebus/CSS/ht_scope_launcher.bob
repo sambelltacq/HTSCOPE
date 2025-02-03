@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-02-03 11:11:27 by dt100-->
+<!--Saved on 2025-02-03 15:05:08 by dt100-->
 <display version="2.0.0">
   <name>HT_Scope_Launcher</name>
   <width>778</width>
@@ -1122,7 +1122,7 @@
   <widget type="group" version="3.0.0">
     <name>Controls</name>
     <x>339</x>
-    <y>144</y>
+    <y>280</y>
     <width>428</width>
     <height>153</height>
     <transparent>true</transparent>
@@ -1349,37 +1349,81 @@
     </widget>
   </widget>
   <widget type="action_button" version="3.0.0">
-    <name>Action Button_2</name>
+    <name>REFRESH Button</name>
     <actions execute_as_one="true">
       <action type="write_pv">
-        <description>Write PV</description>
+        <description>REFRESH</description>
         <pv_name>$(HOST):$(USER):$(UUT_1):REFRESH</pv_name>
         <value>0</value>
       </action>
     </actions>
-    <text>RUNSTOP</text>
-    <x>590</x>
-    <y>94</y>
+    <text>REFRESH</text>
+    <x>477</x>
+    <y>114</y>
     <width>110</width>
     <height>28</height>
     <tooltip>$(actions)</tooltip>
     <border_alarm_sensitive>false</border_alarm_sensitive>
   </widget>
-  <widget type="action_button" version="3.0.0">
-    <name>Action Button_1</name>
-    <actions execute_as_one="true">
-      <action type="write_pv">
-        <description>Write PV</description>
-        <pv_name>$(HOST):$(USER):$(UUT_1):REFRESH</pv_name>
-        <value>0</value>
-      </action>
-    </actions>
-    <text>Refresh</text>
-    <x>461</x>
-    <y>94</y>
-    <width>110</width>
-    <height>28</height>
-    <tooltip>$(actions)</tooltip>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
+  <widget type="group" version="3.0.0">
+    <name>Stream</name>
+    <x>339</x>
+    <y>144</y>
+    <width>316</width>
+    <height>136</height>
+    <transparent>true</transparent>
+    <widget type="bool_button" version="2.0.0">
+      <name>RUNSTOP Button</name>
+      <pv_name>$(HOST):RUNSTOP</pv_name>
+      <width>110</width>
+      <off_label>RUN</off_label>
+      <off_color>
+        <color name="Button_Background" red="210" green="210" blue="210">
+        </color>
+      </off_color>
+      <on_label>STOP</on_label>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="14.0">
+        </font>
+      </font>
+    </widget>
+    <widget type="spinner" version="2.0.0">
+      <name>SHOT_TIME</name>
+      <pv_name>$(HOST):SHOT_TIME</pv_name>
+      <x>120</x>
+      <width>90</width>
+      <height>30</height>
+      <precision>0</precision>
+      <show_units>true</show_units>
+      <background_color>
+        <color name="Header_ForeGround" red="255" green="255" blue="255">
+        </color>
+      </background_color>
+      <vertical_alignment>1</vertical_alignment>
+      <maximum>20.0</maximum>
+      <limits_from_pv>false</limits_from_pv>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>STATUS</name>
+      <pv_name>$(HOST):STATUS</pv_name>
+      <y>40</y>
+      <width>280</width>
+      <height>60</height>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>MMAP button</name>
+      <actions execute_as_one="true">
+        <action type="write_pv">
+          <description>RUNSTOP</description>
+          <pv_name>$(HOST):$(USER):$(UUT_1):MMAPUNMAP</pv_name>
+          <value>0</value>
+        </action>
+      </actions>
+      <text>MMAP</text>
+      <x>220</x>
+      <width>60</width>
+      <tooltip>$(actions)</tooltip>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+    </widget>
   </widget>
 </display>
