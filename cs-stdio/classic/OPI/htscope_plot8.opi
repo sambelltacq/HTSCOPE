@@ -18,15 +18,15 @@
   <height>600</height>
   <macros>
     <include_parent_macros>true</include_parent_macros>
-    <trace_0_y_pv>$(PFX)$(UUT):CH:01</trace_0_y_pv>
-    <trace_1_y_pv>$(PFX)$(UUT):CH:02</trace_1_y_pv>
-    <trace_2_y_pv>$(PFX)$(UUT):CH:03</trace_2_y_pv>
-    <trace_3_y_pv>$(PFX)$(UUT):CH:04</trace_3_y_pv>
-    <trace_4_y_pv>$(PFX)$(UUT):CH:05</trace_4_y_pv>
-    <trace_5_y_pv>$(PFX)$(UUT):CH:06</trace_5_y_pv>
-    <trace_6_y_pv>$(PFX)$(UUT):CH:07</trace_6_y_pv>
-    <trace_7_y_pv>$(PFX)$(UUT):CH:17</trace_7_y_pv>
-    <tbx>$(PFX)$(UUT):TB</tbx>
+    <trace_0_y_pv>$(HOST):$(USER):$(UUT):CH:01</trace_0_y_pv>
+    <trace_1_y_pv>$(HOST):$(USER):$(UUT):CH:02</trace_1_y_pv>
+    <trace_2_y_pv>$(HOST):$(USER):$(UUT):CH:03</trace_2_y_pv>
+    <trace_3_y_pv>$(HOST):$(USER):$(UUT):CH:04</trace_3_y_pv>
+    <trace_4_y_pv>$(HOST):$(USER):$(UUT):CH:05</trace_4_y_pv>
+    <trace_5_y_pv>$(HOST):$(USER):$(UUT):CH:06</trace_5_y_pv>
+    <trace_6_y_pv>$(HOST):$(USER):$(UUT):CH:07</trace_6_y_pv>
+    <trace_7_y_pv>$(HOST):$(USER):$(UUT):CH:17</trace_7_y_pv>
+    <tbx>$(HOST):$(USER):$(UUT):TB</tbx>
     <xtitle>time [s]</xtitle>
     <y_axis_title>level [V]</y_axis_title>
     <TYPE>loc://TYPE("short")</TYPE>
@@ -77,7 +77,7 @@
     <image></image>
     <name>Action Button</name>
     <push_action_index>0</push_action_index>
-    <pv_name>$(PFX)$(UUT):REFRESH</pv_name>
+    <pv_name>$(HOST):$(USER):$(UUT):REFRESH</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -126,7 +126,7 @@ $(pv_value)</tooltip>
     <name>Text Update</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(PFX)$(UUT):FS</pv_name>
+    <pv_name>$(HOST):$(USER):$(UUT):FS</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -178,7 +178,7 @@ $(pv_value)</tooltip>
     <name>Text Update_1</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(PFX)$(UUT):DELAY</pv_name>
+    <pv_name>$(HOST):$(USER):$(UUT):DELAY</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -230,7 +230,7 @@ $(pv_value)</tooltip>
     <name>Text Update_2</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(PFX)$(UUT):STRIDE</pv_name>
+    <pv_name>$(HOST):$(USER):$(UUT):STRIDE</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -287,7 +287,7 @@ $(pv_value)</tooltip>
     <page_increment>10.0</page_increment>
     <precision>3</precision>
     <precision_from_pv>false</precision_from_pv>
-    <pv_name>$(PFX)$(UUT):FS</pv_name>
+    <pv_name>$(HOST):$(USER):$(UUT):FS</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -342,7 +342,7 @@ $(pv_value)</tooltip>
     <page_increment>10.0</page_increment>
     <precision>3</precision>
     <precision_from_pv>false</precision_from_pv>
-    <pv_name>$(PFX)$(UUT):DELAY</pv_name>
+    <pv_name>$(HOST):$(USER):$(UUT):DELAY</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -397,7 +397,7 @@ $(pv_value)</tooltip>
     <page_increment>10.0</page_increment>
     <precision>3</precision>
     <precision_from_pv>false</precision_from_pv>
-    <pv_name>$(PFX)$(UUT):STRIDE</pv_name>
+    <pv_name>$(HOST):$(USER):$(UUT):STRIDE</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -612,7 +612,7 @@ $(pv_value)</tooltip>
     <image></image>
     <name>Action Button_1</name>
     <push_action_index>0</push_action_index>
-    <pv_name>$(PFX)$(UUT):ZOOM:IN</pv_name>
+    <pv_name>$(HOST):$(USER):ZOOM:IN</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -666,7 +666,7 @@ $(pv_value)</tooltip>
     <image></image>
     <name>Action Button_2</name>
     <push_action_index>0</push_action_index>
-    <pv_name>$(PFX)$(UUT):ZOOM:OUT</pv_name>
+    <pv_name>$(HOST):$(USER):ZOOM:OUT</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -720,7 +720,7 @@ $(pv_value)</tooltip>
     <image></image>
     <name>Action Button_3</name>
     <push_action_index>0</push_action_index>
-    <pv_name>$(PFX)$(UUT):PAN_LEFT:1</pv_name>
+    <pv_name>$(HOST):$(USER):PAN_LEFT:1</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -774,7 +774,7 @@ $(pv_value)</tooltip>
     <image></image>
     <name>Action Button_4</name>
     <push_action_index>0</push_action_index>
-    <pv_name>$(PFX)$(UUT):PAN_RIGHT:1</pv_name>
+    <pv_name>$(HOST):$(USER):PAN_RIGHT:1</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -828,7 +828,7 @@ $(pv_value)</tooltip>
     <page_increment>10.0</page_increment>
     <precision>3</precision>
     <precision_from_pv>false</precision_from_pv>
-    <pv_name>$(HOST)SHOT_TIME</pv_name>
+    <pv_name>$(HOST):SHOT_TIME</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -883,7 +883,7 @@ $(pv_value)</tooltip>
     <name>Text Input</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(HOST)UUTS</pv_name>
+    <pv_name>$(HOST):UUTS</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -940,7 +940,7 @@ $(pv_value)</tooltip>
     <name>Text Input_1</name>
     <precision>0</precision>
     <precision_from_pv>true</precision_from_pv>
-    <pv_name>$(HOST)STATUS</pv_name>
+    <pv_name>$(HOST):STATUS</pv_name>
     <pv_value />
     <rotation_angle>0.0</rotation_angle>
     <rules />
@@ -988,7 +988,7 @@ $(pv_value)</tooltip>
     <height>40</height>
     <label></label>
     <name>Menu Button_1</name>
-    <pv_name>$(HOST)RUNSTOP</pv_name>
+    <pv_name>$(HOST):RUNSTOP</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -1032,7 +1032,7 @@ $(pv_value)</tooltip>
     <height>40</height>
     <label></label>
     <name>Menu Button_2</name>
-    <pv_name>$(PFX)$(UUT):MMAPUNMAP</pv_name>
+    <pv_name>$(HOST):$(USER):$(UUT):MMAPUNMAP</pv_name>
     <pv_value />
     <rules />
     <scale_options>
