@@ -48,7 +48,7 @@ record(stringin, "$(HOST):STATUS") {
 record(lsi, "$(HOST):STATUSL") {
     field(DTYP, "Soft Channel")
     field(PINI, "YES")
-    field(VAL,  "init")
+#    field(VAL,  "init")
     field(SIZV,  "512")
     field(DESC, "htstream reports status")
 }
