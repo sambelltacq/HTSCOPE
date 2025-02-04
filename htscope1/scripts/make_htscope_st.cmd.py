@@ -39,6 +39,12 @@ def _hands_out_outlinks():
 global_link = _hands_out_outlinks()
 user_link = None
 
+def print_cal(uut, user, args):
+    """ for each uut, get SITES, iterate sites creating a remote cal anchor record (dummy),
+        then spawn a SM to copy data to channel record on demand.
+    """
+    pass
+
 def print_uut(uut, user, ufan, args):
     print(f'print_uut {uut}')
     wsize=4 if args.data32 == 1 else 2
@@ -49,13 +55,16 @@ multiChannelScopeConfigure("{args.host}:{user}:{uut}", {args.nchan}, {args.ndata
     tm = "TIMEOUT=0"
     uutdb="./db/htscope1.db"
     args.fp.write(f"""
-dbLoadRecords("{uutdb}","HOST={args.host},USER={user},UUT={uut},{tm},GFAN={global_link()},UFAN={ufan}")
+dbLoadRecords("{uutdb}","HOST={args.host},USER={user},UUT={uut},{tm},GFAN={global_link()},UFAN={ufan},NCHAN={args.nchan}")
 """)
     chdb = "./db/htscope1_ch.db"
     for ix in range(args.nchan):
         ch = f"{ix+1:02}"
         args.fp.write(f"""
-dbLoadRecords("{chdb}","HOST={args.host},USER={user},UUT={uut},CH={ch},IX={ix},{tm},NPOINTS={args.ndata}")""")
+dbLoadRecords("{chdb}","HOST={args.host},USER={user},UUT={uut},CH={ch},IX={ix},{tm},NPOINTS={args.ndata}")
+""")
+
+    print_cal(uut, iser, args)
     args.fp.write(f"""
 asynSetTraceMask("{args.host}:{user}:{uut}",0,0xff))
     """)
