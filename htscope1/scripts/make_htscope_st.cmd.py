@@ -12,7 +12,7 @@ def print_preamble(args):
         args.fp = open(args.output, "w")
     args.fp.write("# preamble\n")
     args.fp.write(f'# command\n#{" ".join(sys.argv)}')
-    args.fp.write("""
+    args.fp.write(f"""
 dbLoadDatabase("./dbd/htscope1.dbd")
 htscope1_registerRecordDeviceDriver(pdbbase)
 
