@@ -43,7 +43,7 @@ MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int 
 							 0),
 							 nchan(numChannels), nsam(maxPoints), data_size(_data_size),
 							 ssb(numChannels*data_size),
-							 stride(1), startoff(0), RAW(0), fp(0)
+							 RAW(0), fp(0), stride(1), startoff(0), EGU(0)
 {
 	createParam(PS_NCHAN,               asynParamInt32,         	&P_NCHAN);
 	createParam(PS_NSAM,                asynParamInt32,         	&P_NSAM);
@@ -56,6 +56,9 @@ MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int 
 	createParam(PS_FS,                  asynParamFloat64,           &P_FS);
 	createParam(PS_STRIDE,              asynParamInt32,             &P_STRIDE);
 	createParam(PS_DELAY,              	asynParamFloat64,           &P_DELAY);
+	createParam(PS_ESLO,             	asynParamFloat64Array,      &P_ESLO);
+	createParam(PS_EOFF,             	asynParamFloat64Array,      &P_EOFF);
+	createParam(PS_EGU,  				asynParamInt32,             &P_EGU);
 
 	setIntegerParam(P_NCHAN, 			nchan);
 	setIntegerParam(P_NSAM, 			nsam);
@@ -83,6 +86,13 @@ MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int 
     if (status) {
         printf("%s:%s: epicsThreadCreate failure\n", "mcScope", __FUNCTION__);
         return;
+    }
+
+    ESLO = new epicsFloat64[nchan];
+    EOFF = new epicsFloat64[nchan];
+    for (unsigned ic = 0; ic < nchan; ++ic){
+        ESLO[ic] = 10.0/0x7fff;
+        EOFF[ic] = 0;
     }
 }
 
@@ -219,7 +229,11 @@ void MultiChannelScope::get_data() {
 				printf("%s ic:%d isam:%d cursor:%d %04x\n", __FUNCTION__, ic, isam, cursor, RAW[cursor+ic]);
 			}
 #endif
-			CHANNELS[ic][isam] = RAW[cursor+ic];
+			if (EGU){
+				CHANNELS[ic][isam] = RAW[cursor+ic] * ESLO[ic] + EOFF[ic];
+			}else{
+				CHANNELS[ic][isam] = RAW[cursor+ic];
+			}
 		}
 	}
 
@@ -325,6 +339,28 @@ asynStatus MultiChannelScope::writeInt32(asynUser *pasynUser, epicsInt32 value)
 asynStatus MultiChannelScope::writeFloat64(asynUser *pasynUser, epicsFloat64 value)
 {
 	return asynPortDriver::writeFloat64(pasynUser, value);
+}
+
+asynStatus MultiChannelScope::writeFloat64Array(asynUser *pasynUser, epicsFloat64 *value,
+                                        size_t nElements)
+{
+	asynStatus status = asynSuccess;
+    int function = pasynUser->reason;
+    epicsFloat64* pcal;
+
+    if (function == P_ESLO){
+        pcal = ESLO;
+    }else if (function == P_EOFF){
+        pcal = EOFF;
+    }else{
+        return asynPortDriver::writeFloat64Array(pasynUser, value, nElements);
+    }
+
+    assert(nElements <= nchan);
+    for (unsigned ic = 0; ic < nchan; ++ic){
+        pcal[ic] = value[ic];
+    }
+    return status;
 }
 
 extern "C" {

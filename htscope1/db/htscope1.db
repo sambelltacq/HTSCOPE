@@ -124,6 +124,30 @@ record(ao, "$(HOST):$(USER):$(UUT):FS") {
 	field(PINI, "YES")
 }
 
+record(aao, "$(HOST):$(USER):$(UUT):ESLO") {
+	field(DTYP, "asynFloat64")
+	field(OUT, "@asyn($(HOST):$(USER):$(UUT),0,$(TIMEOUT))ESLO")
+	field(NELM, "$(NCHAN)")
+	field(FTVL, "DOUBLE")
+	field(EGU,  "V/bit")
+}
+record(aao, "$(HOST):$(USER):$(UUT):EOFF") {
+	field(DTYP, "asynFloat64")
+	field(OUT, "@asyn($(HOST):$(USER):$(UUT),0,$(TIMEOUT))EOFF")
+	field(NELM, "$(NCHAN)")
+	field(FTVL, "DOUBLE")
+	field(EGU,  "V")
+}
+
+record(bo, "$(HOST):$(USER):$(UUT):SHOW_EGU") {
+	field(DTYP, "asynInt32")
+	field(OUT,  "@asyn($(HOST):$(USER):$(UUT),0,$(TIMEOUT))EGU")
+	field(ZNAM, "RAW")
+	field(ONAM, "EGU")
+	field(VAL,  "0")
+	field(PINI, "YES")
+}
+
 # PAN_LEFT,  first USER then USER:UUT
 record(bo, "$(HOST):$(USER):PAN_LEFT:1"){
 	field(FLNK, "$(HOST):$(USER):PAN_LEFT:1:f")

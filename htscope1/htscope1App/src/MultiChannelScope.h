@@ -21,6 +21,9 @@
 #define PS_FS           "FS"                /* asynFloat64,     r/w */
 #define PS_STRIDE		"STRIDE"			/* asynInt32,       r/w */
 #define PS_DELAY		"DELAY"				/* asynFloat64,     r/w */
+#define PS_ESLO			"ESLO"				/* asynFloat64,     r/w */
+#define PS_EOFF			"EOFF"				/* asynFloat64,     r/w */
+#define PS_EGU			"EGU"				/* asynInt32,       r/w */
 
 typedef epicsFloat64 CTYPE;
 typedef epicsFloat64 TBTYPE;
@@ -36,6 +39,8 @@ public:
     /* These are the methods that we override from asynPortDriver */
     virtual asynStatus writeInt32(asynUser *pasynUser, epicsInt32 value);
     virtual asynStatus writeFloat64(asynUser *pasynUser, epicsFloat64 value);
+    virtual asynStatus writeFloat64Array(asynUser *pasynUser, epicsFloat64 *value,
+                                        size_t nElements);
     void task(void);
 
 private:
@@ -55,6 +60,9 @@ private:
 	int P_FS;
 	int P_STRIDE;
 	int P_DELAY;
+	int P_ESLO;
+	int P_EOFF;
+	int P_EGU;
 
     // Add private members for scope data
     unsigned long data_len;
@@ -69,6 +77,10 @@ private:
     unsigned long startoff;
     bool refresh;
     bool mmap_active;
+
+    epicsFloat64* ESLO;
+    epicsFloat64* EOFF;
+    int EGU;                    /* EGU if set, RAW if not set */
 
     void get_tb();
     void get_data();
