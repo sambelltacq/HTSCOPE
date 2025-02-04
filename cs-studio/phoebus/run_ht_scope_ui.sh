@@ -5,10 +5,9 @@ help_msg="
 run_ht_scope_ui: Start phoebus gui for ht scope
 
 Usage:
-    ./run_ht_scope_ui.sh --host=kamino --user=dt100 acq1102_015 acq1102_010 acq1102_123 acq1102_999
+    ./run_ht_scope_ui.sh --host=kamino --user=dt100
 
 Args:
-    uuts         Hostname of uuts to target
     --host:      IOC host
     --user:      IOC user
     --chans:     Total chans per uut
@@ -50,12 +49,11 @@ macros["HOST"]="${named_args[host]:-kamino}"
 macros["USER"]="${named_args[user]:-dt100}"
 macros["NCHAN"]="${named_args[chans]:-32}"
 
-macros["UUT_1"]="${positional_args[0]:-acq1102_015}" #TODO change default
-macros["UUT_2"]="${positional_args[1]:-None}"
-macros["UUT_3"]="${positional_args[2]:-None}"
-macros["UUT_4"]="${positional_args[3]:-None}"
+#macros["UUT_1"]="${positional_args[0]:-acq1102_015}" #TODO change default
+#macros["UUT_2"]="${positional_args[1]:-None}"
+#macros["UUT_3"]="${positional_args[2]:-None}"
+#macros["UUT_4"]="${positional_args[3]:-None}"
 
-macros["PFX"]="${macros['HOST']}:${macros['USER']}"
 
 
 macro_to_query() {
