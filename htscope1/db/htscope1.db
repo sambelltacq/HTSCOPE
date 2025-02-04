@@ -125,14 +125,14 @@ record(ao, "$(HOST):$(USER):$(UUT):FS") {
 }
 
 record(aao, "$(HOST):$(USER):$(UUT):ESLO") {
-	field(DTYP, "asynFloat64")
+	field(DTYP, "asynFloat64ArrayOut")
 	field(OUT, "@asyn($(HOST):$(USER):$(UUT),0,$(TIMEOUT))ESLO")
 	field(NELM, "$(NCHAN)")
 	field(FTVL, "DOUBLE")
 	field(EGU,  "V/bit")
 }
 record(aao, "$(HOST):$(USER):$(UUT):EOFF") {
-	field(DTYP, "asynFloat64")
+	field(DTYP, "asynFloat64ArrayOut")
 	field(OUT, "@asyn($(HOST):$(USER):$(UUT),0,$(TIMEOUT))EOFF")
 	field(NELM, "$(NCHAN)")
 	field(FTVL, "DOUBLE")
@@ -278,4 +278,11 @@ record(calcout, "$(HOST):$(USER):$(UUT):ZOOM:OUT:c") {
 	field(DOPT, "Use CALC")
 	field(OUT,  "$(HOST):$(USER):$(UUT):STRIDE PP")
 	field(FLNK, "$(HOST):$(USER):$(UUT):REFRESH PP")
+}
+
+record(longout, "$(HOST):$(USER):DEBUG") {
+	field(DTYP, "asynInt32")
+	field(OUT,  "@asyn($(HOST):$(USER):$(UUT),0,$(TIMEOUT))DEBUG")
+	field(DRVL, "0")
+	field(DRVH, "5")
 }

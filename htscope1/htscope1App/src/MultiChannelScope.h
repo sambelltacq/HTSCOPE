@@ -24,6 +24,7 @@
 #define PS_ESLO			"ESLO"				/* asynFloat64,     r/w */
 #define PS_EOFF			"EOFF"				/* asynFloat64,     r/w */
 #define PS_EGU			"EGU"				/* asynInt32,       r/w */
+#define PS_DEBUG		"DEBUG"				/* asynInt32,       r/w */
 
 typedef epicsFloat64 CTYPE;
 typedef epicsFloat64 TBTYPE;
@@ -44,6 +45,7 @@ public:
     void task(void);
 
 private:
+    static int debug;
     const unsigned nchan;
     const unsigned nsam;
     const unsigned data_size;
@@ -63,6 +65,7 @@ private:
 	int P_ESLO;
 	int P_EOFF;
 	int P_EGU;
+	int P_DEBUG;
 
     // Add private members for scope data
     unsigned long data_len;

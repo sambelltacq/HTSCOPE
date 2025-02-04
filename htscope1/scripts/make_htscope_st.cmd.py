@@ -64,7 +64,7 @@ dbLoadRecords("{uutdb}","HOST={args.host},USER={user},UUT={uut},{tm},GFAN={globa
 dbLoadRecords("{chdb}","HOST={args.host},USER={user},UUT={uut},CH={ch},IX={ix},{tm},NPOINTS={args.ndata}")
 """)
 
-    print_cal(uut, iser, args)
+    print_cal(uut, user, args)
     args.fp.write(f"""
 asynSetTraceMask("{args.host}:{user}:{uut}",0,0xff))
     """)

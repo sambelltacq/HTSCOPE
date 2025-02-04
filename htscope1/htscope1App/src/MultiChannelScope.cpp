@@ -30,7 +30,7 @@ long GetFileSize(const std::string& filename) {
     return rc == 0 ? stat_buf.st_size : -1;
 }
 
-
+#define PRDEB(n) (debug >= n) && printf
 
 MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int maxPoints, unsigned _data_size) :
 		 asynPortDriver(portName,
@@ -59,6 +59,7 @@ MultiChannelScope::MultiChannelScope(const char *portName, int numChannels, int 
 	createParam(PS_ESLO,             	asynParamFloat64Array,      &P_ESLO);
 	createParam(PS_EOFF,             	asynParamFloat64Array,      &P_EOFF);
 	createParam(PS_EGU,  				asynParamInt32,             &P_EGU);
+	createParam(PS_DEBUG,               asynParamInt32,             &P_DEBUG);
 
 	setIntegerParam(P_NCHAN, 			nchan);
 	setIntegerParam(P_NSAM, 			nsam);
@@ -104,6 +105,9 @@ MultiChannelScope::~MultiChannelScope() {
 		unmap_uut_data();
 	}
 }
+
+int MultiChannelScope::debug = 0;
+
 /* Configuration routine.  Called directly, or from the iocsh function below */
 
 
@@ -140,8 +144,9 @@ void MultiChannelScope::task(void)
 				              driverName, functionName, function, paramName, value);
 #endif
 			status = callParamCallbacks();
-			printf("%s %s rc %d\n", __FUNCTION__, "callParamCallbacks", status);
-			printf("%s cleared refresh, callParamCallbacks() done\n", __FUNCTION__);
+
+			PRDEB(3)("%s %s rc %d\n", __FUNCTION__, "callParamCallbacks", status);
+			PRDEB(2)("%s cleared refresh, callParamCallbacks() done\n", __FUNCTION__);
 		}
 	}
 }
@@ -172,7 +177,7 @@ bool MultiChannelScope::mmap_uut_data() {
 		return false;
 	}
 	data_len = GetFileSize(datafile);
-	printf("file: %s data_len %lu\n", datafile, data_len);
+	PRDEB(1)("file: %s data_len %lu\n", datafile, data_len);
 
 
 	data_len -= data_len%(ssb);
@@ -180,11 +185,11 @@ bool MultiChannelScope::mmap_uut_data() {
 	data_len_words   = data_len/data_size;
 	data_len_samples = data_len/ssb;
 
-	printf("data_len: %ld words: %ld samples %ld\n", data_len, data_len_words, data_len_samples);
+	PRDEB(1)("data_len: %ld words: %ld samples %ld\n", data_len, data_len_words, data_len_samples);
 
 	RAW = (epicsInt16*)mmap(0, data_len, PROT_READ, MAP_SHARED, fileno(fp), 0);
 
-	printf("RAW:%p\n", RAW);
+	PRDEB(1)("RAW:%p\n", RAW);
 	return true;
 }
 
@@ -216,24 +221,23 @@ void MultiChannelScope::get_data() {
 	printf("%s startoff:%ld (samples) stride:%u\n", __FUNCTION__, startoff, stride);
 
 	unsigned long start_cursor = startoff*nchan;
+	int overlimit = 0;
 
 	for (unsigned isam = 0; isam < nsam; ++isam){
 		unsigned long cursor = start_cursor + isam*nchan*stride;
 		if (cursor <= data_len_words+nchan*data_size){
 			for (unsigned ic = 0; ic < nchan; ++ic){
-	#if 0
-				if (ic == 0 && isam <20){
-					printf("%s ic:%d isam:%d cursor:%d %04x\n", __FUNCTION__, ic, isam, cursor, RAW[cursor+ic]);
-				}
-	#endif
 				if (EGU){
 					CHANNELS[ic][isam] = RAW[cursor+ic] * ESLO[ic] + EOFF[ic];
+					PRDEB(2 - (ic == 0 && isam <20))("%s EGU ic:%d isam:%d cursor:%ld %04x %.4f\n", __FUNCTION__, ic, isam, cursor, RAW[cursor+ic], CHANNELS[ic][isam]);
 				}else{
 					CHANNELS[ic][isam] = RAW[cursor+ic];
+					PRDEB(2 - (ic == 0 && isam <20))("%s RAW ic:%d isam:%d cursor:%ld %04x\n", __FUNCTION__, ic, isam, cursor, RAW[cursor+ic]);
 				}
 			}
 		}else{
-			printf("cursor %lu reached limit of data at %d/%d fill with zeros (HACK) : set NORD would be better\n", cursor, isam, nsam);
+			PRDEB(1+overlimit)("cursor %lu reached limit of data at %d/%d fill with zeros (HACK) : set NORD would be better\n", cursor, isam, nsam);
+			overlimit = 1;
 
 			for (unsigned ic = 0; ic < nchan; ++ic){
 				CHANNELS[ic][isam] = 0;
@@ -242,7 +246,7 @@ void MultiChannelScope::get_data() {
 	}
 
 	for (unsigned ic = 0; ic < nchan; ic++){
-		//printf("%s ic:%d nsam:%d P_CHANNEL:%d\n", __FUNCTION__, ic, nsam, P_CHANNEL);
+		PRDEB(4)("%s ic:%d nsam:%d P_CHANNEL:%d\n", __FUNCTION__, ic, nsam, P_CHANNEL);
 		doCallbacksFloat64Array(CHANNELS[ic], nsam, P_CHANNEL, ic);
 	}
 	printf("%s 99 nchan:%d nsam:%d\n", __FUNCTION__, nchan, nsam);
@@ -271,7 +275,7 @@ void MultiChannelScope::get_tb() {
 		delay = 0;
 		printf("ERROR: %s failed to retrieve delay, setting default %.3e\n", __FUNCTION__, delay);
 	}
-	printf("%s create TB delay:%f isi:%.4g\n", __FUNCTION__, delay, isi);
+	PRDEB(1)("%s create TB delay:%f isi:%.4g\n", __FUNCTION__, delay, isi);
 
 	for (unsigned isam = 0; isam < nsam; ++isam, delay += isi){
 		TB[isam] = delay;
@@ -280,8 +284,7 @@ void MultiChannelScope::get_tb() {
 			printf("%s [%d] create TB delay:%f isi:%.4g\n", __FUNCTION__, isam, delay, isi);
 		 */
 	}
-	printf("%s doCallbacksFloat64Array(%p, %d, %d, %d)\n",
-			__FUNCTION__, TB, nsam, P_TB, 0);
+	PRDEB(1)("%s doCallbacksFloat64Array(%p, %d, %d, %d)\n", __FUNCTION__, TB, nsam, P_TB, 0);
 	doCallbacksFloat64Array(TB, nsam, P_TB, 0);
 }
 
@@ -296,7 +299,7 @@ asynStatus MultiChannelScope::writeInt32(asynUser *pasynUser, epicsInt32 value)
     status = parseAsynUser(pasynUser, &function, &addr, &paramName);
     if (status != asynSuccess) return status;
 
-    printf("%s addr:%d f:%d %s v:%d\n", __FUNCTION__, function, addr, paramName, value);
+    PRDEB(1)("%s addr:%d f:%d %s v:%d\n", __FUNCTION__, function, addr, paramName, value);
     /* Set the parameter in the parameter library. */
     status = (asynStatus) setIntegerParam(addr, function, value);
 
@@ -313,6 +316,10 @@ asynStatus MultiChannelScope::writeInt32(asynUser *pasynUser, epicsInt32 value)
     	printf("%s %s rc %d\n", __FUNCTION__, "callParamCallbacks", status);
     }else if (function == P_STRIDE){
     	stride = value;
+    }else if (function == P_DEBUG){
+    	debug = value;
+    }else if (function == P_EGU){
+    	EGU = value;
     }else if (function == P_MMAPUNMAP){
     	if (value == 1){
     		mmap_active = mmap_uut_data();
@@ -349,9 +356,14 @@ asynStatus MultiChannelScope::writeFloat64Array(asynUser *pasynUser, epicsFloat6
                                         size_t nElements)
 {
 	asynStatus status = asynSuccess;
-    int function = pasynUser->reason;
+    const char *paramName;
+    int addr;
+    int function;
     epicsFloat64* pcal;
+    status = parseAsynUser(pasynUser, &function, &addr, &paramName);
+    if (status != asynSuccess) return status;
 
+    PRDEB(1)("%s addr:%d f:%d %s\n", __FUNCTION__, addr, function, paramName);
     if (function == P_ESLO){
         pcal = ESLO;
     }else if (function == P_EOFF){
@@ -362,6 +374,7 @@ asynStatus MultiChannelScope::writeFloat64Array(asynUser *pasynUser, epicsFloat6
 
     assert(nElements <= nchan);
     for (unsigned ic = 0; ic < nchan; ++ic){
+    	PRDEB(2)("%s addr:%d %.4f\n", __FUNCTION__, function, value[ic]);
         pcal[ic] = value[ic];
     }
     return status;

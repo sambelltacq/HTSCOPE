@@ -309,116 +309,6 @@ $(pv_value)</tooltip>
     <x>30</x>
     <y>828</y>
   </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.spinner" version="1.0.0">
-    <actions hook="false" hook_all="false" />
-    <alarm_pulsing>false</alarm_pulsing>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <background_color>
-      <color red="255" green="255" blue="255" />
-    </background_color>
-    <border_alarm_sensitive>true</border_alarm_sensitive>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <border_style>3</border_style>
-    <border_width>1</border_width>
-    <buttons_on_left>false</buttons_on_left>
-    <enabled>true</enabled>
-    <font>
-      <opifont.name fontName="Noto Sans" height="11" style="0" pixels="false">Default</opifont.name>
-    </font>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <format>0</format>
-    <height>49</height>
-    <horizontal_alignment>1</horizontal_alignment>
-    <horizontal_buttons_layout>false</horizontal_buttons_layout>
-    <limits_from_pv>true</limits_from_pv>
-    <maximum>1.7976931348623157E308</maximum>
-    <minimum>-1.7976931348623157E308</minimum>
-    <name>Spinner_1</name>
-    <page_increment>10.0</page_increment>
-    <precision>3</precision>
-    <precision_from_pv>false</precision_from_pv>
-    <pv_name>$(HOST):$(USER):$(UUT):DELAY</pv_name>
-    <pv_value />
-    <rules />
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <scripts />
-    <show_text>true</show_text>
-    <step_increment>1.0</step_increment>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <transparent>false</transparent>
-    <vertical_alignment>1</vertical_alignment>
-    <visible>true</visible>
-    <widget_type>Spinner</widget_type>
-    <width>127</width>
-    <wuid>-4e5424a0:193a0f37887:-7d34</wuid>
-    <x>204</x>
-    <y>828</y>
-  </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.spinner" version="1.0.0">
-    <actions hook="false" hook_all="false" />
-    <alarm_pulsing>false</alarm_pulsing>
-    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
-    <background_color>
-      <color red="255" green="255" blue="255" />
-    </background_color>
-    <border_alarm_sensitive>true</border_alarm_sensitive>
-    <border_color>
-      <color red="0" green="128" blue="255" />
-    </border_color>
-    <border_style>3</border_style>
-    <border_width>1</border_width>
-    <buttons_on_left>false</buttons_on_left>
-    <enabled>true</enabled>
-    <font>
-      <opifont.name fontName="Noto Sans" height="11" style="0" pixels="false">Default</opifont.name>
-    </font>
-    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
-    <foreground_color>
-      <color red="0" green="0" blue="0" />
-    </foreground_color>
-    <format>0</format>
-    <height>49</height>
-    <horizontal_alignment>1</horizontal_alignment>
-    <horizontal_buttons_layout>false</horizontal_buttons_layout>
-    <limits_from_pv>true</limits_from_pv>
-    <maximum>1.7976931348623157E308</maximum>
-    <minimum>-1.7976931348623157E308</minimum>
-    <name>Spinner_2</name>
-    <page_increment>10.0</page_increment>
-    <precision>3</precision>
-    <precision_from_pv>false</precision_from_pv>
-    <pv_name>$(HOST):$(USER):$(UUT):STRIDE</pv_name>
-    <pv_value />
-    <rules />
-    <scale_options>
-      <width_scalable>true</width_scalable>
-      <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
-    </scale_options>
-    <scripts />
-    <show_text>true</show_text>
-    <step_increment>1.0</step_increment>
-    <tooltip>$(pv_name)
-$(pv_value)</tooltip>
-    <transparent>false</transparent>
-    <vertical_alignment>1</vertical_alignment>
-    <visible>true</visible>
-    <widget_type>Spinner</widget_type>
-    <width>127</width>
-    <wuid>-4e5424a0:193a0f37887:-7d28</wuid>
-    <x>366</x>
-    <y>828</y>
-  </widget>
   <widget typeId="org.csstudio.opibuilder.widgets.linkingContainer" version="1.0.0">
     <actions hook="false" hook_all="false" />
     <background_color>
@@ -964,19 +854,23 @@ $(pv_value)</tooltip>
     <x>816</x>
     <y>948</y>
   </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.MenuButton" version="1.0.0">
-    <actions_from_pv>true</actions_from_pv>
+  <widget typeId="org.csstudio.opibuilder.widgets.BoolButton" version="1.0.0">
+    <actions hook="false" hook_all="false" />
     <alarm_pulsing>false</alarm_pulsing>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
       <color red="240" green="240" blue="240" />
     </background_color>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <bit>-1</bit>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
-    <border_style>6</border_style>
+    <border_style>0</border_style>
     <border_width>1</border_width>
+    <confirm_message>Are you sure you want to do this?</confirm_message>
+    <data_type>0</data_type>
+    <effect_3d>true</effect_3d>
     <enabled>true</enabled>
     <font>
       <opifont.name fontName="Noto Sans" height="11" style="0" pixels="false">Default</opifont.name>
@@ -985,41 +879,134 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color red="0" green="0" blue="0" />
     </foreground_color>
-    <height>40</height>
-    <label></label>
-    <name>Menu Button_1</name>
+    <height>55</height>
+    <labels_from_pv>true</labels_from_pv>
+    <name>Boolean Button</name>
+    <off_color>
+      <color red="0" green="100" blue="0" />
+    </off_color>
+    <off_label>OFF</off_label>
+    <on_color>
+      <color red="0" green="255" blue="0" />
+    </on_color>
+    <on_label>ON</on_label>
+    <password></password>
+    <push_action_index>0</push_action_index>
     <pv_name>$(HOST):RUNSTOP</pv_name>
     <pv_value />
+    <released_action_index>0</released_action_index>
     <rules />
     <scale_options>
       <width_scalable>true</width_scalable>
       <height_scalable>true</height_scalable>
-      <keep_wh_ratio>false</keep_wh_ratio>
+      <keep_wh_ratio>true</keep_wh_ratio>
     </scale_options>
     <scripts />
-    <show_down_arrow>false</show_down_arrow>
+    <show_boolean_label>true</show_boolean_label>
+    <show_confirm_dialog>0</show_confirm_dialog>
+    <show_led>true</show_led>
+    <square_button>true</square_button>
+    <toggle_button>true</toggle_button>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
-    <transparent>false</transparent>
     <visible>true</visible>
-    <widget_type>Menu Button</widget_type>
-    <width>100</width>
-    <wuid>-1f2275c:194b6725f95:-7f3a</wuid>
-    <x>828</x>
+    <widget_type>Boolean Button</widget_type>
+    <width>127</width>
+    <wuid>779c8d9b:194d20e50c7:-7f34</wuid>
+    <x>816</x>
     <y>842</y>
   </widget>
-  <widget typeId="org.csstudio.opibuilder.widgets.MenuButton" version="1.0.0">
-    <actions_from_pv>true</actions_from_pv>
+  <widget typeId="org.csstudio.opibuilder.widgets.BoolButton" version="1.0.0">
+    <actions hook="false" hook_all="false" />
     <alarm_pulsing>false</alarm_pulsing>
     <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
     <background_color>
       <color red="240" green="240" blue="240" />
     </background_color>
-    <border_alarm_sensitive>false</border_alarm_sensitive>
+    <bit>-1</bit>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
     <border_color>
       <color red="0" green="128" blue="255" />
     </border_color>
-    <border_style>6</border_style>
+    <border_style>0</border_style>
+    <border_width>1</border_width>
+    <confirm_message>Are you sure you want to do this?</confirm_message>
+    <data_type>0</data_type>
+    <effect_3d>true</effect_3d>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Noto Sans" height="11" style="0" pixels="false">Default</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <height>55</height>
+    <labels_from_pv>true</labels_from_pv>
+    <name>Boolean Button_1</name>
+    <off_color>
+      <color red="0" green="100" blue="0" />
+    </off_color>
+    <off_label>OFF</off_label>
+    <on_color>
+      <color red="0" green="255" blue="0" />
+    </on_color>
+    <on_label>ON</on_label>
+    <password></password>
+    <push_action_index>0</push_action_index>
+    <pv_name>$(HOST):$(USER):$(UUT):MMAPUNMAP</pv_name>
+    <pv_value />
+    <released_action_index>0</released_action_index>
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>true</height_scalable>
+      <keep_wh_ratio>true</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <show_boolean_label>true</show_boolean_label>
+    <show_confirm_dialog>0</show_confirm_dialog>
+    <show_led>true</show_led>
+    <square_button>true</square_button>
+    <toggle_button>true</toggle_button>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <visible>true</visible>
+    <widget_type>Boolean Button</widget_type>
+    <width>127</width>
+    <wuid>779c8d9b:194d20e50c7:-7ef1</wuid>
+    <x>1176</x>
+    <y>834</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.checkbox" version="1.0.0">
+    <actions hook="false" hook_all="false">
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name)</pv_name>
+        <value>1</value>
+        <timeout>10</timeout>
+        <confirm_message></confirm_message>
+        <description></description>
+      </action>
+      <action type="WRITE_PV">
+        <pv_name>$(pv_name)</pv_name>
+        <value>0</value>
+        <timeout>10</timeout>
+        <confirm_message></confirm_message>
+        <description></description>
+      </action>
+    </actions>
+    <alarm_pulsing>false</alarm_pulsing>
+    <auto_size>false</auto_size>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="240" green="240" blue="240" />
+    </background_color>
+    <bit>0</bit>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <border_style>0</border_style>
     <border_width>1</border_width>
     <enabled>true</enabled>
     <font>
@@ -1029,10 +1016,64 @@ $(pv_value)</tooltip>
     <foreground_color>
       <color red="0" green="0" blue="0" />
     </foreground_color>
-    <height>40</height>
-    <label></label>
-    <name>Menu Button_2</name>
-    <pv_name>$(HOST):$(USER):$(UUT):MMAPUNMAP</pv_name>
+    <height>31</height>
+    <label>Show EGU</label>
+    <name>Check Box</name>
+    <pv_name>$(HOST):$(USER):$(UUT):SHOW_EGU</pv_name>
+    <pv_value />
+    <rules />
+    <scale_options>
+      <width_scalable>true</width_scalable>
+      <height_scalable>false</height_scalable>
+      <keep_wh_ratio>false</keep_wh_ratio>
+    </scale_options>
+    <scripts />
+    <selected_color>
+      <color red="77" green="77" blue="77" />
+    </selected_color>
+    <tooltip>$(pv_name)
+$(pv_value)</tooltip>
+    <visible>true</visible>
+    <widget_type>Check Box</widget_type>
+    <width>145</width>
+    <wuid>779c8d9b:194d20e50c7:-7e6f</wuid>
+    <x>1200</x>
+    <y>762</y>
+  </widget>
+  <widget typeId="org.csstudio.opibuilder.widgets.spinner" version="1.0.0">
+    <actions hook="false" hook_all="false" />
+    <alarm_pulsing>false</alarm_pulsing>
+    <backcolor_alarm_sensitive>false</backcolor_alarm_sensitive>
+    <background_color>
+      <color red="255" green="255" blue="255" />
+    </background_color>
+    <border_alarm_sensitive>true</border_alarm_sensitive>
+    <border_color>
+      <color red="0" green="128" blue="255" />
+    </border_color>
+    <border_style>3</border_style>
+    <border_width>1</border_width>
+    <buttons_on_left>false</buttons_on_left>
+    <enabled>true</enabled>
+    <font>
+      <opifont.name fontName="Noto Sans" height="11" style="0" pixels="false">Default</opifont.name>
+    </font>
+    <forecolor_alarm_sensitive>false</forecolor_alarm_sensitive>
+    <foreground_color>
+      <color red="0" green="0" blue="0" />
+    </foreground_color>
+    <format>0</format>
+    <height>55</height>
+    <horizontal_alignment>1</horizontal_alignment>
+    <horizontal_buttons_layout>false</horizontal_buttons_layout>
+    <limits_from_pv>true</limits_from_pv>
+    <maximum>Infinity</maximum>
+    <minimum>-Infinity</minimum>
+    <name>Spinner_4</name>
+    <page_increment>10.0</page_increment>
+    <precision>3</precision>
+    <precision_from_pv>false</precision_from_pv>
+    <pv_name>$(HOST):$(USER):DEBUG</pv_name>
     <pv_value />
     <rules />
     <scale_options>
@@ -1041,15 +1082,17 @@ $(pv_value)</tooltip>
       <keep_wh_ratio>false</keep_wh_ratio>
     </scale_options>
     <scripts />
-    <show_down_arrow>false</show_down_arrow>
+    <show_text>true</show_text>
+    <step_increment>1.0</step_increment>
     <tooltip>$(pv_name)
 $(pv_value)</tooltip>
     <transparent>false</transparent>
+    <vertical_alignment>1</vertical_alignment>
     <visible>true</visible>
-    <widget_type>Menu Button</widget_type>
-    <width>100</width>
-    <wuid>-1f2275c:194b6725f95:-7e60</wuid>
-    <x>1188</x>
-    <y>842</y>
+    <widget_type>Spinner</widget_type>
+    <width>97</width>
+    <wuid>779c8d9b:194d20e50c7:-7d8a</wuid>
+    <x>156</x>
+    <y>960</y>
   </widget>
 </display>
