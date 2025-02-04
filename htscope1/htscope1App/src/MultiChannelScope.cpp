@@ -219,20 +219,24 @@ void MultiChannelScope::get_data() {
 
 	for (unsigned isam = 0; isam < nsam; ++isam){
 		unsigned long cursor = start_cursor + isam*nchan*stride;
-		if (cursor >= data_len_words+nchan*data_size){
-			printf("cursor %lu reached limit of data at %d/%d\n", cursor, isam, nsam);
-			break;
-		}
-		for (unsigned ic = 0; ic < nchan; ++ic){
-#if 0
-			if (ic == 0 && isam <20){
-				printf("%s ic:%d isam:%d cursor:%d %04x\n", __FUNCTION__, ic, isam, cursor, RAW[cursor+ic]);
+		if (cursor <= data_len_words+nchan*data_size){
+			for (unsigned ic = 0; ic < nchan; ++ic){
+	#if 0
+				if (ic == 0 && isam <20){
+					printf("%s ic:%d isam:%d cursor:%d %04x\n", __FUNCTION__, ic, isam, cursor, RAW[cursor+ic]);
+				}
+	#endif
+				if (EGU){
+					CHANNELS[ic][isam] = RAW[cursor+ic] * ESLO[ic] + EOFF[ic];
+				}else{
+					CHANNELS[ic][isam] = RAW[cursor+ic];
+				}
 			}
-#endif
-			if (EGU){
-				CHANNELS[ic][isam] = RAW[cursor+ic] * ESLO[ic] + EOFF[ic];
-			}else{
-				CHANNELS[ic][isam] = RAW[cursor+ic];
+		}else{
+			printf("cursor %lu reached limit of data at %d/%d fill with zeros (HACK) : set NORD would be better\n", cursor, isam, nsam);
+
+			for (unsigned ic = 0; ic < nchan; ++ic){
+				CHANNELS[ic][isam] = 0;
 			}
 		}
 	}
