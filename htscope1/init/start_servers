@@ -1,7 +1,21 @@
 #!/bin/bash
 
+start=${1:-start}
+
+kill_pid() {
+	[ -e $1 ] && (kill -3 $(cat $1); rm $1)
+}
+PID_IOC=./pid_ioc
+PID_HTS=./pid_hts
+
+kill_pid $PID_IOC
+kill_pid $PID_HTS
+
+if [ "x$start" = "xstart" ]; then
+
 # run the IOC on control socket 8841
-procServ -L ioc.log -l 8842 -P 8841 ./scripts/run_ioc
+	procServ -L ioc.log -l 8842 -P 8841 -p $PID_IOC ./scripts/run_ioc
 
 # run the htstream wrapper on control socket 8843
-procServ -L htstream_wrapper.log -l 8844 -P 8843 ./scripts/run_htstream_wrapper.py
+	procServ -L htstream_wrapper.log -l 8844 -P 8843 -p $PID_HTS ./scripts/run_htstream_wrapper.py
+fi
