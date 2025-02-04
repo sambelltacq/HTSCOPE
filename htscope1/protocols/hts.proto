@@ -1,0 +1,7 @@
+Terminator = LF;
+ExtraInput = Ignore;
+ReplyTimeout = 2500;
+
+getIDLE {
+	in "waiting";
+}

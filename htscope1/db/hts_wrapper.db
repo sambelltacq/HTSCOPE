@@ -1,0 +1,14 @@
+
+record(bi, "$(HOST):IDLE") {
+	field(DTYP, "stream")
+	field(INP,  "@hts.proto getIDLE ${SPORT}")
+	field(SCAN, "I/O Intr")
+	field(FLNK, "$(HOST):HEARTBEAT PP")
+}
+
+record(calcout, "$(HOST):HEARTBEAT") {
+	field(CALC, "!VAL")
+}
+
+
+
