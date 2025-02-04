@@ -104,6 +104,15 @@ record(longout, "$(HOST):$(USER):$(UUT):STRIDE"){
 	field(DRVH, "200")
 	field(VAL,  "1")
 	field(PINI, "YES")
+	field(FLNK, "$(HOST):$(USER):$(UUT):ISI PP")
+}
+
+record(calc, "$(HOST):$(USER):$(UUT):ISI"){		
+	field(INPA, "$(HOST):$(USER):$(UUT):STRIDE")
+	field(INPB, "$(HOST):$(USER):$(UUT):FS")
+	field(CALC, "A/B*1e6")
+	field(DESC, "ISI: intersample interval")
+	field(EGU,  "usec")
 }
 
 record(ao, "$(HOST):$(USER):$(UUT):DELAY") {
@@ -121,6 +130,7 @@ record(ao, "$(HOST):$(USER):$(UUT):FS") {
 	field(DRVL, "1e3")
 	field(DRVH, "80e6")
 	field(VAL,  "2e6")
+	field(EGU,  "Hz")
 	field(PINI, "YES")
 }
 
