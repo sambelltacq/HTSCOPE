@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-02-05 13:19:55 by dt100-->
+<!--Saved on 2025-02-05 16:46:29 by dt100-->
 <display version="2.0.0">
   <name>HT_Scope_Launcher</name>
   <width>778</width>
@@ -1250,10 +1250,11 @@
     </widget>
     <widget type="bool_button" version="2.0.0">
       <name>EGU Button</name>
-      <pv_name>$(HOST):$(USER):SHOW_EGU</pv_name>
-      <x>293</x>
-      <y>106</y>
+      <pv_name>$(HOST):$(USER):$(UUT_1):SHOW_EGU</pv_name>
+      <x>81</x>
+      <y>112</y>
       <width>90</width>
+      <height>28</height>
       <off_label></off_label>
       <off_color>
         <color red="237" green="185" blue="185">
@@ -1264,11 +1265,23 @@
         <color red="255" green="212" blue="0">
         </color>
       </on_color>
-      <font>
-        <font family="Liberation Sans" style="BOLD" size="14.0">
-        </font>
-      </font>
       <labels_from_pv>true</labels_from_pv>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>REFRESH Button</name>
+      <actions execute_as_one="true">
+        <action type="write_pv">
+          <description>REFRESH</description>
+          <pv_name>$(HOST):$(USER):$(UUT_1):REFRESH</pv_name>
+          <value>0</value>
+        </action>
+      </actions>
+      <text>REFRESH</text>
+      <y>112</y>
+      <width>76</width>
+      <height>28</height>
+      <tooltip>$(actions)</tooltip>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
     </widget>
   </widget>
   <widget type="group" version="3.0.0">
@@ -1315,22 +1328,6 @@
       <y>40</y>
       <width>280</width>
       <height>60</height>
-    </widget>
-    <widget type="action_button" version="3.0.0">
-      <name>REFRESH Button</name>
-      <actions execute_as_one="true">
-        <action type="write_pv">
-          <description>REFRESH</description>
-          <pv_name>$(HOST):$(USER):$(UUT_1):REFRESH</pv_name>
-          <value>0</value>
-        </action>
-      </actions>
-      <text>REFRESH</text>
-      <x>203</x>
-      <width>76</width>
-      <height>28</height>
-      <tooltip>$(actions)</tooltip>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
     </widget>
   </widget>
 </display>
