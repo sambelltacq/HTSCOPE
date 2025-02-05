@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-02-05 16:46:29 by dt100-->
+<!--Saved on 2025-02-05 17:19:35 by dt100-->
 <display version="2.0.0">
   <name>HT_Scope_Launcher</name>
   <width>778</width>
@@ -1328,6 +1328,19 @@
       <y>40</y>
       <width>280</width>
       <height>60</height>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>Action Button_1</name>
+      <actions>
+        <action type="command">
+          <description>Open console</description>
+          <command>mate-terminal -e "nc localhost 8843"</command>
+        </action>
+      </actions>
+      <text>Console</text>
+      <x>203</x>
+      <width>70</width>
+      <tooltip>$(actions)</tooltip>
     </widget>
   </widget>
 </display>
