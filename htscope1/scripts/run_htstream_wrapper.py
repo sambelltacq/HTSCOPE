@@ -25,7 +25,8 @@ def run_process_with_live_output(command):
             output = pp.stdout.readline()
             if not output:
                 break
-            print(output.strip())
+            output = output.strip()
+            if output[0] == '+': STATUS.put(output)
         else:
             if run_request != 1:
                 print(f'STOP requested')

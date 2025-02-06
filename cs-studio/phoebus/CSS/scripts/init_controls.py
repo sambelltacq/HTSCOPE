@@ -27,13 +27,15 @@ def set_macros(widget, new_macros):
 
 logger.info("Start")
 
-uuts = PVUtil.getString(pvs[0]).split(',')
+uuts = PVUtil.getString(pvs[0])
 
 macros = get_macros(display)
 
-for idx in range(4):
+macros['UUTS'] = uuts
+
+for idx, uut in enumerate(uuts.split(',')):
     key = "UUT_{}".format(idx + 1)
-    macros[key] = uuts[idx] if 0 <= idx < len(uuts) else None
+    macros[key] = uut
 
 widget.setPropertyValue("macros", macros)
 widget.setPropertyValue("file", "opi/ht_scope_controls.bob")
