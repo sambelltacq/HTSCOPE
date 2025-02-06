@@ -5,6 +5,19 @@
 # FOO:w : write
 
 
+
+record(bo, "$(HOST):$(USER):REFRESH") {
+	field(DTYP, "Soft Channel")
+	field(FLNK, "$(HOST):$(USER):$(UUT):REFRESH:w PP")
+	field(ZNAM, "0")
+	field(ONAM, "1")
+	field(FLNK, "$(HOST):$(USER):REFRESH:f")
+}
+
+record(fanout, "$(HOST):$(USER):REFRESH:f") {
+	field($(UFAN), "$(HOST):$(USER):$(UUT):REFRESH")
+}
+
 record(bo, "$(HOST):$(USER):$(UUT):REFRESH") {
 	field(DTYP, "Soft Channel")
 	field(FLNK, "$(HOST):$(USER):$(UUT):REFRESH:w PP")
@@ -156,6 +169,14 @@ record(bo, "$(HOST):$(USER):$(UUT):SHOW_EGU") {
 	field(ONAM, "EGU")
 	field(VAL,  "0")
 	field(PINI, "YES")
+	field(FLNK, "$(HOST):$(USER):$(UUT):REFRESH:set PP")
+}
+
+record(calcout, "$(HOST):$(USER):$(UUT):REFRESH:set") {
+	field(CALC, "1")
+	field(DOPT, "Use CALC")
+	field(OOPT, "Every Time")
+	field(OUT,  "$(HOST):$(USER):$(UUT):REFRESH PP")
 }
 
 # PAN_LEFT,  first USER then USER:UUT

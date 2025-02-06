@@ -23,6 +23,7 @@ record(mbbo, "$(HOST):RUN:EXIT_STATUS") {
 	field(ONST, "SUCCESS")
 	field(TWST, "FAIL")
 	field(THST, "BUSY")
+	field(FLNK, "$(HOST):RUN:REFRESH:g")
 }
 
 record(mbbi, "$(HOST):RUN:EXIT_STATUS:r") {
@@ -48,6 +49,15 @@ record(mbbo, "$(HOST):RUN:EXIT_STATUS:s") {
 	field(TWST, "FAIL")
 	field(THST, "BUSY")
  }
+
+record(calcout, "$(HOST):RUN:REFRESH:g") {
+	field(DESC, "REFRESH if good")
+	field(INPA,  "$(HOST):RUN:EXIT_STATUS")
+	field(CALC,  "A==1")
+	field(DOPT, "Use CALC")
+	field(OOPT, "When Non-zero")
+	field(OUT,  "$(HOST):dt100:REFRESH PP")    # @@todo
+}
 
 record(longin, "$(HOST):RUN:JOB" ){
 	field(DTYP, "stream")
