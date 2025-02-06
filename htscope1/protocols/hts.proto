@@ -3,5 +3,9 @@ ExtraInput = Ignore;
 ReplyTimeout = 2500;
 
 getIDLE {
-	in "waiting";
+	in "waiting %d\r";
+}
+
+getRunTime {
+    in "%s\r";
 }

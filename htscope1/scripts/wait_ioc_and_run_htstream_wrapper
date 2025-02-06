@@ -1,0 +1,10 @@
+#!/bin/bash
+
+while [ ! -e records.dbl ]; do
+    echo waiting for ioc
+    sleep 1
+done
+
+unbuffer ./scripts/run_htstream_wrapper.py
+
+

@@ -25,7 +25,10 @@ def run_process_with_live_output(command):
             output = pp.stdout.readline()
             if not output:
                 break
-            print(output.strip())
+            output = output.strip()
+            print(output)
+            if output[0] == '+':
+                STATUS.put(output)
         else:
             if run_request != 1:
                 print(f'STOP requested')
@@ -57,6 +60,7 @@ loopcount = 0
 shot = 0
 
 while True:
+    loopcount += 1
     if run_request == 1:
         shot += 1
         STATUS.put(f'run_request shot {shot}')
@@ -70,9 +74,8 @@ while True:
         STATUS.put(f'htstream complete rc {rc}')
         print(f'htstream complete rc {rc}')
         RUNSTOP.put(0)
+    else:
+        print(f'waiting {loopcount}')
 
     time.sleep(0.1)
-    loopcount += 1
-    if loopcount%10 == 1:
-        print(f'waiting')
 

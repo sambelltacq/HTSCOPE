@@ -7,7 +7,7 @@ import subprocess
 import threading
 
 from acq400_hapi import afhba404, factory, acq400_logger, PR, pv
-
+from acq400_hapi.acq400_print import DISPLAY
 """
 Usage:
 
@@ -266,6 +266,7 @@ class Stream():
             time.sleep(0.5)
 
 def run_main(args):
+    print(args)
     global log
     log = acq400_logger('ht_stream', level=args.loglevel, logfile='ht_stream.log')
 
@@ -285,15 +286,20 @@ def run_main(args):
                 t0 = time.time()
 
             t1 = int(min(time.time() - t0, t0))
-
-            print()
-            print(f"HT_Stream {t1}s")
+            mstr = f"+{t1}:"
 
             for uut in hts.uuts.values():
-                print(f"{uut.uut} {uut.cstate} :")
-                for stream in uut.streams.values():
-                    print(f"\t [{stream.lport}] {stream.state.rx_rate * stream.bl_MB} MB/s {stream.state.rx * stream.bl_MB:,} MB ({stream.state.STATUS})")
 
+                mstr += uut.cstate[0]
+
+                for stream in uut.streams.values():
+                    rate = stream.state.rx_rate * stream.bl_MB
+                    total = stream.state.rx * stream.bl_MB
+                    print(f"runtime={t1} uut={uut.uut} cstate={uut.cstate} rport={stream.rport} lport={stream.lport} rate={rate} total={total}")
+                    mstr += f"{total},"
+
+            print(mstr[:-1])
+            
             if args.secs and t1 > args.secs:
                 print('Time Limit Reached Stopping')
                 if not hts.state_all('IDLE'): hts.stop_uuts()
@@ -303,8 +309,10 @@ def run_main(args):
                 print('Buffer limit Reached Stopping')
                 if not hts.state_all('IDLE'): hts.stop_uuts()
                 else: break
-    
+            
             time.sleep(1)
+    except Exception as e:
+        print(f"error {e}")
 
     except KeyboardInterrupt:
         hts.stop_uuts()

@@ -1,5 +1,5 @@
 
-record(bi, "$(HOST):IDLE") {
+record(longin, "$(HOST):IDLE") {
 	field(DTYP, "stream")
 	field(INP,  "@hts.proto getIDLE ${SPORT}")
 	field(SCAN, "I/O Intr")
@@ -10,5 +10,10 @@ record(calcout, "$(HOST):HEARTBEAT") {
 	field(CALC, "!VAL")
 }
 
+record(stringin, "$(HOST):RUNTIME") {
+    field(DTYPE, "stream")
+    field(INP,  "@hts.proto getRunTime ${SPORT}")
+	field(SCAN, "I/O Intr")
+}
 
 
