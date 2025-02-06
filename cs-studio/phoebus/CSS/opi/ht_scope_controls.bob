@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-02-04 15:01:41 by dt100-->
+<!--Saved on 2025-02-06 14:32:40 by dt100-->
 <display version="2.0.0">
   <name>HT_Scope_Launcher</name>
   <width>778</width>
@@ -1022,7 +1022,7 @@
     <x>339</x>
     <y>280</y>
     <width>428</width>
-    <height>153</height>
+    <height>175</height>
     <transparent>true</transparent>
     <widget type="group" version="3.0.0">
       <name>ControlButtons</name>
@@ -1036,7 +1036,7 @@
         <actions>
           <action type="write_pv">
             <description>Zoom In</description>
-            <pv_name>${HOST}:${USER}:${UUT_1}:ZOOM:IN</pv_name>
+            <pv_name>${HOST}:${USER}:ZOOM:IN</pv_name>
             <value>0</value>
           </action>
         </actions>
@@ -1050,7 +1050,7 @@
         <actions>
           <action type="write_pv">
             <description>Zoom Out</description>
-            <pv_name>${HOST}:${USER}:${UUT_1}:ZOOM:OUT</pv_name>
+            <pv_name>${HOST}:${USER}:ZOOM:OUT</pv_name>
             <value>0</value>
           </action>
         </actions>
@@ -1065,7 +1065,7 @@
         <actions>
           <action type="write_pv">
             <description>Pan Right</description>
-            <pv_name>${HOST}:${USER}:${UUT_1}:PAN_RIGHT:1</pv_name>
+            <pv_name>${HOST}:${USER}:PAN_RIGHT:1</pv_name>
             <value>0</value>
           </action>
         </actions>
@@ -1080,7 +1080,7 @@
         <actions>
           <action type="write_pv">
             <description>Pan Left</description>
-            <pv_name>${HOST}:${USER}:${UUT_1}:PAN_LEFT:1</pv_name>
+            <pv_name>${HOST}:${USER}:PAN_LEFT:1</pv_name>
             <value>0</value>
           </action>
         </actions>
@@ -1102,6 +1102,7 @@
           <PV>STRIDE</PV>
           <VALUE>200</VALUE>
           <MAX>205</MAX>
+          <PRECISION>0</PRECISION>
         </macros>
         <y>37</y>
         <width>282</width>
@@ -1151,6 +1152,7 @@
           <PV>FS</PV>
           <VALUE>2000000</VALUE>
           <MAX>2000000</MAX>
+          <PRECISION>0</PRECISION>
         </macros>
         <x>1</x>
         <width>282</width>
@@ -1200,6 +1202,7 @@
           <PV>DELAY</PV>
           <VALUE>0</VALUE>
           <MAX>100</MAX>
+          <PRECISION>2</PRECISION>
         </macros>
         <x>1</x>
         <y>74</y>
@@ -1213,7 +1216,7 @@
           <x>170</x>
           <width>110</width>
           <height>30</height>
-          <precision>0</precision>
+          <precision>$(PRECISION)</precision>
           <background_color>
             <color name="Header_ForeGround" red="255" green="255" blue="255">
             </color>
@@ -1228,7 +1231,7 @@
           <x>86</x>
           <width>70</width>
           <height>30</height>
-          <precision>0</precision>
+          <precision>$(PRECISION)</precision>
           <vertical_alignment>1</vertical_alignment>
         </widget>
         <widget type="label" version="2.0.0">
@@ -1244,6 +1247,41 @@
           <vertical_alignment>1</vertical_alignment>
         </widget>
       </widget>
+    </widget>
+    <widget type="bool_button" version="2.0.0">
+      <name>EGU Button</name>
+      <pv_name>$(HOST):$(USER):$(UUT_1):SHOW_EGU</pv_name>
+      <x>81</x>
+      <y>112</y>
+      <width>90</width>
+      <height>28</height>
+      <off_label></off_label>
+      <off_color>
+        <color red="237" green="185" blue="185">
+        </color>
+      </off_color>
+      <on_label></on_label>
+      <on_color>
+        <color red="255" green="212" blue="0">
+        </color>
+      </on_color>
+      <labels_from_pv>true</labels_from_pv>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>REFRESH Button</name>
+      <actions execute_as_one="true">
+        <action type="write_pv">
+          <description>REFRESH</description>
+          <pv_name>$(HOST):$(USER):$(UUT_1):REFRESH</pv_name>
+          <value>0</value>
+        </action>
+      </actions>
+      <text>REFRESH</text>
+      <y>112</y>
+      <width>76</width>
+      <height>28</height>
+      <tooltip>$(actions)</tooltip>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
     </widget>
   </widget>
   <widget type="group" version="3.0.0">
@@ -1284,28 +1322,35 @@
       <maximum>20.0</maximum>
       <limits_from_pv>false</limits_from_pv>
     </widget>
-    <widget type="textupdate" version="2.0.0">
-      <name>STATUS</name>
-      <pv_name>$(HOST):STATUS</pv_name>
-      <y>40</y>
-      <width>280</width>
-      <height>60</height>
-    </widget>
     <widget type="action_button" version="3.0.0">
-      <name>REFRESH Button</name>
-      <actions execute_as_one="true">
-        <action type="write_pv">
-          <description>REFRESH</description>
-          <pv_name>$(HOST):$(USER):$(UUT_1):REFRESH</pv_name>
-          <value>0</value>
+      <name>Action Button_1</name>
+      <actions>
+        <action type="command">
+          <description>Open console</description>
+          <command>mate-terminal -e "nc localhost 8843"</command>
         </action>
       </actions>
-      <text>REFRESH</text>
+      <text>Console</text>
       <x>203</x>
-      <width>76</width>
-      <height>28</height>
+      <width>70</width>
       <tooltip>$(actions)</tooltip>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Status box</name>
+      <text>STATUS</text>
+      <y>33</y>
+      <width>273</width>
+      <height>70</height>
+      <background_color>
+        <color name="Read_Background" red="240" green="240" blue="240">
+        </color>
+      </background_color>
+      <transparent>false</transparent>
+      <scripts>
+        <script file="../scripts/handle_status.py">
+          <pv_name>$(HOST):STATUS</pv_name>
+        </script>
+      </scripts>
     </widget>
   </widget>
 </display>
