@@ -1,4 +1,4 @@
-Terminator = LF;
+Terminator = CR LF;
 ExtraInput = Ignore;
 ReplyTimeout = 2500;
 
@@ -6,6 +6,16 @@ getIDLE {
 	in "waiting %d\r";
 }
 
-getRunTime {
-    in "%s\r";
+getRunJob {
+    in "run job %d";
+}
+getRunStatusSec {
+    in "+%d:%*c%*d";
+}
+getExitStatus {
+    in "htstream complete rc %s";
+}
+
+getExitStatusEnum {
+    in "htstream complete rc %{xx|None|-}";
 }
