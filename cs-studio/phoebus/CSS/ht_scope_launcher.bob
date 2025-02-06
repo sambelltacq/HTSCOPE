@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-02-03 17:50:03 by dt100-->
+<!--Saved on 2025-02-05 16:25:45 by dt100-->
 <display version="2.0.0">
   <name>HT_Scope_Launcher</name>
   <width>778</width>
@@ -18,17 +18,16 @@
   </widget>
   <widget type="group" version="3.0.0">
     <name>Needed to work correctly :(</name>
-    <x>200</x>
-    <y>480</y>
+    <y>470</y>
     <width>442</width>
-    <height>350</height>
+    <height>220</height>
     <visible>false</visible>
     <style>3</style>
     <transparent>true</transparent>
     <widget type="textupdate" version="2.0.0">
       <name>Text Update_1</name>
       <pv_name>loc://trace_pvs_0</pv_name>
-      <y>132</y>
+      <y>52</y>
       <width>442</width>
       <foreground_color>
         <color name="On" red="0" green="255" blue="0">
@@ -43,7 +42,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>Text Update_2</name>
       <pv_name>loc://trace_pvs_1</pv_name>
-      <y>152</y>
+      <y>72</y>
       <width>442</width>
       <foreground_color>
         <color name="On" red="0" green="255" blue="0">
@@ -58,7 +57,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>Text Update_3</name>
       <pv_name>loc://trace_pvs_2</pv_name>
-      <y>172</y>
+      <y>92</y>
       <width>442</width>
       <foreground_color>
         <color name="On" red="0" green="255" blue="0">
@@ -73,7 +72,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>Text Update_4</name>
       <pv_name>loc://trace_pvs_3</pv_name>
-      <y>192</y>
+      <y>112</y>
       <width>442</width>
       <foreground_color>
         <color name="On" red="0" green="255" blue="0">
@@ -88,7 +87,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>Text Update_5</name>
       <pv_name>loc://trace_pvs_4</pv_name>
-      <y>212</y>
+      <y>132</y>
       <width>442</width>
       <foreground_color>
         <color name="On" red="0" green="255" blue="0">
@@ -103,7 +102,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>Text Update_6</name>
       <pv_name>loc://trace_pvs_5</pv_name>
-      <y>232</y>
+      <y>152</y>
       <width>442</width>
       <foreground_color>
         <color name="On" red="0" green="255" blue="0">
@@ -118,7 +117,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>Text Update_7</name>
       <pv_name>loc://trace_pvs_6</pv_name>
-      <y>252</y>
+      <y>172</y>
       <width>442</width>
       <foreground_color>
         <color name="On" red="0" green="255" blue="0">
@@ -133,7 +132,7 @@
     <widget type="textupdate" version="2.0.0">
       <name>Text Update_8</name>
       <pv_name>loc://trace_pvs_7</pv_name>
-      <y>272</y>
+      <y>192</y>
       <width>442</width>
       <foreground_color>
         <color name="On" red="0" green="255" blue="0">
@@ -146,41 +145,9 @@
       <transparent>true</transparent>
     </widget>
     <widget type="label" version="2.0.0">
-      <name>Label</name>
-      <text>UUT_1 = ${UUT_1}</text>
-      <y>20</y>
-      <width>122</width>
-      <height>16</height>
-      <auto_size>true</auto_size>
-    </widget>
-    <widget type="label" version="2.0.0">
-      <name>Label_1</name>
-      <text>UUT_2 = ${UUT_2}</text>
-      <y>36</y>
-      <width>122</width>
-      <height>16</height>
-      <auto_size>true</auto_size>
-    </widget>
-    <widget type="label" version="2.0.0">
-      <name>Label_2</name>
-      <text>UUT_3 = ${UUT_3}</text>
-      <y>52</y>
-      <width>122</width>
-      <height>16</height>
-      <auto_size>true</auto_size>
-    </widget>
-    <widget type="label" version="2.0.0">
-      <name>Label_3</name>
-      <text>UUT_4 = ${UUT_4}</text>
-      <y>68</y>
-      <width>122</width>
-      <height>16</height>
-      <auto_size>true</auto_size>
-    </widget>
-    <widget type="label" version="2.0.0">
       <name>Label_11</name>
       <text>HOST = ${HOST}</text>
-      <y>84</y>
+      <y>20</y>
       <width>111</width>
       <height>16</height>
       <auto_size>true</auto_size>
@@ -188,7 +155,7 @@
     <widget type="label" version="2.0.0">
       <name>Label_12</name>
       <text>USER = ${USER}</text>
-      <y>100</y>
+      <y>36</y>
       <width>90</width>
       <height>16</height>
       <auto_size>true</auto_size>

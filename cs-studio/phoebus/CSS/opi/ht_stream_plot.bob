@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-01-31 15:26:45 by dt100-->
+<!--Saved on 2025-02-05 14:49:31 by dt100-->
 <display version="2.0.0">
   <name>Plot</name>
   <width>1100</width>
@@ -20,8 +20,8 @@
         <pv_name>loc://trace_pvs_6</pv_name>
         <pv_name>loc://trace_pvs_7</pv_name>
       </script>
-      <script file="../scripts/fit_plot.py">
-        <pv_name>loc://plot_autosize</pv_name>
+      <script file="../scripts/handle_axis.py">
+        <pv_name>$(HOST):$(USER):$(UUT_1):SHOW_EGU</pv_name>
       </script>
     </scripts>
     <x_axis>
@@ -43,7 +43,7 @@
     </x_axis>
     <y_axes>
       <y_axis>
-        <title>Level [V]</title>
+        <title>Level [Codes]</title>
         <autoscale>true</autoscale>
         <log_scale>false</log_scale>
         <minimum>0.0</minimum>
