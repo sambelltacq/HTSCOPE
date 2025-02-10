@@ -20,7 +20,7 @@ def run_process_with_live_output(command):
     # universal_newlines=True, bufsize=1)
 
     while True:
-        rc = select.select([pp.stdout.fileno()], [], [], 0.5)
+        rc = select.select([pp.stdout.fileno()], [], [], 1)
         if len(rc[0]) > 0:
             output = pp.stdout.readline()
             if not output:
@@ -85,5 +85,5 @@ while True:
     else:
         print(f'waiting {loopcount}')
 
-    time.sleep(0.1)
+    time.sleep(0.5)
 

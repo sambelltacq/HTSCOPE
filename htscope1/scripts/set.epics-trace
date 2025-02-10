@@ -1,0 +1,12 @@
+#!/bin/bash
+
+HN=${1:-$(hostname)}
+SX=${2:-HTS}
+EN=${3:-1}
+
+
+PV=${HN}:asyn:${SX}
+
+caput ${PV}.TB3 ${EN}
+caput ${PV}.TIB0 ${EN}
+
