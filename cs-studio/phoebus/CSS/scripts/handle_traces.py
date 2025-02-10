@@ -32,7 +32,7 @@ def is_stale(pv):
 
 t0 = time.time()
 for trace_num, pv in enumerate(pvs):
-
+    trace_num = trace_num + 1
     value = PVUtil.getString(pv).split(',')
     
     if is_inited(widget) and is_stale(pv): continue
