@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2025-02-10 12:29:36 by dt100-->
+<display version="2.0.0">
+  <name>stream_status</name>
+  <width>470</width>
+  <height>25</height>
+  <widget type="textupdate" version="2.0.0">
+    <name>stream_status</name>
+    <pv_name>$(HOST):$(UUT):STREAM:STATUS</pv_name>
+    <width>470</width>
+    <height>25</height>
+    <visible>false</visible>
+    <font>
+      <font name="Default Bold" family="Liberation Sans" style="BOLD" size="14.0">
+      </font>
+    </font>
+    <format>6</format>
+    <vertical_alignment>1</vertical_alignment>
+    <scripts>
+      <script file="../scripts/handle_visibility.py">
+        <pv_name>$(HOST):UUTS</pv_name>
+      </script>
+    </scripts>
+  </widget>
+</display>

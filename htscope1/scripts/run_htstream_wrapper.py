@@ -26,6 +26,14 @@ def run_process_with_live_output(command):
             if not output:
                 break
             output = output.strip()
+
+            if output.startswith("runtime"):
+                state = dict(item.split("=") for item in output.split())
+                state['host'] = HOST
+                pvname = "{host}:{uut}:STREAM:STATUS".format(**state)
+                pvvalue = "[{uut}][{rport}]({cstate}) -> [{host}][{lport}]({rate}MB/s | {total}MB)".format(**state)
+                epics.caput(pvname, pvvalue)
+
             print(output)
             if output[0] == '+':
                 STATUS.put(output)
@@ -39,19 +47,19 @@ def run_process_with_live_output(command):
 
 # get HOST:USER for local ioc
 
-PFX =  f'{socket.gethostname().split(".")[0]}:'
+HOST = socket.gethostname().split(".")[0]
 
 
 def onChange(pvname=None, value=None, char_value=None, **kwargs):
     global run_request
     run_request = value
 
-print(f'PFX {PFX}')
+print(f'HOST {HOST}')
 
-RUNSTOP = epics.get_pv(f'{PFX}RUNSTOP', callback=onChange)
-UUTS = epics.get_pv(f'{PFX}UUTS')
-SHOT_TIME = epics.get_pv(f'{PFX}SHOT_TIME')
-STATUS = epics.get_pv(f'{PFX}STATUS')
+RUNSTOP = epics.get_pv(f'{HOST}:RUNSTOP', callback=onChange)
+UUTS = epics.get_pv(f'{HOST}:UUTS')
+SHOT_TIME = epics.get_pv(f'{HOST}:SHOT_TIME')
+STATUS = epics.get_pv(f'{HOST}:STATUS')
 
 
 print(f'RUNSTOP: {RUNSTOP.get()} UUTS: {UUTS.get()} SHOT_TIME: {SHOT_TIME.get()}')
