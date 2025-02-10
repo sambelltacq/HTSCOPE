@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-02-10 14:13:56 by dt100-->
+<!--Saved on 2025-02-10 15:52:51 by peter-->
 <display version="2.0.0">
   <name>ht_scope_controls</name>
   <width>895</width>
@@ -1383,7 +1383,7 @@
       <name>Label_13</name>
       <text>USER = ${USER}</text>
       <y>36</y>
-      <width>90</width>
+      <width>87</width>
       <height>16</height>
       <auto_size>true</auto_size>
     </widget>
@@ -1453,5 +1453,28 @@
       <width>70</width>
       <tooltip>$(actions)</tooltip>
     </widget>
+  </widget>
+  <widget type="byte_monitor" version="2.0.0">
+    <name>Byte Monitor</name>
+    <x>220</x>
+    <y>510</y>
+    <width>1</width>
+    <height>1</height>
+  </widget>
+  <widget type="byte_monitor" version="2.0.0">
+    <name>Byte Monitor_1</name>
+    <pv_name>$(HOST):IDLE</pv_name>
+    <x>790</x>
+    <y>454</y>
+    <width>36</width>
+    <height>1</height>
+    <numBits>2</numBits>
+  </widget>
+  <widget type="byte_monitor" version="2.0.0">
+    <name>Byte Monitor_2</name>
+    <x>460</x>
+    <y>530</y>
+    <width>1</width>
+    <height>1</height>
   </widget>
 </display>
