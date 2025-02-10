@@ -18,9 +18,9 @@ htscope1_registerRecordDeviceDriver(pdbbase)
 
 # Turn on asynTraceFlow and asynTraceError for global trace, i.e. no connected asynUser.
 #asynSetTraceMask("", 0, 17)
-#drvAsynIPPortConfigure("HTS", "127.0.0.1:8843")
+drvAsynIPPortConfigure("HTS", "127.0.0.1:8843")
 epicsEnvSet("STREAM_PROTOCOL_PATH","./protocols")
-#dbLoadRecords("./db/hts_wrapper.db","HOST={args.host},SPORT=HTS")
+dbLoadRecords("./db/hts_wrapper.db","HOST={args.host},SPORT=HTS")
 """)
 
 def _hands_out_outlinks():
