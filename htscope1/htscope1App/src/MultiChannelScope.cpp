@@ -176,21 +176,25 @@ bool MultiChannelScope::mmap_uut_data() {
 		perror(datafile);
 		return false;
 	}
-	data_len = GetFileSize(datafile);
-	PRDEB(1)("file: %s data_len %lu\n", datafile, data_len);
+	long file_size = GetFileSize(datafile);
 
-
-	data_len -= data_len%(ssb);
+	data_len = file_size - file_size%ssb ;
 
 	data_len_words   = data_len/data_size;
 	data_len_samples = data_len/ssb;
 
 	PRDEB(1)("data_len: %ld words: %ld samples %ld\n", data_len, data_len_words, data_len_samples);
 
-	RAW = (epicsInt16*)mmap(0, data_len, PROT_READ, MAP_SHARED, fileno(fp), 0);
-
-	PRDEB(1)("RAW:%p\n", RAW);
-	return true;
+	void* rc = mmap(0, data_len, PROT_READ, MAP_SHARED, fileno(fp), 0);
+	if (rc == MAP_FAILED){
+		RAW = 0;
+		fprintf(stderr, "%s WARNING mmap fail data_len:%lu samples file_size:%ld\n", __FUNCTION__, data_len, file_size);
+		return false;
+	}else{
+		RAW = (epicsInt16*)rc;
+		PRDEB(1)("RAW:%p SUCCESS\n", RAW);
+		return true;
+	}
 }
 
 void MultiChannelScope::unmap_uut_data() {
