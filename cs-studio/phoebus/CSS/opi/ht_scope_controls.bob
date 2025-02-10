@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-02-10 10:50:43 by dt100-->
+<!--Saved on 2025-02-10 12:38:36 by dt100-->
 <display version="2.0.0">
   <name>ht_scope_controls</name>
   <width>895</width>
-  <height>530</height>
+  <height>474</height>
   <widget type="group" version="3.0.0">
     <name>Brand</name>
     <x>20</x>
@@ -39,11 +39,11 @@
     </widget>
   </widget>
   <widget type="group" version="3.0.0">
-    <name>Host</name>
+    <name>Plot </name>
     <x>157</x>
     <y>76</y>
-    <width>359</width>
-    <height>71</height>
+    <width>181</width>
+    <height>70</height>
     <transparent>true</transparent>
     <widget type="action_button" version="3.0.0">
       <name>Action Button</name>
@@ -55,15 +55,9 @@
         </action>
       </actions>
       <text>Open Plot</text>
-      <x>123</x>
-      <y>1</y>
-      <height>39</height>
+      <width>145</width>
+      <height>35</height>
       <tooltip>$(actions)</tooltip>
-    </widget>
-    <widget type="label" version="2.0.0">
-      <name>Label_11</name>
-      <text>$(USER)@$(HOST)</text>
-      <y>20</y>
     </widget>
   </widget>
   <widget type="group" version="3.0.0">
@@ -830,12 +824,13 @@
     <name>Controls</name>
     <x>338</x>
     <y>143</y>
-    <width>428</width>
-    <height>175</height>
+    <width>510</width>
+    <height>129</height>
     <transparent>true</transparent>
     <widget type="group" version="3.0.0">
       <name>ControlButtons</name>
-      <x>293</x>
+      <x>284</x>
+      <y>1</y>
       <width>90</width>
       <height>90</height>
       <style>3</style>
@@ -899,10 +894,45 @@
         <tooltip>$(actions)</tooltip>
       </widget>
     </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>REFRESH Button</name>
+      <actions execute_as_one="true">
+        <action type="write_pv">
+          <description>REFRESH</description>
+          <pv_name>$(HOST):$(USER):$(UUT_1):REFRESH</pv_name>
+          <value>0</value>
+        </action>
+      </actions>
+      <text>REFRESH</text>
+      <x>394</x>
+      <y>30</y>
+      <width>81</width>
+      <height>28</height>
+      <tooltip>$(actions)</tooltip>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
+    </widget>
+    <widget type="bool_button" version="2.0.0">
+      <name>EGU Button</name>
+      <pv_name>$(HOST):$(USER):$(UUT_1):SHOW_EGU</pv_name>
+      <x>394</x>
+      <width>81</width>
+      <height>28</height>
+      <off_label></off_label>
+      <off_color>
+        <color red="237" green="185" blue="185">
+        </color>
+      </off_color>
+      <on_label></on_label>
+      <on_color>
+        <color red="255" green="212" blue="0">
+        </color>
+      </on_color>
+      <labels_from_pv>true</labels_from_pv>
+    </widget>
     <widget type="group" version="3.0.0">
-      <name>Group_2</name>
-      <width>283</width>
-      <height>106</height>
+      <name>Controls input</name>
+      <width>261</width>
+      <height>94</height>
       <style>3</style>
       <transparent>true</transparent>
       <widget type="group" version="3.0.0">
@@ -913,15 +943,15 @@
           <MAX>205</MAX>
           <PRECISION>0</PRECISION>
         </macros>
-        <y>37</y>
-        <width>282</width>
+        <y>62</y>
+        <width>261</width>
         <height>32</height>
         <style>2</style>
         <transparent>true</transparent>
         <widget type="spinner" version="2.0.0">
           <name>Spinner_2</name>
           <pv_name>$(HOST):$(USER):$(UUT_1):STRIDE</pv_name>
-          <x>170</x>
+          <x>150</x>
           <width>110</width>
           <height>30</height>
           <precision>0</precision>
@@ -936,64 +966,18 @@
         <widget type="textupdate" version="2.0.0">
           <name>Text Update_15</name>
           <pv_name>$(HOST):$(USER):$(UUT_1):STRIDE</pv_name>
-          <x>86</x>
+          <x>80</x>
           <width>70</width>
           <height>30</height>
+          <background_color>
+            <color name="Header_ForeGround" red="255" green="255" blue="255">
+            </color>
+          </background_color>
           <precision>0</precision>
           <vertical_alignment>1</vertical_alignment>
         </widget>
         <widget type="label" version="2.0.0">
           <name>Label_21</name>
-          <text>${PV}</text>
-          <width>80</width>
-          <height>30</height>
-          <background_color>
-            <color name="Read_Background" red="240" green="240" blue="240">
-            </color>
-          </background_color>
-          <transparent>false</transparent>
-          <vertical_alignment>1</vertical_alignment>
-        </widget>
-      </widget>
-      <widget type="group" version="3.0.0">
-        <name>fs</name>
-        <macros>
-          <PV>FS</PV>
-          <VALUE>2000000</VALUE>
-          <MAX>2000000</MAX>
-          <PRECISION>0</PRECISION>
-        </macros>
-        <x>1</x>
-        <width>282</width>
-        <height>32</height>
-        <style>2</style>
-        <transparent>true</transparent>
-        <widget type="spinner" version="2.0.0">
-          <name>Spinner_4</name>
-          <pv_name>$(HOST):$(USER):$(UUT_1):FS</pv_name>
-          <x>170</x>
-          <width>110</width>
-          <height>30</height>
-          <precision>0</precision>
-          <background_color>
-            <color name="Header_ForeGround" red="255" green="255" blue="255">
-            </color>
-          </background_color>
-          <vertical_alignment>1</vertical_alignment>
-          <maximum>${MAX}</maximum>
-          <limits_from_pv>false</limits_from_pv>
-        </widget>
-        <widget type="textupdate" version="2.0.0">
-          <name>Text Update_17</name>
-          <pv_name>$(HOST):$(USER):$(UUT_1):FS</pv_name>
-          <x>86</x>
-          <width>70</width>
-          <height>30</height>
-          <precision>0</precision>
-          <vertical_alignment>1</vertical_alignment>
-        </widget>
-        <widget type="label" version="2.0.0">
-          <name>Label_23</name>
           <text>${PV}</text>
           <width>80</width>
           <height>30</height>
@@ -1013,16 +997,14 @@
           <MAX>100</MAX>
           <PRECISION>2</PRECISION>
         </macros>
-        <x>1</x>
-        <y>74</y>
-        <width>282</width>
+        <width>260</width>
         <height>32</height>
         <style>2</style>
         <transparent>true</transparent>
         <widget type="spinner" version="2.0.0">
           <name>Spinner_5</name>
           <pv_name>$(HOST):$(USER):$(UUT_1):DELAY</pv_name>
-          <x>170</x>
+          <x>150</x>
           <width>110</width>
           <height>30</height>
           <precision>$(PRECISION)</precision>
@@ -1037,9 +1019,13 @@
         <widget type="textupdate" version="2.0.0">
           <name>Text Update_18</name>
           <pv_name>$(HOST):$(USER):$(UUT_1):DELAY</pv_name>
-          <x>86</x>
+          <x>80</x>
           <width>70</width>
           <height>30</height>
+          <background_color>
+            <color name="Header_ForeGround" red="255" green="255" blue="255">
+            </color>
+          </background_color>
           <precision>$(PRECISION)</precision>
           <vertical_alignment>1</vertical_alignment>
         </widget>
@@ -1056,54 +1042,74 @@
           <vertical_alignment>1</vertical_alignment>
         </widget>
       </widget>
-    </widget>
-    <widget type="bool_button" version="2.0.0">
-      <name>EGU Button</name>
-      <pv_name>$(HOST):$(USER):$(UUT_1):SHOW_EGU</pv_name>
-      <x>81</x>
-      <y>112</y>
-      <width>90</width>
-      <height>28</height>
-      <off_label></off_label>
-      <off_color>
-        <color red="237" green="185" blue="185">
-        </color>
-      </off_color>
-      <on_label></on_label>
-      <on_color>
-        <color red="255" green="212" blue="0">
-        </color>
-      </on_color>
-      <labels_from_pv>true</labels_from_pv>
-    </widget>
-    <widget type="action_button" version="3.0.0">
-      <name>REFRESH Button</name>
-      <actions execute_as_one="true">
-        <action type="write_pv">
-          <description>REFRESH</description>
-          <pv_name>$(HOST):$(USER):$(UUT_1):REFRESH</pv_name>
-          <value>0</value>
-        </action>
-      </actions>
-      <text>REFRESH</text>
-      <y>112</y>
-      <width>76</width>
-      <height>28</height>
-      <tooltip>$(actions)</tooltip>
-      <border_alarm_sensitive>false</border_alarm_sensitive>
+      <widget type="group" version="3.0.0">
+        <name>fs</name>
+        <macros>
+          <PV>FS</PV>
+          <VALUE>2000000</VALUE>
+          <MAX>2000000</MAX>
+          <PRECISION>0</PRECISION>
+        </macros>
+        <y>31</y>
+        <width>260</width>
+        <height>32</height>
+        <style>2</style>
+        <transparent>true</transparent>
+        <widget type="spinner" version="2.0.0">
+          <name>Spinner_4</name>
+          <pv_name>$(HOST):$(USER):$(UUT_1):FS</pv_name>
+          <x>150</x>
+          <width>110</width>
+          <height>30</height>
+          <precision>0</precision>
+          <background_color>
+            <color name="Header_ForeGround" red="255" green="255" blue="255">
+            </color>
+          </background_color>
+          <vertical_alignment>1</vertical_alignment>
+          <maximum>${MAX}</maximum>
+          <limits_from_pv>false</limits_from_pv>
+        </widget>
+        <widget type="textupdate" version="2.0.0">
+          <name>Text Update_17</name>
+          <pv_name>$(HOST):$(USER):$(UUT_1):FS</pv_name>
+          <x>80</x>
+          <width>70</width>
+          <height>30</height>
+          <background_color>
+            <color name="Header_ForeGround" red="255" green="255" blue="255">
+            </color>
+          </background_color>
+          <precision>0</precision>
+          <vertical_alignment>1</vertical_alignment>
+        </widget>
+        <widget type="label" version="2.0.0">
+          <name>Label_23</name>
+          <text>${PV}</text>
+          <width>80</width>
+          <height>30</height>
+          <background_color>
+            <color name="Read_Background" red="240" green="240" blue="240">
+            </color>
+          </background_color>
+          <transparent>false</transparent>
+          <vertical_alignment>1</vertical_alignment>
+        </widget>
+      </widget>
     </widget>
   </widget>
   <widget type="group" version="3.0.0">
     <name>Stream</name>
     <x>338</x>
-    <y>318</y>
-    <width>428</width>
-    <height>212</height>
+    <y>76</y>
+    <width>510</width>
+    <height>70</height>
     <transparent>true</transparent>
     <widget type="bool_button" version="2.0.0">
       <name>RUNSTOP Button</name>
       <pv_name>$(HOST):RUNSTOP</pv_name>
       <width>110</width>
+      <height>32</height>
       <off_label>RUN</off_label>
       <off_color>
         <color name="Button_Background" red="210" green="210" blue="210">
@@ -1115,51 +1121,88 @@
         </font>
       </font>
     </widget>
-    <widget type="spinner" version="2.0.0">
-      <name>SHOT_TIME</name>
-      <pv_name>$(HOST):SHOT_TIME</pv_name>
+    <widget type="group" version="3.0.0">
+      <name>Runtime Status</name>
+      <x>300</x>
+      <width>179</width>
+      <height>32</height>
+      <style>2</style>
+      <transparent>true</transparent>
+      <widget type="spinner" version="2.0.0">
+        <name>SHOT_TIME</name>
+        <pv_name>$(HOST):SHOT_TIME</pv_name>
+        <x>104</x>
+        <width>73</width>
+        <height>30</height>
+        <precision>0</precision>
+        <show_units>true</show_units>
+        <background_color>
+          <color name="Header_ForeGround" red="255" green="255" blue="255">
+          </color>
+        </background_color>
+        <vertical_alignment>1</vertical_alignment>
+        <maximum>20.0</maximum>
+        <limits_from_pv>false</limits_from_pv>
+      </widget>
+      <widget type="textupdate" version="2.0.0">
+        <name>Runtime value</name>
+        <pv_name>$(HOST):RUN:STATUS:SEC</pv_name>
+        <x>61</x>
+        <width>43</width>
+        <height>30</height>
+        <format>1</format>
+        <vertical_alignment>1</vertical_alignment>
+      </widget>
+      <widget type="label" version="2.0.0">
+        <name>runtime label</name>
+        <text>Runtime</text>
+        <width>61</width>
+        <height>30</height>
+        <background_color>
+          <color name="Read_Background" red="240" green="240" blue="240">
+          </color>
+        </background_color>
+        <horizontal_alignment>1</horizontal_alignment>
+        <vertical_alignment>1</vertical_alignment>
+      </widget>
+    </widget>
+    <widget type="group" version="3.0.0">
+      <name>Shot Status</name>
       <x>115</x>
-      <width>73</width>
-      <height>30</height>
-      <precision>0</precision>
-      <show_units>true</show_units>
-      <background_color>
-        <color name="Header_ForeGround" red="255" green="255" blue="255">
-        </color>
-      </background_color>
-      <vertical_alignment>1</vertical_alignment>
-      <maximum>20.0</maximum>
-      <limits_from_pv>false</limits_from_pv>
-    </widget>
-    <widget type="action_button" version="3.0.0">
-      <name>Action Button_1</name>
-      <actions>
-        <action type="command">
-          <description>Open console</description>
-          <command>mate-terminal -e "nc localhost 8843"</command>
-        </action>
-      </actions>
-      <text>Console</text>
-      <x>323</x>
-      <width>70</width>
-      <tooltip>$(actions)</tooltip>
-    </widget>
-    <widget type="label" version="2.0.0">
-      <name>Status box</name>
-      <text>STATUS</text>
-      <y>33</y>
-      <width>393</width>
-      <height>131</height>
-      <background_color>
-        <color name="Read_Background" red="240" green="240" blue="240">
-        </color>
-      </background_color>
-      <transparent>false</transparent>
-      <scripts>
-        <script file="../scripts/handle_status.py">
-          <pv_name>$(HOST):STATUS</pv_name>
-        </script>
-      </scripts>
+      <width>180</width>
+      <height>32</height>
+      <style>2</style>
+      <transparent>true</transparent>
+      <widget type="label" version="2.0.0">
+        <name>shot label</name>
+        <text>Shot</text>
+        <width>40</width>
+        <height>30</height>
+        <background_color>
+          <color name="Read_Background" red="240" green="240" blue="240">
+          </color>
+        </background_color>
+        <horizontal_alignment>1</horizontal_alignment>
+        <vertical_alignment>1</vertical_alignment>
+      </widget>
+      <widget type="textupdate" version="2.0.0">
+        <name>SHot value</name>
+        <pv_name>$(HOST):RUN:JOB</pv_name>
+        <x>40</x>
+        <width>43</width>
+        <height>30</height>
+        <horizontal_alignment>1</horizontal_alignment>
+        <vertical_alignment>1</vertical_alignment>
+      </widget>
+      <widget type="textupdate" version="2.0.0">
+        <name>SHot value_2</name>
+        <pv_name>$(HOST):RUN:EXIT_STATUS</pv_name>
+        <x>83</x>
+        <width>95</width>
+        <height>30</height>
+        <horizontal_alignment>1</horizontal_alignment>
+        <vertical_alignment>1</vertical_alignment>
+      </widget>
     </widget>
   </widget>
   <widget type="template" version="2.0.0">
@@ -1349,6 +1392,63 @@
         <font family="Liberation Sans" style="BOLD" size="18.0">
         </font>
       </font>
+    </widget>
+  </widget>
+  <widget type="label" version="2.0.0">
+    <name>Label_11</name>
+    <text>$(USER)@$(HOST)</text>
+    <x>28</x>
+    <y>454</y>
+    <width>147</width>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>Stream State</name>
+    <x>338</x>
+    <y>272</y>
+    <width>510</width>
+    <height>182</height>
+    <transparent>true</transparent>
+    <widget type="template" version="2.0.0">
+      <name>Stream state array</name>
+      <file>stream_status.bob</file>
+      <instances>
+        <instance>
+          <macros>
+            <UUT>$(UUT_1)</UUT>
+          </macros>
+        </instance>
+        <instance>
+          <macros>
+            <UUT>$(UUT_2)</UUT>
+          </macros>
+        </instance>
+        <instance>
+          <macros>
+            <UUT>$(UUT_3)</UUT>
+          </macros>
+        </instance>
+        <instance>
+          <macros>
+            <UUT>$(UUT_4)</UUT>
+          </macros>
+        </instance>
+      </instances>
+      <width>470</width>
+      <height>100</height>
+      <gap>0</gap>
+    </widget>
+    <widget type="action_button" version="3.0.0">
+      <name>Action Button_1</name>
+      <actions>
+        <action type="command">
+          <description>Open console</description>
+          <command>mate-terminal -e "nc localhost 8843"</command>
+        </action>
+      </actions>
+      <text>Console</text>
+      <y>111</y>
+      <width>70</width>
+      <tooltip>$(actions)</tooltip>
     </widget>
   </widget>
 </display>
