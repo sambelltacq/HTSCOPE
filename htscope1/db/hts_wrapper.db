@@ -10,10 +10,71 @@ record(calcout, "$(HOST):HEARTBEAT") {
 	field(CALC, "!VAL")
 }
 
-record(stringin, "$(HOST):RUNTIME") {
-    field(DTYPE, "stream")
-    field(INP,  "@hts.proto getRunTime ${SPORT}")
+record(stringin, "$(HOST):RUN:EXIT_STATUS:S") {
+	field(DTYP, "stream")
+	field(INP,  "@hts.proto getExitStatus ${SPORT}")
 	field(SCAN, "I/O Intr")
 }
 
+record(mbbo, "$(HOST):RUN:EXIT_STATUS") {
+	field(DTYP, "Soft Channel")
+	field(NOBT, "2")
+	field(ZRST, "UNDEF")
+	field(ONST, "SUCCESS")
+	field(TWST, "FAIL")
+	field(THST, "BUSY")
+	field(FLNK, "$(HOST):RUN:REFRESH:g")
+}
+
+record(mbbi, "$(HOST):RUN:EXIT_STATUS:r") {
+	field(DTYP, "stream")
+	field(INP,  "@hts.proto getExitStatusEnum ${SPORT}")
+	field(SCAN, "I/O Intr")
+	field(NOBT, "2")
+	field(ZRST, "UNDEF")
+	field(ONST, "SUCCESS")
+	field(TWST, "FAIL")
+	field(THST, "BUSY")
+	field(FLNK, "$(HOST):RUN:EXIT_STATUS:s")
+ }
+
+record(mbbo, "$(HOST):RUN:EXIT_STATUS:s") {
+	field(DTYP, "Soft Channel")
+	field(OMSL, "closed_loop")
+	field(DOL,  "$(HOST):RUN:EXIT_STATUS:r NPP")
+	field(OUT,  "$(HOST):RUN:EXIT_STATUS PP")
+	field(NOBT, "2")
+	field(ZRST, "UNDEF")
+	field(ONST, "SUCCESS")
+	field(TWST, "FAIL")
+	field(THST, "BUSY")
+ }
+
+record(calcout, "$(HOST):RUN:REFRESH:g") {
+	field(DESC, "REFRESH if good")
+	field(INPA,  "$(HOST):RUN:EXIT_STATUS")
+	field(CALC,  "A==1")
+	field(DOPT, "Use CALC")
+	field(OOPT, "When Non-zero")
+	field(OUT,  "$(HOST):dt100:REFRESH PP")    # @@todo
+}
+
+record(longin, "$(HOST):RUN:JOB" ){
+	field(DTYP, "stream")
+	field(INP,  "@hts.proto getRunJob ${SPORT}")
+	field(SCAN, "I/O Intr")
+	field(FLNK, "$(HOST):RUN:EXIT_STATUS:c PP")
+}
+
+record(calcout, "$(HOST):RUN:EXIT_STATUS:c") {
+	field(CALC, "3")
+	field(DOPT, "Use CALC")
+	field(OOPT, "Every Time")
+	field(OUT,  "$(HOST):RUN:EXIT_STATUS PP")
+}
+record(longin, "$(HOST):RUN:STATUS:SEC"){
+	field(DTYP, "stream")
+	field(INP,  "@hts.proto getRunStatusSec ${SPORT}")
+	field(SCAN, "I/O Intr")
+}
 
