@@ -1,9 +1,9 @@
 Terminator = CR LF;
 ExtraInput = Ignore;
-ReplyTimeout = 2500;
+ReplyTimeout = 250;
 
 getIDLE {
-	in "waiting %d\r";
+	in "waiting %d";
 }
 
 getRunJob {

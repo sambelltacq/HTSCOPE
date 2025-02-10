@@ -32,7 +32,7 @@ record(mbbi, "$(HOST):RUN:EXIT_STATUS:r") {
 	field(SCAN, "I/O Intr")
 	field(NOBT, "2")
 	field(ZRST, "UNDEF")
-	field(ONST, "SUCCESS")
+	field(ONST, "SUCCESS")          # 1 is SUCCESS
 	field(TWST, "FAIL")
 	field(THST, "BUSY")
 	field(FLNK, "$(HOST):RUN:EXIT_STATUS:s")
@@ -53,7 +53,7 @@ record(mbbo, "$(HOST):RUN:EXIT_STATUS:s") {
 record(calcout, "$(HOST):RUN:REFRESH:g") {
 	field(DESC, "REFRESH if good")
 	field(INPA,  "$(HOST):RUN:EXIT_STATUS")
-	field(CALC,  "A==1")
+	field(CALC,  "A==1")                      # 1 is SUCCESS
 	field(DOPT, "Use CALC")
 	field(OOPT, "When Non-zero")
 	field(OUT,  "$(HOST):dt100:REFRESH PP")    # @@todo
