@@ -53,9 +53,19 @@ record(mbbo, "$(HOST):RUN:EXIT_STATUS:s") {
 record(calcout, "$(HOST):RUN:REFRESH:g") {
 	field(DESC, "REFRESH if good")
 	field(INPA,  "$(HOST):RUN:EXIT_STATUS")
-	field(CALC,  "A==1")                      # 1 is SUCCESS
+	field(CALC,  "A==1 || A==0")                      # 1 is SUCCESS || UNDEF .. might be data..
 	field(DOPT, "Use CALC")
-	field(OOPT, "When Non-zero")
+	field(OOPT, "Transition To Non-zero")
+	field(OUT,  "$(HOST):dt100:REFRESH PP")    # @@todo
+	field(FLNK, "$(HOST):RUN:REFRESH:t")
+}
+
+record(calcout, "$(HOST):RUN:REFRESH:t") {
+	field(DESC, "clear refresh")
+	field(CALC,  "0")                      # 1 is SUCCESS || UNDEF .. might be data..
+	field(DOPT, "Use CALC")
+	field(ODLY, "1")
+	field(OOPT, "Every Time")
 	field(OUT,  "$(HOST):dt100:REFRESH PP")    # @@todo
 }
 
