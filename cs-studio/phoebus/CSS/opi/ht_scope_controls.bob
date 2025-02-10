@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-02-06 14:32:40 by dt100-->
+<!--Saved on 2025-02-10 10:50:43 by dt100-->
 <display version="2.0.0">
-  <name>HT_Scope_Launcher</name>
-  <width>778</width>
-  <height>455</height>
+  <name>ht_scope_controls</name>
+  <width>895</width>
+  <height>530</height>
   <widget type="group" version="3.0.0">
     <name>Brand</name>
     <x>20</x>
@@ -40,9 +40,10 @@
   </widget>
   <widget type="group" version="3.0.0">
     <name>Host</name>
-    <x>521</x>
-    <width>134</width>
-    <height>152</height>
+    <x>157</x>
+    <y>76</y>
+    <width>359</width>
+    <height>71</height>
     <transparent>true</transparent>
     <widget type="action_button" version="3.0.0">
       <name>Action Button</name>
@@ -54,8 +55,9 @@
         </action>
       </actions>
       <text>Open Plot</text>
-      <y>58</y>
-      <height>58</height>
+      <x>123</x>
+      <y>1</y>
+      <height>39</height>
       <tooltip>$(actions)</tooltip>
     </widget>
     <widget type="label" version="2.0.0">
@@ -65,199 +67,9 @@
     </widget>
   </widget>
   <widget type="group" version="3.0.0">
-    <name>UUT 1</name>
-    <macros>
-      <UUT>$(UUT_1)</UUT>
-    </macros>
-    <x>157</x>
-    <width>182</width>
-    <height>76</height>
-    <transparent>true</transparent>
-    <widget type="textupdate" version="2.0.0">
-      <name>uut_state_1</name>
-      <pv_name>$(UUT):MODE:CONTINUOUS:STATE</pv_name>
-      <y>20</y>
-      <width>72</width>
-      <horizontal_alignment>1</horizontal_alignment>
-      <vertical_alignment>1</vertical_alignment>
-      <scripts>
-        <script file="../scripts/handle_cstate.py">
-          <pv_name>$(UUT):MODE:CONTINUOUS:STATE</pv_name>
-        </script>
-      </scripts>
-      <border_width>1</border_width>
-    </widget>
-    <widget type="label" version="2.0.0">
-      <name>uut_id_1</name>
-      <text>$(UUT)</text>
-      <width>120</width>
-    </widget>
-    <widget type="led" version="2.0.0">
-      <name>uut_state_1</name>
-      <pv_name>$(HOST):$(USER):$(UUT):MMAPUNMAP</pv_name>
-      <x>72</x>
-      <y>19</y>
-      <width>74</width>
-      <height>22</height>
-      <off_color>
-        <color name="Grid" red="128" green="128" blue="128">
-        </color>
-      </off_color>
-      <on_color>
-        <color name="OK" red="0" green="255" blue="0">
-        </color>
-      </on_color>
-      <square>true</square>
-      <labels_from_pv>true</labels_from_pv>
-    </widget>
-  </widget>
-  <widget type="group" version="3.0.0">
-    <name>UUT 2</name>
-    <macros>
-      <UUT>$(UUT_2)</UUT>
-    </macros>
-    <x>157</x>
-    <y>76</y>
-    <width>182</width>
-    <height>76</height>
-    <transparent>true</transparent>
-    <widget type="label" version="2.0.0">
-      <name>uut_id_2</name>
-      <text>$(UUT)</text>
-      <width>120</width>
-    </widget>
-    <widget type="textupdate" version="2.0.0">
-      <name>uut_state_2</name>
-      <pv_name>$(UUT):MODE:CONTINUOUS:STATE</pv_name>
-      <y>21</y>
-      <width>72</width>
-      <horizontal_alignment>1</horizontal_alignment>
-      <vertical_alignment>1</vertical_alignment>
-      <scripts>
-        <script file="../scripts/handle_cstate.py">
-          <pv_name>$(UUT):MODE:CONTINUOUS:STATE</pv_name>
-        </script>
-      </scripts>
-      <border_width>1</border_width>
-    </widget>
-    <widget type="led" version="2.0.0">
-      <name>uut_state_2</name>
-      <pv_name>$(HOST):$(USER):$(UUT):MMAPUNMAP</pv_name>
-      <x>72</x>
-      <y>20</y>
-      <width>74</width>
-      <height>22</height>
-      <off_color>
-        <color name="Grid" red="128" green="128" blue="128">
-        </color>
-      </off_color>
-      <on_color>
-        <color name="OK" red="0" green="255" blue="0">
-        </color>
-      </on_color>
-      <square>true</square>
-      <labels_from_pv>true</labels_from_pv>
-    </widget>
-  </widget>
-  <widget type="group" version="3.0.0">
-    <name>UUT 3</name>
-    <macros>
-      <UUT>$(UUT_3)</UUT>
-    </macros>
-    <x>339</x>
-    <width>182</width>
-    <height>76</height>
-    <transparent>true</transparent>
-    <widget type="label" version="2.0.0">
-      <name>uut_id_3</name>
-      <text>$(UUT)</text>
-      <width>120</width>
-    </widget>
-    <widget type="textupdate" version="2.0.0">
-      <name>uut_state_3</name>
-      <pv_name>$(UUT):MODE:CONTINUOUS:STATE</pv_name>
-      <y>21</y>
-      <width>72</width>
-      <horizontal_alignment>1</horizontal_alignment>
-      <vertical_alignment>1</vertical_alignment>
-      <scripts>
-        <script file="../scripts/handle_cstate.py">
-          <pv_name>$(UUT):MODE:CONTINUOUS:STATE</pv_name>
-        </script>
-      </scripts>
-      <border_width>1</border_width>
-    </widget>
-    <widget type="led" version="2.0.0">
-      <name>uut_state_3</name>
-      <pv_name>$(HOST):$(USER):$(UUT):MMAPUNMAP</pv_name>
-      <x>72</x>
-      <y>20</y>
-      <width>74</width>
-      <height>22</height>
-      <off_color>
-        <color name="Grid" red="128" green="128" blue="128">
-        </color>
-      </off_color>
-      <on_color>
-        <color name="OK" red="0" green="255" blue="0">
-        </color>
-      </on_color>
-      <square>true</square>
-      <labels_from_pv>true</labels_from_pv>
-    </widget>
-  </widget>
-  <widget type="group" version="3.0.0">
-    <name>UUT 4</name>
-    <macros>
-      <UUT>$(UUT_4)</UUT>
-    </macros>
-    <x>339</x>
-    <y>76</y>
-    <width>182</width>
-    <height>76</height>
-    <transparent>true</transparent>
-    <widget type="label" version="2.0.0">
-      <name>uut_id_4</name>
-      <text>$(UUT)</text>
-      <width>120</width>
-    </widget>
-    <widget type="textupdate" version="2.0.0">
-      <name>uut_state_4</name>
-      <pv_name>$(UUT):MODE:CONTINUOUS:STATE</pv_name>
-      <y>21</y>
-      <width>72</width>
-      <horizontal_alignment>1</horizontal_alignment>
-      <vertical_alignment>1</vertical_alignment>
-      <scripts>
-        <script file="../scripts/handle_cstate.py">
-          <pv_name>$(UUT):MODE:CONTINUOUS:STATE</pv_name>
-        </script>
-      </scripts>
-      <border_width>1</border_width>
-    </widget>
-    <widget type="led" version="2.0.0">
-      <name>uut_state_4</name>
-      <pv_name>$(HOST):$(USER):$(UUT):MMAPUNMAP</pv_name>
-      <x>72</x>
-      <y>20</y>
-      <width>74</width>
-      <height>22</height>
-      <off_color>
-        <color name="Grid" red="128" green="128" blue="128">
-        </color>
-      </off_color>
-      <on_color>
-        <color name="OK" red="0" green="255" blue="0">
-        </color>
-      </on_color>
-      <square>true</square>
-      <labels_from_pv>true</labels_from_pv>
-    </widget>
-  </widget>
-  <widget type="group" version="3.0.0">
     <name>Traces</name>
-    <x>11</x>
-    <y>144</y>
+    <x>10</x>
+    <y>143</y>
     <width>328</width>
     <height>311</height>
     <transparent>true</transparent>
@@ -292,16 +104,13 @@
       </widget>
       <widget type="combo" version="2.0.0">
         <name>trace_uut_1</name>
-        <pv_name>loc://TRACE_UUT_$(trace_num)("$(UUT_1)")</pv_name>
+        <pv_name>loc://TRACE_UUT_$(trace_num)</pv_name>
         <x>68</x>
         <width>150</width>
         <tooltip></tooltip>
         <border_alarm_sensitive>false</border_alarm_sensitive>
         <items>
-          <item>${UUT_1}</item>
-          <item>${UUT_2}</item>
-          <item>${UUT_3}</item>
-          <item>${UUT_4}</item>
+          <item></item>
         </items>
       </widget>
       <widget type="spinner" version="2.0.0">
@@ -1019,8 +828,8 @@
   </widget>
   <widget type="group" version="3.0.0">
     <name>Controls</name>
-    <x>339</x>
-    <y>280</y>
+    <x>338</x>
+    <y>143</y>
     <width>428</width>
     <height>175</height>
     <transparent>true</transparent>
@@ -1286,10 +1095,10 @@
   </widget>
   <widget type="group" version="3.0.0">
     <name>Stream</name>
-    <x>339</x>
-    <y>144</y>
-    <width>316</width>
-    <height>136</height>
+    <x>338</x>
+    <y>318</y>
+    <width>428</width>
+    <height>212</height>
     <transparent>true</transparent>
     <widget type="bool_button" version="2.0.0">
       <name>RUNSTOP Button</name>
@@ -1309,7 +1118,7 @@
     <widget type="spinner" version="2.0.0">
       <name>SHOT_TIME</name>
       <pv_name>$(HOST):SHOT_TIME</pv_name>
-      <x>120</x>
+      <x>115</x>
       <width>73</width>
       <height>30</height>
       <precision>0</precision>
@@ -1331,7 +1140,7 @@
         </action>
       </actions>
       <text>Console</text>
-      <x>203</x>
+      <x>323</x>
       <width>70</width>
       <tooltip>$(actions)</tooltip>
     </widget>
@@ -1339,8 +1148,8 @@
       <name>Status box</name>
       <text>STATUS</text>
       <y>33</y>
-      <width>273</width>
-      <height>70</height>
+      <width>393</width>
+      <height>131</height>
       <background_color>
         <color name="Read_Background" red="240" green="240" blue="240">
         </color>
@@ -1351,6 +1160,195 @@
           <pv_name>$(HOST):STATUS</pv_name>
         </script>
       </scripts>
+    </widget>
+  </widget>
+  <widget type="template" version="2.0.0">
+    <name>uut state array</name>
+    <file>uut_status.bob</file>
+    <instances>
+      <instance>
+        <macros>
+          <UUT>$(UUT_1)</UUT>
+          <NUM>1</NUM>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <UUT>$(UUT_2)</UUT>
+          <NUM>2</NUM>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <UUT>$(UUT_3)</UUT>
+          <NUM>3</NUM>
+        </macros>
+      </instance>
+      <instance>
+        <macros>
+          <UUT>$(UUT_4)</UUT>
+          <NUM>4</NUM>
+        </macros>
+      </instance>
+    </instances>
+    <x>157</x>
+    <width>728</width>
+    <height>76</height>
+    <horizontal>true</horizontal>
+    <gap>0</gap>
+  </widget>
+  <widget type="group" version="3.0.0">
+    <name>DEBUG</name>
+    <x>130</x>
+    <y>180</y>
+    <width>442</width>
+    <height>270</height>
+    <visible>false</visible>
+    <style>3</style>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_1</name>
+      <pv_name>loc://trace_pvs_8</pv_name>
+      <y>192</y>
+      <width>442</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_2</name>
+      <pv_name>loc://trace_pvs_1</pv_name>
+      <y>52</y>
+      <width>442</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_3</name>
+      <pv_name>loc://trace_pvs_2</pv_name>
+      <y>72</y>
+      <width>442</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_4</name>
+      <pv_name>loc://trace_pvs_3</pv_name>
+      <y>92</y>
+      <width>442</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_5</name>
+      <pv_name>loc://trace_pvs_4</pv_name>
+      <y>112</y>
+      <width>442</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_6</name>
+      <pv_name>loc://trace_pvs_5</pv_name>
+      <y>132</y>
+      <width>442</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_7</name>
+      <pv_name>loc://trace_pvs_6</pv_name>
+      <y>152</y>
+      <width>442</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+    </widget>
+    <widget type="textupdate" version="2.0.0">
+      <name>Text Update_8</name>
+      <pv_name>loc://trace_pvs_7</pv_name>
+      <y>172</y>
+      <width>442</width>
+      <foreground_color>
+        <color name="On" red="0" green="255" blue="0">
+        </color>
+      </foreground_color>
+      <background_color>
+        <color name="Transparent" red="255" green="255" blue="255" alpha="0">
+        </color>
+      </background_color>
+      <transparent>true</transparent>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_12</name>
+      <text>HOST = ${HOST}</text>
+      <y>20</y>
+      <width>111</width>
+      <height>16</height>
+      <auto_size>true</auto_size>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_13</name>
+      <text>USER = ${USER}</text>
+      <y>36</y>
+      <width>90</width>
+      <height>16</height>
+      <auto_size>true</auto_size>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label_14</name>
+      <text>DEBUG</text>
+      <width>120</width>
+      <font>
+        <font family="Liberation Sans" style="BOLD" size="18.0">
+        </font>
+      </font>
     </widget>
   </widget>
 </display>

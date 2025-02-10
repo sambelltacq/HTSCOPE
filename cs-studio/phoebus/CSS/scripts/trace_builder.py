@@ -37,7 +37,7 @@ enabled = int(pvs[0].read().getValue())
 y_pv = "{host}:{user}:{uut}:CH:{chan:02d}".format(**env)
 x_pv = "{host}:{user}:{uut}:TB".format(**env)
 
-trace_pv = "loc://trace_pvs_{}".format(trace_num - 1)
+trace_pv = "loc://trace_pvs_{}".format(trace_num)
 
 logger.info("{}[x]: '{}' ".format(trace_pv, x_pv))
 logger.info("{}[y]: '{}' ".format(trace_pv, y_pv))
