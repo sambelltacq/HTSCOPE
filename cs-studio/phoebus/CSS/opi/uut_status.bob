@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Saved on 2025-02-10 10:12:29 by dt100-->
+<display version="2.0.0">
+  <name>uut_status.bob</name>
+  <width>182</width>
+  <height>76</height>
+  <widget type="group" version="3.0.0">
+    <name>UUT_${NUM}</name>
+    <width>182</width>
+    <height>76</height>
+    <visible>false</visible>
+    <transparent>true</transparent>
+    <scripts>
+      <script file="../scripts/handle_visibility.py">
+        <pv_name>$(HOST):UUTS</pv_name>
+      </script>
+    </scripts>
+    <widget type="textupdate" version="2.0.0">
+      <name>uut_state_1</name>
+      <pv_name>$(UUT):MODE:CONTINUOUS:STATE</pv_name>
+      <y>20</y>
+      <width>72</width>
+      <horizontal_alignment>1</horizontal_alignment>
+      <vertical_alignment>1</vertical_alignment>
+      <scripts>
+        <script file="../scripts/handle_cstate.py">
+          <pv_name>$(UUT):MODE:CONTINUOUS:STATE</pv_name>
+        </script>
+      </scripts>
+      <border_width>1</border_width>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>uut_id_1</name>
+      <text>$(UUT)</text>
+      <width>120</width>
+    </widget>
+    <widget type="led" version="2.0.0">
+      <name>uut_state_2</name>
+      <pv_name>$(HOST):$(USER):$(UUT):MMAPUNMAP</pv_name>
+      <x>72</x>
+      <y>19</y>
+      <width>74</width>
+      <height>22</height>
+      <off_color>
+        <color name="Grid" red="128" green="128" blue="128">
+        </color>
+      </off_color>
+      <on_color>
+        <color name="OK" red="0" green="255" blue="0">
+        </color>
+      </on_color>
+      <square>true</square>
+      <labels_from_pv>true</labels_from_pv>
+    </widget>
+  </widget>
+</display>
