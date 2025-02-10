@@ -317,3 +317,11 @@ record(longout, "$(HOST):$(USER):DEBUG") {
 	field(DRVL, "0")
 	field(DRVH, "5")
 }
+
+record(waveform, "$(HOST):$(UUT):STREAM:STATUS") {
+	field(DTYP, "Soft Channel")
+	field(PINI, "YES")
+	field(NELM, "512")
+	field(FTVL, "CHAR")
+	field(DESC, "uut ht_stream status")
+}

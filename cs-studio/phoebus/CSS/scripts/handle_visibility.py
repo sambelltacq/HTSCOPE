@@ -12,12 +12,11 @@ display = widget.topDisplayModel
 
 
 def get_macros(widget):
-	macros = widget.getPropertyValue("macros")
+	macros = widget.getEffectiveMacros()
 	extracted = {}
 	for key in macros.getNames():
 		extracted[key] = macros.getValue(key)
 	return extracted
-
 
 uut = get_macros(widget)['UUT']
 uuts = PVUtil.getString(pvs[0]).split(',')
@@ -27,5 +26,5 @@ if uut in uuts:
 else:
 	visible = False
 
-logger.info("{} set visible {}".format(widget.name, visible))
+logger.info("{} '{}' set visibility {}".format(widget.name, uut, visible))
 widget.setPropertyValue('visible', visible)
