@@ -1,7 +1,7 @@
 # HTSCOPE : Interactive Scope display for HTS data store in HOST ramdisk
 
 The plan is to have an local IOC that maps the data to WF records, and to display this data in 
-cs-studio (and ultimately, Phoebus).
+cs-studio (phoebus and classic)
 
 Data set size:
 16ch x 2b x 2M x 10s = 6.4GB,  maybe 4 devices so 24GB.
@@ -67,16 +67,50 @@ git clone https://github.com/D-TACQ/HTSCOPE
 cd HTSCOPE; make
 ```
 
-3. Make Test data, at $HOME:
+3. Make Data Sources
+
+AFHBA404/HTSTREAM will store RT data to a ramdisk, typically
+
+```
+/mnt/afhba.0/acq1102_010/000000/0.00
+```
+
+We want to keep HTSCOPE away from this complexity, by using top level links in the user directory
+Our HTSCOPE user follows D-TACQ tradition as "dt100". There can also be any number of secondary "users" who share views of the data. The secondary users don't have to be "users" in the Unix sense. Our host is "kamino":
+
+Showing links in $HOME to the data for two UUT's
+
+```
+[dt100@kamino ~]$ls -lt | grep kamino | cut -c 50-
+kamino:dt100:acq1102_010 -> /mnt/afhba.0/acq1102_010/000000/0.00
+kamino:dt100:acq1102_015 -> /mnt/afhba.2/acq1102_015/000000/2.00
+```
+
+Showing links for an additional two "secondary users", "mike" and "fred"
+
+```
+kamino:mike:acq1102_015 -> kamino:dt100:acq1102_015
+kamino:fred:acq1102_015 -> kamino:dt100:acq1102_015
+
+kamino:mike:acq1102_010 -> kamino:dt100:acq1102_010
+kamino:fred:acq1102_010 -> kamino:dt100:acq1102_010
+```
+
+Alternatively, we can make test data to use instead of real data..
+
+3.1 Make Test data, at $HOME:
+
 ```
 ramp  800000000 1 4 1 > Downloads/ramp800M-1-4-1
 ramp 1600000000 1 2 1 > Downloads/ramp1600M-1-2-1
 ramp  100000000 1 2 16 > Downloads/ramp100M-1-2-16
 ```
 for best results:
+
 ```
-ln -s Downloads/ramp800M-1-4-1 acq1102_123
+ln -s Downloads/ramp800M-1-4-1 kamino:dt100:acq1102_123
 ```
+
 4. Make a cs-studio workspace 
 .. and add PROJECTS/HTSCOPE/OPI as a project
 
@@ -320,7 +354,7 @@ user "dt100"
 +
 
 * aborting the stream can crash the box - probably best to suppress abort once data is flowing (the shot is only 10s after all)
-* BUG: there's a memory leak, that will crash the box (possible cause of the above)
+
 
 
 
