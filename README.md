@@ -36,12 +36,29 @@ To browse the data rapidly, we have two controls:
 
 ### Build Detail
 
-1. We assume there is already a build of EPICS BASE, ASYN, STREAMDEVICE, SNC
-Peter used EPICS7 from ACQ400_ESW_TOP
-https://github.com/D-TACQ/ACQ400_ESW_TOP
+1. EPICS_BASE
 
-Not because we want to run this on a ZYNQ (well, it's an idea!), but because it saved time with a pre-cooked build environment.
-This ends up with the full BASE under /use/local/epics/base, with an $EPICS_BASE pre-defined.
+We assume there is already a build of EPICS BASE, ASYN, STREAMDEVICE, SNC
+Peter used EPICS7 from ACQ400_ESW_TOP
+
+```
+https://github.com/D-TACQ/ACQ400_ESW_TOP
+```
+
+Not because we want to run this on a ZYNQ (well, it's an idea!), but because it saved time with a pre-cooked build environment. This ends up with the full BASE under /use/local/epics/base, with an $EPICS_BASE pre-defined.
+
+For general users who do NOT want the ZYNQ build, change CONFIG_SITE as follows:
+
+```
+--- a/configure/CONFIG_SITE
++++ b/configure/CONFIG_SITE
+@@ -107,7 +107,7 @@
+ # Which target architectures to cross-compile for.
+ #  Definitions in configure/os/CONFIG_SITE.<host>.Common
+ #  may override this setting.
++CROSS_COMPILER_TARGET_ARCHS=
+-CROSS_COMPILER_TARGET_ARCHS=linux-arm
+```
 
 2. Build this project
 ```
@@ -86,10 +103,11 @@ for pictures see https://github.com/D-TACQ/HTSCOPE/releases/download/v0.0.1/HTSC
 
 ### db name convention:
 
+```
 $(HOST):FROB                   # PV that is global to the HOST eg RUNSTOP
 $(HOST):$(USER):FLIP           # PV that is common to all UUT's in USER's view of the HOST. eg $(HOST):$(USER):ZOOM_IN
 $(HOST):$(USER):$(UUT):CH:01   # PV with user data view 
-
+```
 
 ### Define db
 ```
@@ -155,9 +173,18 @@ Everything runs under procServ:
 ./init/start_servers
 ```
 
-### cs-studio UI
+### cs-studio-phoebus UI
+Full support here:
 
-* OPI set written for cs-studio CLASSIC, not Phoebus, Phoebus port in progress.
+```
+cs-studio/phoebus/
+# run this script to start:
+run_ht_scope_ui.sh
+```
+
+### cs-studio-classic UI
+
+* OPI set written for cs-studio CLASSIC, not Phoebus, 
 * create your own unique WORKSPACE per HOST, link HTSCOPE/OPI as a project.
 * Define the following macros in the WORKSPACE (Edit|Preferences|CSS Applications|Display|BOY|OPI Runtime
 <pre>
