@@ -210,11 +210,19 @@ Everything runs under procServ:
 ### cs-studio-phoebus UI
 Full support here:
 
+#### Linux client
 ```
 cs-studio/phoebus/
 # run this script to start:
 run_ht_scope_ui.sh
 ```
+
+#### windows client
+```
+# first, customise cs-studio/phoebus/windows/* to suit your configuration then run:
+run_ht_scope_ui.bat
+```
+
 
 ### cs-studio-classic UI
 
