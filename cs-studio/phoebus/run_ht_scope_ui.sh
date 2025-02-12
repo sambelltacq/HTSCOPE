@@ -49,13 +49,6 @@ macros["HOST"]="${named_args[host]:-kamino}"
 macros["USER"]="${named_args[user]:-dt100}"
 macros["NCHAN"]="${named_args[chans]:-32}"
 
-#macros["UUT_1"]="${positional_args[0]:-acq1102_015}" #TODO change default
-#macros["UUT_2"]="${positional_args[1]:-None}"
-#macros["UUT_3"]="${positional_args[2]:-None}"
-#macros["UUT_4"]="${positional_args[3]:-None}"
-
-
-
 macro_to_query() {
     local query=""
 
@@ -89,9 +82,8 @@ RESOURCE="${PROTOCOL}${LAUNCHER}?${QUERY}"
 
 rm ~/.phoebus/memento
 
-echo CMD $CMD
-CMD="$JAVA_EXE -jar $PHOEBUS_JAR $ARGS -resource $RESOURCE -settings $SETTINGS"
 
+CMD="$JAVA_EXE -jar $PHOEBUS_JAR $ARGS -resource $RESOURCE -settings $SETTINGS"
 echo "CMD: $CMD"
 $CMD
 
