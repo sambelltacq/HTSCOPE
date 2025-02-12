@@ -7,7 +7,6 @@ import subprocess
 import threading
 
 from acq400_hapi import afhba404, factory, acq400_logger, PR, pv
-from acq400_hapi.acq400_print import DISPLAY
 """
 Usage:
 
@@ -51,6 +50,7 @@ class HTS(dict):
             uut = self.uuts[conn.uut]
 
             uut.cstate = None
+            uut.stop_flag = True
 
             if sites == 'ALL': sites = uut.get_site_types()["AISITES"]
             else: sites = sites.split(',')
@@ -121,20 +121,25 @@ class HTS(dict):
 
         for uut in self.uuts.values():
             log.debug(f"Starting {uut.uut}")
+            uut.stop_flag = False
             self.start_uut(uut)
-            uut.th = update_wrapper(uut)
+            uut.update_th = update_wrapper(uut)
 
         time.sleep(1)
 
     def stop_uuts(self):
+
+        @background_task
+        def wrapper(uut):
+            log.debug(f'{uut.uut} Stopping')
+            uut.stop_flag = True
+            while uut.cstate != 'IDLE':
+                uut.s0.streamtonowhered = "stop"
+                time.sleep(2)
+
         for uut in self.uuts.values():
-            log.info(f"Stopping {uut.uut}") #TODO add threading here
-            uut.s0.streamtonowhered = "stop"
-        
-        while True:
-            if self.state_all('IDLE'):
-                return
-            time.sleep(1)
+            if uut.stop_flag: continue
+            uut.stop_th = wrapper(uut)
 
     def setup_trigger(self, args):
         pass # TODO
@@ -217,7 +222,7 @@ class Stream():
                 self.state = self.get_state()
                 time.sleep(1)
 
-        self.th = update_wrapper()
+        self.update_th = update_wrapper()
 
         ssb = 0
         for site in self.sites:
@@ -278,6 +283,8 @@ def run_main(args):
     hts.start_uuts()
 
     t0 = 0
+    exit_code = 0
+    stopping = False
 
     try:
         while True:
@@ -285,44 +292,50 @@ def run_main(args):
             if t0 == 0 and hts.state_any('RUN'):
                 t0 = time.time()
 
-            t1 = int(min(time.time() - t0, t0))
-            mstr = f"+{t1}:"
+            if not stopping:
+                t1 = int(min(time.time() - t0, t0))
 
             for uut in hts.uuts.values():
-
-                mstr += uut.cstate[0]
 
                 for stream in uut.streams.values():
                     rate = stream.state.rx_rate * stream.bl_MB
                     total = stream.state.rx * stream.bl_MB
                     print(f"runtime={t1} uut={uut.uut} cstate={uut.cstate} rport={stream.rport} lport={stream.lport} rate={rate} total={total}")
-                    mstr += f"{total},"
 
-            print(mstr[:-1])
             
             if args.secs and t1 > args.secs:
-                print('Time Limit Reached Stopping')
-                if not hts.state_all('IDLE'): hts.stop_uuts()
-                else: break
+                if not stopping:
+                    print('Time Limit Reached Stopping')
+                    hts.stop_uuts()
+                    stopping = True
+                if hts.state_all('IDLE'): break
 
             if hts.all_ended():
-                print('Buffer limit Reached Stopping')
-                if not hts.state_all('IDLE'): hts.stop_uuts()
-                else: break
+                if not stopping:
+                    print('Buffer limit Reached Stopping')
+                    hts.stop_uuts()
+                    stopping = True
+                if hts.state_all('IDLE'): break
             
             time.sleep(1)
     except Exception as e:
-        print(f"error {e}")
-
+        log.error(e)
+        exit_code = 1
+        
     except KeyboardInterrupt:
-        hts.stop_uuts()
+        log.info("Interrupt!")
+
+    hts.stop_uuts()
+    while not hts.state_all('IDLE'):
+        print("wait for stop")
         time.sleep(1)
+    
     log.info('Done')
+    exit(exit_code)
 
 def background_task(func):
     """Runs decorated function in the background returns thread"""
     def wrapper(*args, **kwargs):
-#        print(f'starting wrapper {args} {kwargs}')
         thread = threading.Thread(target=func, args=[*args], kwargs=kwargs)
         thread.daemon = True
         thread.start()

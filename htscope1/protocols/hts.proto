@@ -10,7 +10,7 @@ getRunJob {
     in "run job %d";
 }
 getRunStatusSec {
-    in "+%d:%*c%*d";
+    in "runtime=%d";
 }
 getExitStatus {
     in "htstream complete rc %s";
