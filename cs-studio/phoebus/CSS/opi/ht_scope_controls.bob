@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-02-12 14:26:31 by dt100-->
+<!--Saved on 2025-02-12 15:20:38 by dt100-->
 <display version="2.0.0">
   <name>ht_scope_controls</name>
   <width>895</width>
@@ -1271,8 +1271,8 @@
   </widget>
   <widget type="group" version="3.0.0">
     <name>DEBUG</name>
-    <x>130</x>
-    <y>180</y>
+    <x>200</x>
+    <y>161</y>
     <width>442</width>
     <height>270</height>
     <visible>false</visible>
@@ -1423,13 +1423,6 @@
       </font>
     </widget>
   </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label_11</name>
-    <text>$(USER)@$(HOST)</text>
-    <x>19</x>
-    <y>454</y>
-    <width>147</width>
-  </widget>
   <widget type="group" version="3.0.0">
     <name>Stream State</name>
     <x>338</x>
@@ -1480,34 +1473,34 @@
       <tooltip>$(actions)</tooltip>
     </widget>
   </widget>
-  <widget type="byte_monitor" version="2.0.0">
-    <name>Byte Monitor</name>
-    <x>220</x>
-    <y>510</y>
-    <width>1</width>
-    <height>1</height>
-  </widget>
-  <widget type="byte_monitor" version="2.0.0">
-    <name>Byte Monitor_1</name>
-    <pv_name>$(HOST):IDLE</pv_name>
-    <x>790</x>
+  <widget type="group" version="3.0.0">
+    <name>Footer</name>
+    <x>19</x>
     <y>454</y>
-    <width>36</width>
-    <height>1</height>
-    <numBits>2</numBits>
-  </widget>
-  <widget type="byte_monitor" version="2.0.0">
-    <name>Byte Monitor_2</name>
-    <x>460</x>
-    <y>530</y>
-    <width>1</width>
-    <height>1</height>
-  </widget>
-  <widget type="label" version="2.0.0">
-    <name>Label</name>
-    <text>Idle:</text>
-    <x>761</x>
-    <y>454</y>
-    <width>50</width>
+    <width>822</width>
+    <height>20</height>
+    <style>3</style>
+    <transparent>true</transparent>
+    <widget type="label" version="2.0.0">
+      <name>Label_11</name>
+      <text>$(USER)@$(HOST)</text>
+      <width>147</width>
+    </widget>
+    <widget type="byte_monitor" version="2.0.0">
+      <name>Byte Monitor_1</name>
+      <pv_name>$(HOST):IDLE</pv_name>
+      <x>786</x>
+      <width>36</width>
+      <height>18</height>
+      <numBits>2</numBits>
+    </widget>
+    <widget type="label" version="2.0.0">
+      <name>Label</name>
+      <text>Idle:</text>
+      <x>756</x>
+      <width>27</width>
+      <height>18</height>
+      <auto_size>true</auto_size>
+    </widget>
   </widget>
 </display>
