@@ -295,19 +295,13 @@ def run_main(args):
             if not stopping:
                 t1 = int(min(time.time() - t0, t0))
 
-            mstr = f"+{t1}:"
-
             for uut in hts.uuts.values():
-
-                mstr += uut.cstate[0]
 
                 for stream in uut.streams.values():
                     rate = stream.state.rx_rate * stream.bl_MB
                     total = stream.state.rx * stream.bl_MB
                     print(f"runtime={t1} uut={uut.uut} cstate={uut.cstate} rport={stream.rport} lport={stream.lport} rate={rate} total={total}")
-                    mstr += f"{total},"
 
-            print(mstr[:-1])
             
             if args.secs and t1 > args.secs:
                 if not stopping:

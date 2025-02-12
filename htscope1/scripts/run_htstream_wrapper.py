@@ -35,8 +35,6 @@ def run_process_with_live_output(command):
                 epics.caput(pvname, pvvalue)
 
             print(output)
-            if output[0] == '+':
-                STATUS.put(output)
         else:
             if run_request != 1:
                 print(f'STOP requested')
