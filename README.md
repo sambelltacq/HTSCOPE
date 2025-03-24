@@ -96,6 +96,16 @@ kamino:mike:acq1102_010 -> kamino:dt100:acq1102_010
 kamino:fred:acq1102_010 -> kamino:dt100:acq1102_010
 ```
 
+We have a convenience script to do this automatically for ALL connected hosts
+```
+./scripts/create_symlinks.sh $USER [$USER2..]
+```
+example
+```
+[dt100@kamino htscope1 (main)]$./scripts/create_symlinks.sh $USER
+/home/dt100/kamino:dt100:acq1102_010 --> /mnt/afhba.0/acq1102_010/000000/0.00
+/home/dt100/kamino:dt100:acq1102_047 --> /mnt/afhba.1/acq1102_047/000000/1.00
+```
 Alternatively, we can make test data to use instead of real data..
 
 3.1 Make Test data, at $HOME:
