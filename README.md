@@ -49,22 +49,13 @@ Not because we want to run this on a ZYNQ (well, it's an idea!), but because it 
 
 For general users who do NOT want the ZYNQ build, change CONFIG_SITE as follows:
 
-```
---- a/configure/CONFIG_SITE
-+++ b/configure/CONFIG_SITE
-@@ -107,7 +107,7 @@
- # Which target architectures to cross-compile for.
- #  Definitions in configure/os/CONFIG_SITE.<host>.Common
- #  may override this setting.
-+CROSS_COMPILER_TARGET_ARCHS=
--CROSS_COMPILER_TARGET_ARCHS=linux-arm
-```
+Ref: BUILD_EPICS_FROM_SCRATCH.md
 
 2. Build this project
 ```
 mkdir PROJECTS; cd PROJECTS
 git clone https://github.com/D-TACQ/HTSCOPE
-cd HTSCOPE; make
+cd HTSCOPE; source /usr/local/epcis/base/setup.env; make
 ```
 
 3. Make Data Sources
