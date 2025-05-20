@@ -49,7 +49,7 @@ Not because we want to run this on a ZYNQ (well, it's an idea!), but because it 
 
 For general users who do NOT want the ZYNQ build, change CONFIG_SITE as follows:
 
-Ref: BUILD_EPICS_FROM_SCRATCH.md
+Ref: [BUILD_EPICS_FROM_SCRATCH.md](./BUILD_EPICS_FROM_SCRATCH.md)
 
 2. Build this project
 ```
