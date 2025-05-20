@@ -16,15 +16,20 @@ ln -s acq400_epics_base base
 cd base;
 ```
 
+# Build Base
+```
 source setup.env
 # comment out CROSS_COMPILER_TARGET_ARCHS for no linux-arm
 vi configure/CONFIG_SITE
-
 make 
 make install
-
+```
+# Build Modules
+```
 cd ../modules/
 # comment out CROSS_COMPILER_TARGET_ARCHS for no linux-arm
 vi seq/configure/CONFIG_SITE 
 for dir in *;do (cd $dir; make); done
+```
+
 
