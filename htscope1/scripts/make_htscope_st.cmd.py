@@ -76,9 +76,11 @@ asynSetTraceMask("{args.host}:{user}:{uut}",0,0xff))
 def print_postamble(args):
     args.fp.write("\n# postamble\n")
     maindb = "./db/htscope1_main.db"
-    uuts= ','.join(args.uuts)
+    uuts = ["", "", "", ""]
+    uuts[:len(args.uuts)] = args.uuts
+    uuts = ','.join(f'UUT{i+1}={value}' for i, value in enumerate(uuts))
     args.fp.write(f"""
-dbLoadRecords("{maindb}","HOST={args.host},UUTS=\'{uuts}\'")
+dbLoadRecords("{maindb}","HOST={args.host},{uuts}")
 """)
     args.fp.write("iocInit()\n")
     args.fp.write("dbl > records.dbl\n")

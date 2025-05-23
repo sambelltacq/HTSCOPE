@@ -18,7 +18,10 @@
     <vertical_alignment>1</vertical_alignment>
     <scripts>
       <script file="../scripts/handle_visibility.py">
-        <pv_name>$(HOST):UUTS</pv_name>
+        <pv_name>$(HOST):UUT1</pv_name>
+        <pv_name>$(HOST):UUT2</pv_name>
+        <pv_name>$(HOST):UUT3</pv_name>
+        <pv_name>$(HOST):UUT4</pv_name>
       </script>
     </scripts>
   </widget>

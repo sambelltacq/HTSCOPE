@@ -56,13 +56,12 @@ def create_enum_pv(name, value):
 # Main
 logger.info("Start")
 
-uuts = PVUtil.getString(pvs[0])
+uuts = [PVUtil.getString(pv) for pv in pvs if len(PVUtil.getString(pv)) > 0]
 
 macros = get_macros(display)
+macros['UUTS'] = ','.join(uuts)
+set_macros(display, macros)
 
-macros['UUTS'] = uuts
-
-uuts = uuts.split(',')
 max_uuts = 4
 max_traces = 8
 
