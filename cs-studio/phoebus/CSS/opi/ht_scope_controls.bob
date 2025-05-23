@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-02-12 15:20:38 by dt100-->
+<!--Saved on 2025-05-23 17:54:34 by dt100-->
 <display version="2.0.0">
   <name>ht_scope_controls</name>
   <width>895</width>
@@ -41,7 +41,7 @@
   <widget type="group" version="3.0.0">
     <name>Plot </name>
     <x>157</x>
-    <y>76</y>
+    <y>81</y>
     <width>181</width>
     <height>70</height>
     <transparent>true</transparent>
@@ -928,6 +928,31 @@
         </color>
       </on_color>
       <labels_from_pv>true</labels_from_pv>
+      <scripts>
+        <script file="EmbeddedPy">
+          <text><![CDATA[from org.csstudio.display.builder.runtime.script import PVUtil
+
+def get_macros(widget):
+    macros = widget.getEffectiveMacros()
+    return {key: macros.getValue(key) for key in macros.names}
+
+pvbase = "{}:{}:{}:SHOW_EGU"
+macros = get_macros(widget)
+value = PVUtil.getInt(pvs[0])
+
+host = macros['HOST']
+user = macros['USER']
+
+for i in [2, 3, 4]:
+    uut = macros['UUT_{}'.format(i)]
+    if len(uut) == 0: continue
+    PVUtil.writePV(pvbase.format(host, user, uut), value, 2000)
+    
+]]></text>
+          <pv_name>$(HOST):$(USER):$(UUT_1):SHOW_EGU</pv_name>
+        </script>
+      </scripts>
+      <border_alarm_sensitive>false</border_alarm_sensitive>
     </widget>
     <widget type="group" version="3.0.0">
       <name>Controls Input</name>
@@ -1127,7 +1152,7 @@
   <widget type="group" version="3.0.0">
     <name>Stream</name>
     <x>338</x>
-    <y>76</y>
+    <y>81</y>
     <width>510</width>
     <height>70</height>
     <transparent>true</transparent>
@@ -1499,8 +1524,28 @@
       <text>Idle:</text>
       <x>756</x>
       <width>27</width>
-      <height>18</height>
+      <height>16</height>
       <auto_size>true</auto_size>
     </widget>
+  </widget>
+  <widget type="action_button" version="3.0.0">
+    <name>Action Button_2</name>
+    <x>550</x>
+    <y>570</y>
+    <width>1</width>
+    <height>1</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="combo" version="2.0.0">
+    <name>Combo Box</name>
+    <pv_name>$(UUT_1):0:SIG:SRC:TRG:0</pv_name>
+    <x>263</x>
+    <y>12</y>
+    <width>58</width>
+    <height>21</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
   </widget>
 </display>
