@@ -60,7 +60,7 @@ macro_to_query() {
 }
 
 ROOT_DIR=$(dirname "$(dirname "$(realpath "$0")")")
-PHOEBUS_PROD="$HOME/PROJECTS/phoebus/phoebus-product/target/"
+PHOEBUS_PROD="$HOME/PROJECTS/phoebus/"
 [ -e $PHOEBUS_PROD/update ] && PHOEBUS_PROD=$PHOEBUS_PROD/update
 PHOEBUS_JAR=$(find $PHOEBUS_PROD -name product\*jar)
 if [ -z $PHOEBUS_JAR ]; then

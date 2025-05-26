@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--Saved on 2025-05-23 15:23:43 by dt100-->
+<!--Saved on 2025-05-23 16:50:10 by dt100-->
 <display version="2.0.0">
   <name>ht_scope_controls</name>
   <width>895</width>
@@ -41,7 +41,7 @@
   <widget type="group" version="3.0.0">
     <name>Plot </name>
     <x>157</x>
-    <y>76</y>
+    <y>81</y>
     <width>181</width>
     <height>70</height>
     <transparent>true</transparent>
@@ -1140,7 +1140,7 @@ pvs[3].write(value)]]></text>
   <widget type="group" version="3.0.0">
     <name>Stream</name>
     <x>338</x>
-    <y>76</y>
+    <y>81</y>
     <width>510</width>
     <height>70</height>
     <transparent>true</transparent>
@@ -1278,7 +1278,7 @@ pvs[3].write(value)]]></text>
     </instances>
     <x>157</x>
     <width>728</width>
-    <height>76</height>
+    <height>90</height>
     <horizontal>true</horizontal>
     <gap>0</gap>
   </widget>
@@ -1520,7 +1520,20 @@ pvs[3].write(value)]]></text>
     <name>Action Button_2</name>
     <x>550</x>
     <y>570</y>
-    <width>0</width>
-    <height>0</height>
+    <width>1</width>
+    <height>1</height>
+    <tooltip>$(actions)</tooltip>
+  </widget>
+  <widget type="combo" version="2.0.0">
+    <name>Combo Box</name>
+    <pv_name>$(UUT_1):0:SIG:SRC:TRG:0</pv_name>
+    <x>263</x>
+    <y>12</y>
+    <width>58</width>
+    <height>21</height>
+    <font>
+      <font family="Liberation Sans" style="BOLD" size="12.0">
+      </font>
+    </font>
   </widget>
 </display>
