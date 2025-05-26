@@ -22,6 +22,7 @@ def run_process_with_live_output(command):
     while True:
         rc = select.select([pp.stdout.fileno()], [], [], 1)
         if len(rc[0]) > 0:
+            print(f"\n\nrunrequest is {run_request}")
             output = pp.stdout.readline()
             if not output:
                 break
@@ -36,6 +37,7 @@ def run_process_with_live_output(command):
 
             print(output)
         else:
+            print(f"\n\nrunrequest else is {run_request}")
             if run_request != 1:
                 print(f'STOP requested')
                 pp.send_signal(signal.SIGABRT)
