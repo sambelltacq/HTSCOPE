@@ -145,7 +145,7 @@ class HTS(dict):
         pass # TODO
 
     def trigger_uuts(self):
-        pass # TODO 
+        pass # TODO
 
     def state_all(self, state='IDLE'):
         for uut in self.uuts.values():
@@ -156,7 +156,7 @@ class HTS(dict):
         for uut in self.uuts.values():
             if uut.cstate == state: return True
         return False
-    
+
     def all_ended(self):
         for stream in self.streams:
             if stream.state.STATUS != 'STOP_DONE': return False
@@ -302,7 +302,7 @@ def run_main(args):
                     total = stream.state.rx * stream.bl_MB
                     print(f"runtime={t1} uut={uut.uut} cstate={uut.cstate} rport={stream.rport} lport={stream.lport} rate={rate} total={total}")
 
-            
+
             if args.secs and t1 > args.secs:
                 if not stopping:
                     print('Time Limit Reached Stopping')
@@ -316,20 +316,22 @@ def run_main(args):
                     hts.stop_uuts()
                     stopping = True
                 if hts.state_all('IDLE'): break
-            
+
             time.sleep(1)
+
+    except KeyboardInterrupt:
+         log.info("Interrupt!")
+
     except Exception as e:
+        log.info("exception has been called")
         log.error(e)
         exit_code = 1
-        
-    except KeyboardInterrupt:
-        log.info("Interrupt!")
 
     hts.stop_uuts()
     while not hts.state_all('IDLE'):
         print("wait for stop")
         time.sleep(1)
-    
+
     log.info('Done')
     exit(exit_code)
 
@@ -378,7 +380,7 @@ def get_parser():
     parser.add_argument('--outroot', default="/mnt/afhba.{lport}/{uut}", help='path to save data')
 
     parser.add_argument('uuts', nargs='+', help="uut hostnames")
-    
+
     return parser
 
 if __name__ == '__main__':
