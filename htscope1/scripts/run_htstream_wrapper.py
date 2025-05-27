@@ -22,6 +22,7 @@ def run_process_with_live_output(command):
     while True:
         rc = select.select([pp.stdout.fileno()], [], [], 1)
         if len(rc[0]) > 0:
+            print(f"\n\nrunrequest is {run_request}")
             output = pp.stdout.readline()
             if not output:
                 break
@@ -36,6 +37,7 @@ def run_process_with_live_output(command):
 
             print(output)
         else:
+            print(f"\n\nrunrequest else is {run_request}")
             if run_request != 1:
                 print(f'STOP requested')
                 pp.send_signal(signal.SIGABRT)
@@ -54,13 +56,15 @@ def onChange(pvname=None, value=None, char_value=None, **kwargs):
 
 print(f'HOST {HOST}')
 
+UUTS = [epics.caget(pv) for pv in [f'{HOST}:UUT1', f'{HOST}:UUT2', f'{HOST}:UUT3', f'{HOST}:UUT4']]
+UUTS = ' '.join(UUTS).strip()
+
 RUNSTOP = epics.get_pv(f'{HOST}:RUNSTOP', callback=onChange)
-UUTS = epics.get_pv(f'{HOST}:UUTS')
 SHOT_TIME = epics.get_pv(f'{HOST}:SHOT_TIME')
 STATUS = epics.get_pv(f'{HOST}:STATUS')
 
 
-print(f'RUNSTOP: {RUNSTOP.get()} UUTS: {UUTS.get()} SHOT_TIME: {SHOT_TIME.get()}')
+print(f'RUNSTOP: {RUNSTOP.get()} UUTS: {UUTS} SHOT_TIME: {SHOT_TIME.get()}')
 
 loopcount = 0
 shot = 0
@@ -71,9 +75,8 @@ while True:
         shot += 1
         STATUS.put(f'run_request shot {shot}')
         print(f'run_request shot {shot}')
-        uuts = ' '.join(UUTS.get().split(','))
         secs = int(SHOT_TIME.get())
-        job = f'unbuffer ./scripts/ht_stream.py --concat=999999 --secs={secs} {uuts}'
+        job = f'unbuffer ./scripts/ht_stream.py --concat=999999 --secs={secs} {UUTS}'
         STATUS.put(f'run job {shot}')
         print(f'run job {shot} {job}')
         rc = run_process_with_live_output(job)

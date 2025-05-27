@@ -19,7 +19,7 @@ def get_macros(widget):
 	return extracted
 
 uut = get_macros(widget)['UUT']
-uuts = PVUtil.getString(pvs[0]).split(',')
+uuts = [PVUtil.getString(pv) for pv in pvs if len(PVUtil.getString(pv)) > 0]
 
 if uut in uuts:
 	visible = True

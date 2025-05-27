@@ -11,11 +11,29 @@ record(ao, "$(HOST):SHOT_TIME") {
 	field(DESC, "specify shot duration")
 }
 
-record(stringout, "$(HOST):UUTS"){
+record(stringout, "$(HOST):UUT1"){
 	field(DTYP, "Soft Channel")
-	field(VAL,  "$(UUTS)")
+	field(VAL,  "$(UUT1)")
 	field(PINI, "YES")
-	field(DESC, "list of UUTs in shot")
+	field(DESC, "UUT 1 hostname")
+}
+record(stringout, "$(HOST):UUT2"){
+	field(DTYP, "Soft Channel")
+	field(VAL,  "$(UUT2)")
+	field(PINI, "YES")
+	field(DESC, "UUT 2 hostname")
+}
+record(stringout, "$(HOST):UUT3"){
+	field(DTYP, "Soft Channel")
+	field(VAL,  "$(UUT3)")
+	field(PINI, "YES")
+	field(DESC, "UUT 3 hostname")
+}
+record(stringout, "$(HOST):UUT4"){
+	field(DTYP, "Soft Channel")
+	field(VAL,  "$(UUT4)")
+	field(PINI, "YES")
+	field(DESC, "UUT 4 hostname")
 }
 
 record(bo, "$(HOST):RUNSTOP") {
