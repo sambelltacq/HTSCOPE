@@ -28,6 +28,8 @@ class HTS(dict):
         self.uuts = {}
         self.streams = []
 
+        self.master_uut = uuts[0]
+
         conns = afhba404.get_connections()
         for conn in conns.values():
             print(f"start {conn}")
@@ -49,6 +51,7 @@ class HTS(dict):
 
             uut = self.uuts[conn.uut]
 
+            uut.hostname = conn.uut
             uut.cstate = None
             uut.stop_flag = True
 
@@ -122,8 +125,14 @@ class HTS(dict):
         for uut in self.uuts.values():
             log.debug(f"Starting {uut.uut}")
             uut.stop_flag = False
-            self.start_uut(uut)
             uut.update_th = update_wrapper(uut)
+            if uut.hostname != self.master_uut: self.start_uut(uut)
+        
+        while not self.state_all('ARM', [self.master_uut]):
+            log.info("waiting for slave arm")
+            time.sleep(1)
+
+        self.start_uut(self.uuts[self.master_uut])
 
         time.sleep(1)
 
@@ -145,10 +154,11 @@ class HTS(dict):
         pass # TODO
 
     def trigger_uuts(self):
-        pass # TODO 
+        pass # TODO
 
-    def state_all(self, state='IDLE'):
+    def state_all(self, state='IDLE', exclude=[]):
         for uut in self.uuts.values():
+            if uut.hostname in exclude: continue
             if uut.cstate != state: return False
         return True
 
@@ -156,7 +166,7 @@ class HTS(dict):
         for uut in self.uuts.values():
             if uut.cstate == state: return True
         return False
-    
+
     def all_ended(self):
         for stream in self.streams:
             if stream.state.STATUS != 'STOP_DONE': return False
@@ -302,7 +312,7 @@ def run_main(args):
                     total = stream.state.rx * stream.bl_MB
                     print(f"runtime={t1} uut={uut.uut} cstate={uut.cstate} rport={stream.rport} lport={stream.lport} rate={rate} total={total}")
 
-            
+
             if args.secs and t1 > args.secs:
                 if not stopping:
                     print('Time Limit Reached Stopping')
@@ -316,20 +326,22 @@ def run_main(args):
                     hts.stop_uuts()
                     stopping = True
                 if hts.state_all('IDLE'): break
-            
+
             time.sleep(1)
+
+    except KeyboardInterrupt:
+         log.info("Interrupt!")
+
     except Exception as e:
+        log.info("exception has been called")
         log.error(e)
         exit_code = 1
-        
-    except KeyboardInterrupt:
-        log.info("Interrupt!")
 
     hts.stop_uuts()
     while not hts.state_all('IDLE'):
         print("wait for stop")
         time.sleep(1)
-    
+
     log.info('Done')
     exit(exit_code)
 
@@ -378,7 +390,7 @@ def get_parser():
     parser.add_argument('--outroot', default="/mnt/afhba.{lport}/{uut}", help='path to save data')
 
     parser.add_argument('uuts', nargs='+', help="uut hostnames")
-    
+
     return parser
 
 if __name__ == '__main__':
