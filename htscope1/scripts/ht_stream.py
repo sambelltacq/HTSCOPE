@@ -28,6 +28,8 @@ class HTS(dict):
         self.uuts = {}
         self.streams = []
 
+        self.master_uut = uuts[0]
+
         conns = afhba404.get_connections()
         for conn in conns.values():
             print(f"start {conn}")
@@ -49,6 +51,7 @@ class HTS(dict):
 
             uut = self.uuts[conn.uut]
 
+            uut.hostname = conn.uut
             uut.cstate = None
             uut.stop_flag = True
 
@@ -122,8 +125,14 @@ class HTS(dict):
         for uut in self.uuts.values():
             log.debug(f"Starting {uut.uut}")
             uut.stop_flag = False
-            self.start_uut(uut)
             uut.update_th = update_wrapper(uut)
+            if uut.hostname != self.master_uut: self.start_uut(uut)
+        
+        while not self.state_all('ARM', [self.master_uut]):
+            log.info("waiting for slave arm")
+            time.sleep(1)
+
+        self.start_uut(self.uuts[self.master_uut])
 
         time.sleep(1)
 
@@ -147,8 +156,9 @@ class HTS(dict):
     def trigger_uuts(self):
         pass # TODO
 
-    def state_all(self, state='IDLE'):
+    def state_all(self, state='IDLE', exclude=[]):
         for uut in self.uuts.values():
+            if uut.hostname in exclude: continue
             if uut.cstate != state: return False
         return True
 
